@@ -1,35 +1,6 @@
-import { useState, useEffect } from 'react';
-import api from './api/axios';
-import KanbanBoard from './components/KanbanBoard';
+import Dashboard from './components/Dashboard';
 
 function App() {
-  const [applications, setApplications] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  // Fetch data from Laravel
-  useEffect(() => {
-    api.get('/applications')
-      .then(res => {
-        setApplications(res.data);
-        setLoading(false);
-      })
-      .catch(err => console.error("Error fetching apps", err));
-  }, []);
-
-  // Update status when dropdown changes
-  const handleStatusChange = async (id, newStatus) => {
-    try {
-      await api.put(`/applications/${id}`, { status: newStatus });
-      setApplications(prev => 
-        prev.map(app => app.id === id ? { ...app, status: newStatus } : app)
-      );
-    } catch (err) {
-      alert("Failed to update status");
-    }
-  };
-
-  if (loading) return <div className="p-10 text-center">Loading HireTrack...</div>;
-
   return (
     <div className="min-h-screen bg-white">
       <header className="bg-white border-b p-4 flex justify-between items-center">
@@ -39,10 +10,7 @@ function App() {
         </button>
       </header>
       
-      <KanbanBoard 
-        applications={applications} 
-        onStatusChange={handleStatusChange} 
-      />
+      <Dashboard />
     </div>
   );
 }
