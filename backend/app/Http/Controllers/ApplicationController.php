@@ -19,6 +19,7 @@ class ApplicationController extends Controller
             'role' => 'required|string|max:255',
             'status' => 'nullable|in:Applied,Interviewing,Accepted,Rejected',
             'applied_at' => 'required|date',
+            'logo_url' => 'nullable|string|url|max:2048',
         ]);
 
         $data['status'] = $data['status'] ?? 'Applied';
@@ -47,6 +48,7 @@ class ApplicationController extends Controller
             'role' => 'sometimes|string|max:255',
             'status' => 'sometimes|in:Applied,Interviewing,Accepted,Rejected',
             'applied_at' => 'sometimes|date',
+            'logo_url' => 'nullable|string|url|max:2048',
         ]);
 
         $application->update($data);

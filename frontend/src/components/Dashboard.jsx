@@ -19,28 +19,23 @@ export default function Dashboard({
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 relative z-10">
+    <div className="flex overflow-x-auto snap-x snap-mandatory pb-8 gap-6 md:grid md:grid-cols-2 lg:grid-cols-4 md:overflow-visible md:snap-none custom-scrollbar">
       {STATUSES.map((status, index) => (
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: index * 0.1, duration: 0.5, type: 'spring' }}
           key={status}
-          className="flex flex-col rounded-[2rem] backdrop-blur-xl bg-slate-900/40 border border-white/20 p-5 shadow-2xl relative overflow-hidden min-h-[65vh]"
+          className="flex-none w-[85%] sm:w-[450px] md:w-full snap-center flex flex-col rounded-[2.5rem] bg-white/[0.02] border border-white/5 p-6 shadow-2xl relative min-h-[600px]"
         >
-          {/* Subtle light refraction base */}
-          <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent pointer-events-none mix-blend-overlay"></div>
-          {/* Light-catcher top edge */}
-          <div className="absolute inset-x-0 top-0 h-[1px] bg-gradient-to-r from-transparent via-white/30 to-transparent"></div>
-
-          <div className="mb-6 relative z-10 flex items-center justify-between px-1">
-            <h2 className="text-2xl font-black tracking-tight text-white/95">{status}</h2>
-            <div className="bg-white/10 text-white/90 text-sm font-bold px-3 py-1 rounded-full border border-white/10 shadow-inner backdrop-blur-md">
+          <div className="mb-8 flex items-center justify-between px-2">
+            <h2 className="text-xl font-black tracking-tight text-white/90">{status}</h2>
+            <div className="bg-white/5 text-white/40 text-xs font-black px-3 py-1 rounded-full border border-white/5 backdrop-blur-md">
               {applications.filter((app) => app.status === status).length}
             </div>
           </div>
 
-          <div className="flex-1 space-y-4 relative z-10 overflow-y-auto pb-4 pr-1 custom-scrollbar">
+          <div className="flex-1 space-y-4 overflow-y-auto pb-4 pr-1 custom-scrollbar-slim">
             {applications
               .filter((app) => app.status === status)
               .map((app) => (
@@ -53,8 +48,8 @@ export default function Dashboard({
                 />
               ))}
             {applications.filter((app) => app.status === status).length === 0 && (
-              <div className="flex items-center justify-center h-32 rounded-2xl border border-dashed border-white/20 bg-white/5">
-                <p className="text-white/40 text-sm font-semibold tracking-wide">No applications</p>
+              <div className="flex items-center justify-center h-32 rounded-3xl border border-dashed border-white/10 bg-white/[0.01]">
+                <p className="text-white/20 text-xs font-bold tracking-widest uppercase">Empty</p>
               </div>
             )}
           </div>

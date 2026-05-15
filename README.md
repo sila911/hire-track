@@ -1,78 +1,91 @@
 # HireTrack
 
-HireTrack is a comprehensive Applicant Tracking System (ATS) that streamlines the recruitment process, making it easier for HR teams to manage job postings, track candidates, and collaborate on hiring decisions.
+HireTrack is a sleek, personal job application tracker designed to help job seekers organize their career search. Track your applications, manage statuses, and visualize your progress with a modern, high-performance interface.
 
-This project is structured as a decoupled application with a **Laravel 12** backend API and a **React 19** frontend powered by **Vite**.
+This project is a decoupled application featuring a **Laravel 12** backend API and a **React 19** frontend powered by **Vite**.
 
-## Project Structure
+## ✨ Features
 
-- `backend/`: Contains the Laravel REST API, database migrations, and business logic.
-- `frontend/`: Contains the React SPA built with Vite, Tailwind CSS, and Framer Motion.
+- **Personal Dashboard:** A centralized view of all your job applications with real-time search and sorting.
+- **Visual Analytics:** Quick stats and metrics to help you understand your application funnel at a glance.
+- **Status Management:** Seamlessly move applications through stages: *Applied*, *Interviewing*, *Accepted*, or *Rejected*.
+- **Secure Authentication:** User accounts and session management powered by **Laravel Sanctum**.
+- **Modern UI/UX:** A responsive, glassmorphic interface built with **Tailwind CSS**, featuring smooth transitions and interactive feedback.
+- **Company Logos:** Support for tracking company logos via external URLs to keep your dashboard visually organized.
 
-## Features
+## 🛠️ Tech Stack
 
-- **Job Posting Management:** Create, edit, and publish job openings.
-- **Candidate Tracking:** Move applicants through customizable pipeline stages using a Kanban board interface.
-- **Dashboard & Analytics:** View quick stats and applicant status distributions.
-- **Authentication:** Secure API authentication utilizing Laravel Sanctum.
-- **Modern UI:** Responsive, animated user interface styled with Tailwind CSS and Framer Motion.
+### Backend
+- **Framework:** Laravel 12
+- **Auth:** Laravel Sanctum (Stateful API Authentication)
+- **Database:** MySQL / PostgreSQL / SQLite
+- **Testing:** PHPUnit
 
-## Requirements
+### Frontend
+- **Framework:** React 19
+- **Build Tool:** Vite
+- **Styling:** Tailwind CSS
+- **HTTP Client:** Axios
+- **Icons:** Custom SVG & Lucide-inspired icons
 
-- PHP 8.2 or higher
+## 🚀 Getting Started
+
+### Prerequisites
+
+- PHP 8.2+
 - Composer
-- Node.js & NPM
-- MySQL, PostgreSQL, or SQLite
+- Node.js 20+ & NPM
+- A database (SQLite is supported out-of-the-box)
 
-## Installation & Setup
+### Backend Setup
 
-### Backend (Laravel API)
-
-1. Navigate to the backend directory:
+1. **Navigate to the backend directory:**
    ```bash
    cd backend
    ```
-2. Install PHP dependencies:
+2. **Install dependencies:**
    ```bash
    composer install
    ```
-3. Copy the environment file and generate the application key:
+3. **Configure environment:**
    ```bash
    cp .env.example .env
    php artisan key:generate
    ```
-4. Configure your database settings in the `backend/.env` file.
-5. Run the database migrations (and seeders if desired):
-   ```bash
-   php artisan migrate --seed
+4. **Database Configuration:**
+   Ensure your `.env` is configured for your database. For a quick start with SQLite:
+   ```env
+   DB_CONNECTION=sqlite
    ```
-6. Start the backend development server:
+5. **Run Migrations:**
+   ```bash
+   php artisan migrate
+   ```
+6. **Start the API server:**
    ```bash
    php artisan serve
    ```
-   *The API will typically be available at `http://localhost:8000`.*
 
-### Frontend (React Application)
+### Frontend Setup
 
-1. Open a new terminal and navigate to the frontend directory:
+1. **Navigate to the frontend directory:**
    ```bash
    cd frontend
    ```
-2. Install Node dependencies:
+2. **Install dependencies:**
    ```bash
    npm install
    ```
-3. Copy the environment file:
-   ```bash
-   cp .env.example .env
+3. **Configure environment:**
+   Create a `.env` file (or copy `.env.example` if available) and point to your backend:
+   ```env
+   VITE_API_BASE_URL=http://localhost:8000/api
    ```
-   *Ensure the backend API URL is correctly configured (e.g., `VITE_API_BASE_URL=http://localhost:8000/api`).*
-4. Start the frontend development server:
+4. **Start the development server:**
    ```bash
    npm run dev
    ```
-   *The application will typically be available at `http://localhost:5173`.*
 
-## License
+## 📄 License
 
-The HireTrack application is a software licensed under the MIT license.
+HireTrack is open-sourced software licensed under the [MIT license](LICENSE).

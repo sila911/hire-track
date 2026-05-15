@@ -28,7 +28,7 @@ export default function Login({ onAuthed }) {
     try {
       const { data } = await api.post('/login', { email, password });
       localStorage.setItem('token', data.token);
-      onAuthed();
+      onAuthed(data.user);
       navigate('/', { replace: true });
     } catch (err) {
       const { fieldErrors: next, banner } = parseLoginApiError(err);

@@ -6,24 +6,33 @@ function formatPct(rate) {
   return `${(rate * 100).toFixed(1)}%`;
 }
 
-function StatCard({ title, value, hint, loading, delay = 0 }) {
+function StatCard({ title, value, hint, trend, loading, delay = 0 }) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay, duration: 0.35, type: 'spring', stiffness: 260, damping: 28 }}
-      className="relative overflow-hidden rounded-2xl border border-white/20 bg-slate-900/40 p-5 shadow-xl backdrop-blur-xl"
+      className="relative overflow-hidden rounded-3xl border border-white/5 bg-white/[0.03] p-6 shadow-2xl backdrop-blur-xl"
     >
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/[0.07] to-transparent" />
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent" />
       <div className="relative z-10">
-        <p className="text-xs font-bold uppercase tracking-wider text-white/45">{title}</p>
+        <div className="flex justify-between items-start mb-4">
+          <p className="text-xs font-bold uppercase tracking-[0.15em] text-white/30">{title}</p>
+          {trend && !loading && (
+            <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/10`}>
+              {trend}
+            </span>
+          )}
+        </div>
+        
         {loading ? (
-          <div className="mt-3 h-9 w-24 animate-pulse rounded-lg bg-white/10" />
+          <div className="h-10 w-24 animate-pulse rounded-lg bg-white/5" />
         ) : (
-          <p className="mt-2 text-3xl font-black tracking-tight text-white tabular-nums">{value}</p>
+          <p className="text-4xl font-black tracking-tighter text-white tabular-nums">{value}</p>
         )}
-        {hint && !loading && <p className="mt-1.5 text-xs font-medium text-white/40">{hint}</p>}
+        
+        {hint && !loading && (
+          <p className="mt-2 text-xs font-medium text-white/20 tracking-tight">{hint}</p>
+        )}
       </div>
     </motion.div>
   );
@@ -40,27 +49,30 @@ export default function QuickStatsSection({ stats, loading }) {
 
   return (
     <section
-      className="mb-8 grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4"
+      className="mb-12 grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-4"
       aria-label="Application statistics"
     >
       <StatCard
-        title="Total applications"
+        title="Total apps"
         value={total.toLocaleString()}
-        hint="Across all pipeline stages"
+        hint="All-time pipeline volume"
+        trend="+2 this week"
         loading={loading}
         delay={0}
       />
       <StatCard
         title="Interview rate"
         value={formatPct(stats?.interview_rate)}
-        hint="Share currently interviewing"
+        hint="Current active pipeline"
+        trend="High volume"
         loading={loading}
         delay={0.05}
       />
       <StatCard
         title="Success rate"
         value={formatPct(stats?.success_rate)}
-        hint="Share accepted offers"
+        hint="Completed offer cycles"
+        trend="+0.4%"
         loading={loading}
         delay={0.1}
       />
@@ -68,14 +80,11 @@ export default function QuickStatsSection({ stats, loading }) {
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.12, duration: 0.35, type: 'spring', stiffness: 260, damping: 28 }}
-        className="relative overflow-hidden rounded-2xl border border-white/20 bg-slate-900/40 p-5 shadow-xl backdrop-blur-xl sm:col-span-2 xl:col-span-1"
+        className="relative overflow-hidden rounded-3xl border border-white/5 bg-white/[0.03] p-6 shadow-2xl backdrop-blur-xl sm:col-span-2 xl:col-span-1"
       >
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/[0.07] to-transparent" />
-        <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent" />
-        <div className="relative z-10">
-          <p className="text-xs font-bold uppercase tracking-wider text-white/45">Status mix</p>
-          <p className="mt-0.5 text-sm text-white/50">Pipeline distribution</p>
-          <div className="mt-2">
+        <div className="relative z-10 h-full flex flex-col">
+          <p className="text-xs font-bold uppercase tracking-[0.15em] text-white/30 mb-4">Pipeline mix</p>
+          <div className="flex-1 min-h-[60px] flex items-center justify-center">
             <StatusPieChart byStatus={stats?.by_status} />
           </div>
         </div>

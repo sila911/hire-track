@@ -15,6 +15,7 @@ export default function ApplicationModal({ open, application, onClose, onSaved }
   const [role, setRole] = useState('');
   const [appliedAt, setAppliedAt] = useState(todayISODate());
   const [status, setStatus] = useState('Applied');
+  const [logoUrl, setLogoUrl] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [fieldErrors, setFieldErrors] = useState({});
   const [banner, setBanner] = useState(null);
@@ -30,11 +31,13 @@ export default function ApplicationModal({ open, application, onClose, onSaved }
         const ad = application.applied_at;
         setAppliedAt(typeof ad === 'string' ? ad.slice(0, 10) : todayISODate());
         setStatus(application.status ?? 'Applied');
+        setLogoUrl(application.logo_url ?? '');
       } else {
         setCompany('');
         setRole('');
         setAppliedAt(todayISODate());
         setStatus('Applied');
+        setLogoUrl('');
       }
     });
   }, [open, application]);
@@ -48,13 +51,36 @@ export default function ApplicationModal({ open, application, onClose, onSaved }
     return () => window.removeEventListener('keydown', onKey);
   }, [open, onClose]);
 
+  useEffect(() => {
+    if (!company) {
+      if (!isEdit) setLogoUrl('');
+      return;
+    }
+
+    const timer = setTimeout(async () => {
+      try {
+        const query = encodeURIComponent(company.trim());
+        const res = await fetch(`https://autocomplete.clearbit.com/v1/companies/suggest?query=${query}`);
+        if (!res.ok) return;
+        const data = await res.json();
+        if (data && data.length > 0 && data[0].logo) {
+          setLogoUrl(data[0].logo);
+        }
+      } catch (err) {
+        // ignore errors
+      }
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, [company, isEdit]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmitting(true);
     setFieldErrors({});
     setBanner(null);
     try {
-      const payload = { company: company.trim(), role: role.trim(), applied_at: appliedAt, status };
+      const payload = { company: company.trim(), role: role.trim(), applied_at: appliedAt, status, logo_url: logoUrl };
       const res = isEdit
         ? await api.put(`/applications/${application.id}`, payload)
         : await api.post('/applications', payload);

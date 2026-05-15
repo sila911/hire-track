@@ -37,7 +37,7 @@ export default function Register({ onAuthed }) {
         password_confirmation: passwordConfirmation,
       });
       localStorage.setItem('token', data.token);
-      onAuthed();
+      onAuthed(data.user);
       navigate('/', { replace: true });
     } catch (err) {
       const { fieldErrors: next, banner } = parseRegisterApiError(err);
