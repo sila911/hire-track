@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import Dashboard from './components/Dashboard';
 import ApplicationModal from './components/ApplicationModal';
+import QuickStatsSection from './components/QuickStatsSection';
 import AuthGate from './components/AuthGate';
 import { useAuth } from './auth-context';
 import { useDialog } from './dialog-context';
@@ -10,31 +11,47 @@ function AppShell() {
   const { logout } = useAuth();
   const { confirm, alert: alertDialog } = useDialog();
   const [applications, setApplications] = useState([]);
+  const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
+
   const [modal, setModal] = useState({ open: false, application: null });
 
-  const loadApplications = useCallback(async () => {
+  const loadDashboard = useCallback(async () => {
     setLoading(true);
     try {
-      const response = await api.get('/applications');
-      setApplications(response.data);
+      const [appsRes, statsRes] = await Promise.all([
+        api.get('/applications'),
+        api.get('/applications/stats'),
+      ]);
+      setApplications(appsRes.data);
+      setStats(statsRes.data);
     } catch (error) {
-      console.error('Failed to fetch applications:', error);
+      console.error('Failed to load dashboard:', error);
     } finally {
       setLoading(false);
     }
   }, []);
 
+  const refreshStats = useCallback(async () => {
+    try {
+      const { data } = await api.get('/applications/stats');
+      setStats(data);
+    } catch (error) {
+      console.error('Failed to refresh stats:', error);
+    }
+  }, []);
+
   useEffect(() => {
     queueMicrotask(() => {
-      void loadApplications();
+      void loadDashboard();
     });
-  }, [loadApplications]);
+  }, [loadDashboard]);
 
   const handleStatusChange = async (id, newStatus) => {
     try {
       const { data } = await api.put(`/applications/${id}`, { status: newStatus });
       setApplications((prev) => prev.map((app) => (app.id === id ? data : app)));
+      void refreshStats();
     } catch (error) {
       console.error('Failed to update status:', error);
       void alertDialog('Failed to update status.', 'Could not update');
@@ -65,6 +82,7 @@ function AppShell() {
     try {
       await api.delete(`/applications/${application.id}`);
       setApplications((prev) => prev.filter((app) => app.id !== application.id));
+      void refreshStats();
     } catch (error) {
       console.error('Failed to delete application:', error);
       void alertDialog('Failed to delete application.', 'Could not delete');
@@ -77,6 +95,7 @@ function AppShell() {
       if (exists) return prev.map((a) => (a.id === saved.id ? saved : a));
       return [saved, ...prev];
     });
+    void refreshStats();
   };
 
   return (
@@ -108,6 +127,8 @@ function AppShell() {
           </button>
         </div>
       </header>
+
+      <QuickStatsSection stats={stats} loading={loading} />
 
       <Dashboard
         applications={applications}
