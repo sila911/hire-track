@@ -1,5 +1,3 @@
-import React from 'react';
-
 const KanbanBoard = ({ applications, onStatusChange }) => {
   const statuses = ['Applied', 'Interviewing', 'Accepted', 'Rejected'];
 
