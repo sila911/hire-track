@@ -15,11 +15,13 @@ class ApplicationController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'company' => 'required|string',
-            'role' => 'required|string',
-            'status' => 'required|in:Applied,Interviewing,Accepted,Rejected',
+            'company' => 'required|string|max:255',
+            'role' => 'required|string|max:255',
+            'status' => 'nullable|in:Applied,Interviewing,Accepted,Rejected',
             'applied_at' => 'required|date',
         ]);
+
+        $data['status'] = $data['status'] ?? 'Applied';
 
         return $request->user()->applications()->create($data);
     }
@@ -40,13 +42,24 @@ class ApplicationController extends Controller
             return response()->json(['message' => 'Unauthorized'], 403);
         }
 
-        $application->update($request->only('status', 'company', 'role'));
+        $data = $request->validate([
+            'company' => 'sometimes|string|max:255',
+            'role' => 'sometimes|string|max:255',
+            'status' => 'sometimes|in:Applied,Interviewing,Accepted,Rejected',
+            'applied_at' => 'sometimes|date',
+        ]);
 
-        return $application;
+        $application->update($data);
+
+        return $application->fresh();
     }
 
-    public function destroy(Application $application)
+    public function destroy(Request $request, Application $application)
     {
+        if ($request->user()->id !== $application->user_id) {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
+
         $application->delete();
 
         return response()->noContent();
