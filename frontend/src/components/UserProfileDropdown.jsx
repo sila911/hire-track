@@ -2,10 +2,12 @@ import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../auth-context';
+import { useDialog } from '../dialog-context';
 import { FaUser, FaCog, FaSignOutAlt, FaSun, FaMoon, FaPalette } from 'react-icons/fa';
 
 export default function UserProfileDropdown() {
   const { user, logout } = useAuth();
+  const { confirm } = useDialog();
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
   const [theme, setTheme] = useState(localStorage.getItem('theme') || 'dark');
@@ -42,6 +44,21 @@ export default function UserProfileDropdown() {
 
   const toggleTheme = () => {
     setTheme(theme === 'dark' ? 'light' : 'dark');
+  };
+
+  const handleLogout = async () => {
+    setIsOpen(false);
+    const ok = await confirm({
+      title: 'Confirm Logout',
+      message: 'Are you sure you want to sign out of your account?',
+      confirmLabel: 'Logout',
+      cancelLabel: 'Cancel',
+      variant: 'danger',
+    });
+
+    if (ok) {
+      logout();
+    }
   };
 
   return (
@@ -136,10 +153,7 @@ export default function UserProfileDropdown() {
 
               <button
                 type="button"
-                onClick={() => {
-                  setIsOpen(false);
-                  logout();
-                }}
+                onClick={handleLogout}
                 className="flex items-center w-full gap-4 px-5 py-3.5 text-sm font-black text-red-500 hover:text-red-600 hover:bg-red-500/10 rounded-3xl transition-all duration-200 group text-left"
               >
                 <div className="w-9 h-9 rounded-xl bg-red-500/10 flex items-center justify-center border border-red-500/20 group-hover:border-red-500/30 transition-colors">

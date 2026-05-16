@@ -18,6 +18,7 @@ class ApplicationController extends Controller
             'company' => 'required|string|max:255',
             'role' => 'required|string|max:255',
             'status' => 'nullable|in:Applied,Interviewing,Accepted,Rejected',
+            'source' => 'nullable|string|max:50',
             'applied_at' => 'required|date',
             'logo_url' => 'nullable|string|url|max:2048',
         ]);
@@ -47,6 +48,7 @@ class ApplicationController extends Controller
             'company' => 'sometimes|string|max:255',
             'role' => 'sometimes|string|max:255',
             'status' => 'sometimes|in:Applied,Interviewing,Accepted,Rejected',
+            'source' => 'sometimes|string|max:50',
             'applied_at' => 'sometimes|date',
             'logo_url' => 'nullable|string|url|max:2048',
         ]);

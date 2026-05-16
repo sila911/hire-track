@@ -8,6 +8,7 @@ function todayISODate() {
 }
 
 const STATUSES = ['Applied', 'Interviewing', 'Accepted', 'Rejected'];
+const SOURCES = ['LinkedIn', 'Nham24', 'Company Website', 'Referral', 'Other'];
 
 export default function ApplicationModal({ open, application, onClose, onSaved }) {
   const isEdit = Boolean(application?.id);
@@ -15,6 +16,7 @@ export default function ApplicationModal({ open, application, onClose, onSaved }
   const [role, setRole] = useState('');
   const [appliedAt, setAppliedAt] = useState(todayISODate());
   const [status, setStatus] = useState('Applied');
+  const [source, setSource] = useState('Other');
   const [logoUrl, setLogoUrl] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [fieldErrors, setFieldErrors] = useState({});
@@ -31,12 +33,14 @@ export default function ApplicationModal({ open, application, onClose, onSaved }
         const ad = application.applied_at;
         setAppliedAt(typeof ad === 'string' ? ad.slice(0, 10) : todayISODate());
         setStatus(application.status ?? 'Applied');
+        setSource(application.source ?? 'Other');
         setLogoUrl(application.logo_url ?? '');
       } else {
         setCompany('');
         setRole('');
         setAppliedAt(todayISODate());
         setStatus('Applied');
+        setSource('Other');
         setLogoUrl('');
       }
     });
@@ -80,7 +84,7 @@ export default function ApplicationModal({ open, application, onClose, onSaved }
     setFieldErrors({});
     setBanner(null);
     try {
-      const payload = { company: company.trim(), role: role.trim(), applied_at: appliedAt, status, logo_url: logoUrl };
+      const payload = { company: company.trim(), role: role.trim(), applied_at: appliedAt, status, source, logo_url: logoUrl };
       const res = isEdit
         ? await api.put(`/applications/${application.id}`, payload)
         : await api.post('/applications', payload);
@@ -244,6 +248,27 @@ export default function ApplicationModal({ open, application, onClose, onSaved }
                 </select>
                 {fieldErrors.status && (
                   <p className="mt-1.5 text-xs font-bold text-red-400">{fieldErrors.status}</p>
+                )}
+              </div>
+
+              <div>
+                <label htmlFor="app-source" className="mb-1.5 block text-xs font-black uppercase tracking-wider text-black dark:text-white">
+                  Source
+                </label>
+                <select
+                  id="app-source"
+                  value={source}
+                  onChange={(e) => setSource(e.target.value)}
+                  className="w-full rounded-xl border border-slate-200 dark:border-white/10 bg-white/40 dark:bg-black/40 px-4 py-3 text-black dark:text-white outline-none ring-slate-200 dark:ring-white/20 focus:ring-2 transition-all cursor-pointer"
+                >
+                  {SOURCES.map((s) => (
+                    <option key={s} value={s} className="bg-white dark:bg-slate-900 text-black dark:text-white">
+                      {s}
+                    </option>
+                  ))}
+                </select>
+                {fieldErrors.source && (
+                  <p className="mt-1.5 text-xs font-bold text-red-400">{fieldErrors.source}</p>
                 )}
               </div>
 

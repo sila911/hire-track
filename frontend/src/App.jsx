@@ -8,6 +8,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import AppLayout from './components/AppLayout';
 import Profile from './pages/Profile';
 import Settings from './pages/Settings';
+import Analysis from './pages/Analysis';
 import Login from './pages/Auth/Login';
 import Register from './pages/Auth/Register';
 import { useDialog } from './dialog-context';
@@ -185,7 +186,7 @@ function AppShell() {
             setModal={setModal}
             handleDelete={handleDelete}
           />} />
-          <Route path="/analysis" element={<div className="p-8 text-center"><h2 className="text-2xl font-bold">Analysis Coming Soon</h2></div>} />
+          <Route path="/analysis" element={<Analysis />} />
           <Route path="/applications" element={<div className="p-8 text-center"><h2 className="text-2xl font-bold">Applications List Coming Soon</h2></div>} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/settings" element={<Settings />} />

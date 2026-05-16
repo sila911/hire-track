@@ -11,11 +11,13 @@ import {
   Zap
 } from 'lucide-react';
 import { useAuth } from '../auth-context';
+import { useDialog } from '../dialog-context';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function Sidebar() {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const { user, logout } = useAuth();
+  const { confirm } = useDialog();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -47,9 +49,19 @@ export default function Sidebar() {
     }
   ];
 
-  const handleLogout = () => {
-    logout();
-    navigate('/login');
+  const handleLogout = async () => {
+    const ok = await confirm({
+      title: 'Confirm Logout',
+      message: 'Are you sure you want to sign out of your account?',
+      confirmLabel: 'Logout',
+      cancelLabel: 'Cancel',
+      variant: 'danger',
+    });
+
+    if (ok) {
+      logout();
+      navigate('/login');
+    }
   };
 
   return (

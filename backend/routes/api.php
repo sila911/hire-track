@@ -3,6 +3,7 @@
 use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\ApplicationStatsController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\AnalyticsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,5 +18,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/user/password', [AuthController::class, 'updatePassword']);
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('applications/stats', ApplicationStatsController::class);
+    Route::get('analytics/sources', [AnalyticsController::class, 'sources']);
+    Route::get('analytics/velocity', [AnalyticsController::class, 'velocity']);
+    Route::get('analytics/consistency', [AnalyticsController::class, 'consistency']);
     Route::apiResource('applications', ApplicationController::class);
 });
