@@ -38,8 +38,8 @@ export default function ApplicationCard({ application, onStatusChange, onEdit, o
               </div>
             )}
             <div>
-              <h3 className="text-lg font-black tracking-tight text-black dark:text-white leading-tight transition-colors duration-300">{application.company}</h3>
-              <p className="text-black/70 dark:text-white/70 font-black text-xs mt-1 uppercase tracking-wider transition-colors duration-300">{application.role}</p>
+              <h3 className="text-sm md:text-base font-bold tracking-tight text-black dark:text-white leading-tight transition-colors duration-300">{application.company}</h3>
+              <p className="text-slate-500 dark:text-white/60 font-bold text-[11px] md:text-xs mt-0.5 uppercase tracking-wider transition-colors duration-300">{application.role}</p>
             </div>
           </div>
 
@@ -48,9 +48,9 @@ export default function ApplicationCard({ application, onStatusChange, onEdit, o
             <button
               type="button"
               onClick={() => setShowMenu(!showMenu)}
-              className="p-2 text-slate-400 dark:text-white/40 hover:text-black dark:hover:text-white transition-colors duration-300"
+              className="p-1.5 md:p-2 text-slate-400 dark:text-white/40 hover:text-black dark:hover:text-white transition-colors duration-300"
             >
-              <FaEllipsisV />
+              <FaEllipsisV size={14} className="md:w-4 md:h-4" />
             </button>
             
             <AnimatePresence>
@@ -79,9 +79,9 @@ export default function ApplicationCard({ application, onStatusChange, onEdit, o
           </div>
         </div>
 
-        <div className="flex flex-col gap-4 mt-6">
-          <div className="flex items-center gap-2 text-[10px] font-bold text-black/60 dark:text-white/60 uppercase tracking-widest transition-colors duration-300">
-            <FaClock className="text-xs" />
+        <div className="flex flex-col gap-3 md:gap-4 mt-4 md:mt-6">
+          <div className="flex items-center gap-2 text-[10px] font-bold text-slate-500 dark:text-white/40 uppercase tracking-widest transition-colors duration-300">
+            <FaClock className="text-[10px]" />
             <span>Applied {new Date(application.applied_at).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}</span>
           </div>
 
@@ -89,7 +89,7 @@ export default function ApplicationCard({ application, onStatusChange, onEdit, o
             <select
               value={application.status}
               onChange={(e) => onStatusChange(application.id, e.target.value)}
-              className="appearance-none w-full bg-black/5 dark:bg-white/5 text-black dark:text-white text-[10px] font-black uppercase tracking-[0.2em] py-3 px-5 rounded-2xl border border-slate-200 dark:border-white/10 cursor-pointer outline-none focus:border-slate-300 dark:focus:border-white/20 transition-all hover:bg-black/10 dark:hover:bg-white/[0.08]"
+              className="appearance-none w-full bg-black/5 dark:bg-white/5 text-black dark:text-white text-[11px] md:text-xs font-bold uppercase tracking-wider py-1.5 md:py-3 px-3 md:px-5 rounded-xl md:rounded-2xl border border-slate-200 dark:border-white/10 cursor-pointer outline-none focus:border-slate-300 dark:focus:border-white/20 transition-all hover:bg-black/10 dark:hover:bg-white/[0.08]"
             >
               <option value="Applied">Applied</option>
               <option value="Interviewing">Interviewing</option>

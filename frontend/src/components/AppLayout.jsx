@@ -40,7 +40,7 @@ export default function AppLayout({
               </button>
             </div>
 
-            <div className="flex flex-col sm:flex-row gap-3 w-full max-w-2xl flex-1 justify-center md:px-8">
+            <div className="hidden md:flex flex-col sm:flex-row gap-3 w-full max-w-2xl flex-1 justify-center md:px-8">
               <div className="relative flex-1">
                 <input
                   type="text"
