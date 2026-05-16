@@ -134,11 +134,19 @@ function AppShell() {
   };
 
   const handleSaved = (saved) => {
+    const exists = applications.some((a) => a.id === saved.id);
+    
     setApplications((prev) => {
-      const exists = prev.some((a) => a.id === saved.id);
       if (exists) return prev.map((a) => (a.id === saved.id ? saved : a));
       return [saved, ...prev];
     });
+
+    addNotification({
+      type: 'success',
+      title: exists ? 'Application Updated' : 'Application Created',
+      description: `${saved.company} application has been ${exists ? 'updated' : 'added'} successfully.`,
+    });
+
     void refreshStats();
   };
 
