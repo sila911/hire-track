@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { NavLink, useNavigate, useLocation } from 'react-router-dom';
 import { 
   LayoutDashboard, 
@@ -8,7 +8,9 @@ import {
   LogOut, 
   ChevronLeft, 
   ChevronRight,
-  Zap
+  Zap,
+  Sun,
+  Moon
 } from 'lucide-react';
 import { useAuth } from '../auth-context';
 import { useDialog } from '../dialog-context';
@@ -20,6 +22,16 @@ export default function Sidebar() {
   const { confirm } = useDialog();
   const navigate = useNavigate();
   const location = useLocation();
+  const [theme, setTheme] = useState(localStorage.getItem('theme') || 'dark');
+
+  useEffect(() => {
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+    localStorage.setItem('theme', theme);
+  }, [theme]);
 
   if (!user) return null;
 
@@ -48,6 +60,10 @@ export default function Sidebar() {
       ]
     }
   ];
+
+  const toggleTheme = () => {
+    setTheme(theme === 'dark' ? 'light' : 'dark');
+  };
 
   const handleLogout = async () => {
     const ok = await confirm({
@@ -140,6 +156,26 @@ export default function Sidebar() {
                   )}
                 </NavLink>
               ))}
+              {group.group === 'ACCOUNT & TOOLS' && (
+                <button
+                  onClick={toggleTheme}
+                  className={`
+                    flex items-center gap-4 px-4 py-3.5 w-full rounded-2xl transition-all duration-200 group relative
+                    text-slate-500 hover:bg-slate-200/30 dark:hover:bg-white/5 hover:text-black dark:hover:text-white hover:scale-[1.02]
+                    ${isCollapsed ? 'justify-center px-0' : ''}
+                  `}
+                >
+                  {theme === 'dark' ? <Sun size={20} className="transition-transform duration-200 group-hover:scale-110 shrink-0" /> : <Moon size={20} className="transition-transform duration-200 group-hover:scale-110 shrink-0" />}
+                  {!isCollapsed && (
+                    <span className="text-sm tracking-tight">Theme</span>
+                  )}
+                  {!isCollapsed && (
+                    <div className="ml-auto p-1.5 rounded-lg bg-black/5 dark:bg-white/10 text-black dark:text-amber-400 border border-black/5 dark:border-white/10 shadow-sm">
+                      {theme === 'dark' ? <Sun size={12} fill="currentColor" /> : <Moon size={12} fill="currentColor" />}
+                    </div>
+                  )}
+                </button>
+              )}
             </div>
           </div>
         ))}

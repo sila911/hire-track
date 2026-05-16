@@ -6,12 +6,13 @@ This project is a decoupled application featuring a **Laravel 12** backend API a
 
 ## ✨ Features
 
-- **Personal Dashboard:** A centralized view of all your job applications with real-time search and sorting.
-- **Visual Analytics:** Quick stats and metrics to help you understand your application funnel at a glance.
+- **Personal Dashboard & Kanban Board:** A centralized view of all your job applications with real-time search, sorting, and a drag-and-drop Kanban board for visual status management.
+- **Advanced Analytics:** Quick stats, application velocity metrics, and source tracking (e.g., LinkedIn, Indeed) to help you understand your application funnel.
+- **Profile Management:** User profile settings with avatar support.
 - **Status Management:** Seamlessly move applications through stages: *Applied*, *Interviewing*, *Accepted*, or *Rejected*.
 - **Secure Authentication:** User accounts and session management powered by **Laravel Sanctum**.
 - **Modern UI/UX:** A responsive, glassmorphic interface built with **Tailwind CSS**, featuring smooth transitions and interactive feedback.
-- **Company Logos:** Support for tracking company logos via external URLs to keep your dashboard visually organized.
+- **Rich Application Data:** Support for tracking company logos via external URLs and tracking application sources.
 
 ## 🛠️ Tech Stack
 
@@ -27,6 +28,23 @@ This project is a decoupled application featuring a **Laravel 12** backend API a
 - **Styling:** Tailwind CSS
 - **HTTP Client:** Axios
 - **Icons:** Custom SVG & Lucide-inspired icons
+
+## 📂 Project Structure
+
+```text
+HireTrack/
+├── backend/               # Laravel 12 API
+│   ├── app/               # Application logic (Controllers, Models)
+│   ├── database/          # Migrations, Factories, Seeders
+│   ├── routes/            # API routing (api.php)
+│   └── tests/             # PHPUnit tests
+└── frontend/              # React 19 SPA
+    ├── public/            # Static assets
+    └── src/
+        ├── components/    # Reusable UI components (Kanban, Analytics, etc.)
+        ├── pages/         # Route views (Dashboard, Analysis, Profile, Auth)
+        └── utils/         # Helper functions
+```
 
 ## 🚀 Getting Started
 

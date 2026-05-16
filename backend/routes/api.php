@@ -18,6 +18,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/user/password', [AuthController::class, 'updatePassword']);
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('applications/stats', ApplicationStatsController::class);
+    Route::get('analytics/summary', [AnalyticsController::class, 'summary']);
     Route::get('analytics/sources', [AnalyticsController::class, 'sources']);
     Route::get('analytics/velocity', [AnalyticsController::class, 'velocity']);
     Route::get('analytics/consistency', [AnalyticsController::class, 'consistency']);

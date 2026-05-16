@@ -26,6 +26,21 @@ class AnalyticsController extends Controller
         return response()->json($sources);
     }
 
+    public function summary(Request $request)
+    {
+        $counts = $request->user()->applications()
+            ->select('status', DB::raw('count(*) as count'))
+            ->groupBy('status')
+            ->pluck('count', 'status');
+
+        return response()->json([
+            'total_applied' => (int) ($counts['Applied'] ?? 0),
+            'total_interviewing' => (int) ($counts['Interviewing'] ?? 0),
+            'total_accepted' => (int) ($counts['Accepted'] ?? 0),
+            'total_rejected' => (int) ($counts['Rejected'] ?? 0),
+        ]);
+    }
+
     public function velocity(Request $request)
     {
         $apps = $request->user()->applications()

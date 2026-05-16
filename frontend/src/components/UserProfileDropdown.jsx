@@ -3,23 +3,13 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../auth-context';
 import { useDialog } from '../dialog-context';
-import { FaUser, FaCog, FaSignOutAlt, FaSun, FaMoon, FaPalette } from 'react-icons/fa';
+import { FaUser, FaCog, FaSignOutAlt } from 'react-icons/fa';
 
 export default function UserProfileDropdown() {
   const { user, logout } = useAuth();
   const { confirm } = useDialog();
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
-  const [theme, setTheme] = useState(localStorage.getItem('theme') || 'dark');
-
-  useEffect(() => {
-    if (theme === 'dark') {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-    localStorage.setItem('theme', theme);
-  }, [theme]);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -41,10 +31,6 @@ export default function UserProfileDropdown() {
         .toUpperCase()
         .slice(0, 2)
     : '??';
-
-  const toggleTheme = () => {
-    setTheme(theme === 'dark' ? 'light' : 'dark');
-  };
 
   const handleLogout = async () => {
     setIsOpen(false);
@@ -130,24 +116,6 @@ export default function UserProfileDropdown() {
                 </div>
                 <span>Settings</span>
               </Link>
-
-              {/* Theme Switcher Row */}
-              <div className="flex items-center justify-between px-5 py-3.5">
-                <div className="flex items-center gap-4 text-black dark:text-white">
-                  <div className="w-9 h-9 rounded-xl bg-black/5 dark:bg-white/5 flex items-center justify-center border border-slate-200 dark:border-white/10">
-                    <FaPalette className="text-xs" />
-                  </div>
-                  <span className="text-sm font-bold">Theme</span>
-                </div>
-                
-                <button
-                  onClick={toggleTheme}
-                  className="p-2 rounded-xl bg-slate-200 dark:bg-slate-800 text-black dark:text-amber-400 hover:scale-105 transition-all shadow-sm"
-                  aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
-                >
-                  {theme === 'dark' ? <FaSun className="text-sm" /> : <FaMoon className="text-sm" />}
-                </button>
-              </div>
 
               <div className="my-3 mx-6 h-px bg-black/5 dark:bg-white/10"></div>
 

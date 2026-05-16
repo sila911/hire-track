@@ -1,6 +1,7 @@
 import AnalyticsSources from '../components/Analysis/AnalyticsSources';
 import AnalyticsVelocity from '../components/Analysis/AnalyticsVelocity';
 import AnalyticsConsistency from '../components/Analysis/AnalyticsConsistency';
+import AnalyticsSummaryCards from '../components/Analysis/AnalyticsSummaryCards';
 
 export default function Analysis() {
   return (
@@ -13,6 +14,8 @@ export default function Analysis() {
           Insights into your job search performance and lead sources.
         </p>
       </header>
+
+      <AnalyticsSummaryCards />
 
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
         <div className="xl:col-span-2">
