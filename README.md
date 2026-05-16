@@ -52,8 +52,9 @@ HireTrack/
 
 - PHP 8.2+
 - Composer
-- Node.js 20+ & NPM
-- A database (SQLite is supported out-of-the-box)
+- **Secure Authentication:** User accounts and session management powered by **Laravel Sanctum** with support for **Google One-Tap / OAuth**.
+
+...
 
 ### Backend Setup
 
@@ -70,16 +71,22 @@ HireTrack/
    cp .env.example .env
    php artisan key:generate
    ```
-4. **Database Configuration:**
+4. **Google Auth Configuration:**
+   Add your Google credentials to `.env`:
+   ```env
+   GOOGLE_CLIENT_ID=your_id.apps.googleusercontent.com
+   GOOGLE_CLIENT_SECRET=your_secret
+   ```
+5. **Database Configuration:**
    Ensure your `.env` is configured for your database. For a quick start with SQLite:
    ```env
    DB_CONNECTION=sqlite
    ```
-5. **Run Migrations:**
+6. **Run Migrations:**
    ```bash
    php artisan migrate
    ```
-6. **Start the API server:**
+7. **Start the API server:**
    ```bash
    php artisan serve
    ```
@@ -99,11 +106,12 @@ HireTrack/
    ```env
    VITE_API_BASE_URL=http://localhost:8000/api
    ```
-4. **Start the development server:**
+4. **Google Auth setup:**
+   Open `src/main.jsx` and replace the `clientId` with your Google Client ID.
+5. **Start the development server:**
    ```bash
    npm run dev
    ```
-
 ## 📄 License
 
 HireTrack is open-sourced software licensed under the [MIT license](LICENSE).

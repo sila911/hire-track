@@ -4,12 +4,14 @@ import { motion } from 'framer-motion';
 const STATUSES = ['Applied', 'Interviewing', 'Accepted', 'Rejected'];
 
 export default function Dashboard({
-  applications,
+  applications = [],
   loading,
   onStatusChange,
   onEdit,
   onDelete,
 }) {
+  const safeApps = Array.isArray(applications) ? applications : [];
+
   if (loading) {
     return (
       <div className="flex justify-center items-center h-64">
@@ -31,12 +33,12 @@ export default function Dashboard({
           <div className="mb-8 flex items-center justify-between px-2">
             <h2 className="text-xl font-black tracking-tight text-black dark:text-white transition-colors duration-300">{status}</h2>
             <div className="bg-black/5 dark:bg-white/10 text-black dark:text-white text-xs font-black px-3 py-1 rounded-full border border-slate-200/50 dark:border-white/10 backdrop-blur-md transition-colors duration-300">
-              {applications.filter((app) => app.status === status).length}
+              {safeApps.filter((app) => app.status === status).length}
             </div>
           </div>
 
           <div className="flex-1 space-y-4 overflow-y-auto pb-4 pr-1 custom-scrollbar-slim">
-            {applications
+            {safeApps
               .filter((app) => app.status === status)
               .map((app) => (
                 <ApplicationCard
@@ -47,7 +49,7 @@ export default function Dashboard({
                   onDelete={onDelete}
                 />
               ))}
-            {applications.filter((app) => app.status === status).length === 0 && (
+            {safeApps.filter((app) => app.status === status).length === 0 && (
               <div className="flex items-center justify-center h-32 rounded-3xl border border-dashed border-slate-300 dark:border-white/10 bg-black/[0.01] dark:bg-white/[0.01]">
                 <p className="text-black/50 dark:text-white/40 text-xs font-black tracking-widest uppercase transition-colors duration-300">Empty</p>
               </div>

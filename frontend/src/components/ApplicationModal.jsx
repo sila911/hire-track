@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
+import { FaXmark } from 'react-icons/fa6';
 import api from '../axios';
 import { firstErrorPerField } from '../utils/laravelErrors';
 
@@ -142,9 +143,9 @@ export default function ApplicationModal({ open, application, onClose, onSaved }
               <button
                 type="button"
                 onClick={onClose}
-                className="rounded-xl border border-slate-200 dark:border-white/15 bg-black/5 dark:bg-white/10 px-3 py-2 text-sm font-black text-black dark:text-white transition hover:bg-black/10 dark:hover:bg-white/20"
+                className="absolute top-6 right-6 p-2 rounded-full text-slate-400 hover:text-black dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/10 transition-all duration-200"
               >
-                Close
+                <FaXmark size={20} />
               </button>
             </div>
 
@@ -272,7 +273,7 @@ export default function ApplicationModal({ open, application, onClose, onSaved }
                 )}
               </div>
 
-              <div className="flex flex-col-reverse gap-3 pt-4 sm:flex-row sm:justify-end">
+              <div className="flex flex-row items-center justify-end gap-3 pt-4">
                 <button
                   type="button"
                   onClick={onClose}

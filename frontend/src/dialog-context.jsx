@@ -86,11 +86,11 @@ function SystemDialogLayer({
               >
                 {confirmPayload.message}
               </div>
-              <div className="mt-8 flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
+              <div className="mt-8 flex flex-row items-center justify-end gap-3 w-full">
                 <button
                   type="button"
                   onClick={() => onConfirmResult(false)}
-                  className="rounded-xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-bold text-white/90 transition hover:bg-white/10"
+                  className="rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-xs font-bold uppercase tracking-wider text-white/70 transition hover:bg-white/10 hover:text-white"
                 >
                   {confirmPayload.cancelLabel}
                 </button>
@@ -99,8 +99,8 @@ function SystemDialogLayer({
                   onClick={() => onConfirmResult(true)}
                   className={
                     confirmPayload.variant === 'danger'
-                      ? 'rounded-xl border border-red-400/30 bg-red-500/20 px-5 py-3 text-sm font-bold text-red-100 transition hover:bg-red-500/30'
-                      : 'rounded-xl border border-white/25 bg-white/20 px-5 py-3 text-sm font-bold text-white transition hover:bg-white/30'
+                      ? 'rounded-xl border border-red-500/20 bg-red-500/10 px-4 py-2 text-xs font-bold uppercase tracking-wider text-red-500 transition hover:bg-red-500/20'
+                      : 'rounded-xl border border-white/20 bg-white/10 px-4 py-2 text-xs font-bold uppercase tracking-wider text-white transition hover:bg-white/20'
                   }
                 >
                   {confirmPayload.confirmLabel}

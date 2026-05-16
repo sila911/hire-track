@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { FaEnvelope, FaLock } from 'react-icons/fa';
+import { GoogleLogin } from '@react-oauth/google';
 import api from '../../axios';
 import FormErrorAlert from '../../components/ui/FormErrorAlert';
 import { parseLoginApiError } from '../../utils/laravelErrors';
@@ -20,6 +21,44 @@ export default function Login() {
 
   const emailError = fieldErrors.email || '';
   const passwordError = fieldErrors.password || '';
+
+  const handleGoogleSuccess = async (credentialResponse) => {
+    setPending(true);
+    setFieldErrors({});
+    setBannerMessages([]);
+    try {
+      const response = await api.post('/auth/google', {
+        token: credentialResponse.credential,
+      });
+
+      // Data Validation Guard: Verify response structure before proceeding
+      if (response.data && response.data.token && response.data.user) {
+        const { token, user } = response.data;
+        
+        login(token, user);
+        addNotification({
+          type: 'success',
+          title: 'Successfully signed in',
+          description: `Welcome, ${user?.name || 'User'}!`,
+        });
+        navigate('/dashboard', { replace: true });
+      } else {
+        console.log('Backend response type:', typeof response.data);
+        console.log('Backend response keys:', response.data ? Object.keys(response.data) : 'null');
+        console.log('Backend response data:', response.data);
+        
+        const detail = response.data?.error || "Missing user or token in success response.";
+        throw new Error(`Server returned status ${response.status} but invalid data: ${detail}`);
+      }
+    } catch (err) {
+      console.error('Google Auth failure:', err);
+      // Capture backend error or fallback to generic message
+      const errorMessage = err.response?.data?.error || err.message || "Google authentication failed. Please try again.";
+      setBannerMessages([errorMessage]);
+    } finally {
+      setPending(false);
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -122,6 +161,29 @@ export default function Login() {
               {pending ? 'Signing in…' : 'Sign in'}
             </button>
           </form>
+
+          <div className="mt-6">
+            <div className="relative mb-6">
+              <div className="absolute inset-0 flex items-center" aria-hidden="true">
+                <div className="w-full border-t border-slate-200 dark:border-white/10"></div>
+              </div>
+              <div className="relative flex justify-center text-sm font-bold uppercase tracking-widest">
+                <span className="bg-white dark:bg-[#020617] px-4 text-slate-500 dark:text-white/40">Or continue with</span>
+              </div>
+            </div>
+
+            <div className="flex justify-center">
+              <GoogleLogin
+                onSuccess={handleGoogleSuccess}
+                onError={() => {
+                  console.log('Google Auth Failed');
+                  setBannerMessages(['Google authentication was cancelled or failed.']);
+                }}
+                theme="filled_blue"
+                shape="circle"
+              />
+            </div>
+          </div>
 
           <p className="mt-8 text-center text-sm font-bold text-black dark:text-white transition-colors">
             Don’t have an account?{' '}

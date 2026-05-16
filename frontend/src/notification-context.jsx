@@ -34,7 +34,8 @@ export function NotificationProvider({ children }) {
     <NotificationContext.Provider value={value}>
       {children}
       <div className="fixed z-[200] pointer-events-none flex flex-col gap-3 p-4 
-        top-4 right-0 sm:right-4 w-full max-w-[90vw] sm:max-w-md items-end">
+        top-2 left-1/2 -translate-x-1/2 w-full max-w-[90vw] items-center
+        sm:top-4 sm:right-4 sm:left-auto sm:translate-x-0 sm:max-w-md sm:items-end">
         <AnimatePresence mode="popLayout">
           {notifications.map((notification) => (
             <Toast

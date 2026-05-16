@@ -134,11 +134,13 @@ function AppShell() {
   };
 
   const handleSaved = (saved) => {
-    const exists = applications.some((a) => a.id === saved.id);
+    const appsList = Array.isArray(applications) ? applications : [];
+    const exists = appsList.some((a) => a.id === saved.id);
     
     setApplications((prev) => {
-      if (exists) return prev.map((a) => (a.id === saved.id ? saved : a));
-      return [saved, ...prev];
+      const prevList = Array.isArray(prev) ? prev : [];
+      if (exists) return prevList.map((a) => (a.id === saved.id ? saved : a));
+      return [saved, ...prevList];
     });
 
     addNotification({
@@ -150,7 +152,7 @@ function AppShell() {
     void refreshStats();
   };
 
-  const filteredAndSortedApplications = applications
+  const filteredAndSortedApplications = (Array.isArray(applications) ? applications : [])
     .filter((app) => {
       if (!searchQuery) return true;
       const lowerQuery = searchQuery.toLowerCase();

@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Http;
+use Laravel\Socialite\Facades\Socialite;
+use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
@@ -89,5 +92,53 @@ class AuthController extends Controller
             'message' => 'Profile updated successfully.',
             'user' => $request->user(),
         ]);
+    }
+    public function handleGoogleLogin(Request $request)
+    {
+        $request->validate(['token' => 'required']);
+
+        try {
+            // Fetch user info using Google's token verification endpoint
+            // This is more reliable for ID Tokens (JWT) than Socialite's userFromToken
+            $response = \Http::get("https://oauth2.googleapis.com/tokeninfo?id_token={$request->token}");
+
+            if (!$response->successful()) {
+                \Log::error('Google Token Validation Failed: ' . $response->body());
+                return response()->json(['error' => 'Invalid or expired Google token'], 401);
+            }
+
+            $googleData = $response->json();
+
+            if (!isset($googleData['email'])) {
+                \Log::error('Google response missing email: ' . json_encode($googleData));
+                return response()->json(['error' => 'Could not retrieve email from Google'], 401);
+            }
+
+            // Find existing user or generate a new profile entry automatically
+            $user = User::firstOrCreate(
+                ['email' => $googleData['email']],
+                [
+                    'name' => $googleData['name'] ?? explode('@', $googleData['email'])[0],
+                    'password' => Hash::make(Str::random(24)), // Generate secure placeholder string
+                ]
+            );
+
+            // Update profile image if available and not already set
+            if (!$user->profile_image_url && isset($googleData['picture'])) {
+                $user->update(['profile_image_url' => $googleData['picture']]);
+            }
+
+            // Issue a standard Laravel Sanctum access token
+            $authToken = $user->createToken('auth_token')->plainTextToken;
+
+            return response()->json([
+                'token' => $authToken,
+                'user' => $user
+            ], 200);
+
+        } catch (\Exception $e) {
+            \Log::error('Google Auth failure: ' . $e->getMessage());
+            return response()->json(['error' => 'Authentication exception: ' . $e->getMessage()], 500);
+        }
     }
 }
