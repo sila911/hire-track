@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import Dashboard from './components/Dashboard';
 import ApplicationModal from './components/ApplicationModal';
 import QuickStatsSection from './components/QuickStatsSection';
@@ -30,7 +30,7 @@ function DashboardPage({ applications, stats, loading, handleStatusChange, setMo
 }
 
 function AppShell() {
-  const { confirm, alert: alertDialog } = useDialog();
+  const { confirm } = useDialog();
   const { addNotification } = useNotification();
   const [applications, setApplications] = useState([]);
   const [stats, setStats] = useState(null);
@@ -185,6 +185,8 @@ function AppShell() {
             setModal={setModal}
             handleDelete={handleDelete}
           />} />
+          <Route path="/analysis" element={<div className="p-8 text-center"><h2 className="text-2xl font-bold">Analysis Coming Soon</h2></div>} />
+          <Route path="/applications" element={<div className="p-8 text-center"><h2 className="text-2xl font-bold">Applications List Coming Soon</h2></div>} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/settings" element={<Settings />} />
           <Route path="/" element={<Navigate to="/dashboard" replace />} />
