@@ -25,7 +25,7 @@ export function NotificationProvider({ children }) {
 
     setTimeout(() => {
       removeNotification(id);
-    }, 5000);
+    }, 8000);
   }, [removeNotification]);
 
   const value = useMemo(() => ({ addNotification }), [addNotification]);
@@ -34,8 +34,7 @@ export function NotificationProvider({ children }) {
     <NotificationContext.Provider value={value}>
       {children}
       <div className="fixed z-[200] pointer-events-none flex flex-col gap-3 p-4 
-        top-4 left-1/2 -translate-x-1/2 w-full max-w-[90vw] sm:max-w-md
-        lg:top-auto lg:left-auto lg:bottom-4 lg:right-4 lg:translate-x-0 lg:items-end">
+        top-4 right-0 sm:right-4 w-full max-w-[90vw] sm:max-w-md items-end">
         <AnimatePresence mode="popLayout">
           {notifications.map((notification) => (
             <Toast
