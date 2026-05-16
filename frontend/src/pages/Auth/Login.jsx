@@ -45,18 +45,18 @@ export default function Login() {
   };
 
   return (
-    <div className="flex min-h-dvh items-center justify-center bg-[#020617] px-4 py-10 font-sans text-white antialiased">
+    <div className="flex min-h-dvh items-center justify-center bg-slate-50 dark:bg-[#020617] px-4 py-10 font-sans transition-colors duration-300 antialiased">
       <motion.div
         initial={{ opacity: 0, y: 14, x: -10 }}
         animate={{ opacity: 1, y: 0, x: 0 }}
         transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
         className="w-full max-w-[420px]"
       >
-        <div className="rounded-3xl border border-white/10 bg-white/[0.03] p-8 shadow-2xl backdrop-blur-xl">
+        <div className="rounded-3xl border border-slate-200 dark:border-white/10 bg-white/80 dark:bg-white/[0.03] p-8 shadow-2xl backdrop-blur-xl transition-all duration-300">
           <div className="mb-8 text-center">
-            <p className="font-black tracking-tighter text-4xl text-white">HireTrack</p>
-            <h1 className="mt-4 font-black text-2xl tracking-tight text-white">Sign in</h1>
-            <p className="mt-2 text-sm font-bold text-white">Welcome back. Enter your credentials to continue.</p>
+            <p className="font-black tracking-tighter text-4xl text-black dark:text-white">HireTrack</p>
+            <h1 className="mt-4 font-black text-2xl tracking-tight text-black dark:text-white">Sign in</h1>
+            <p className="mt-2 text-sm font-bold text-black/60 dark:text-white/60">Welcome back. Enter your credentials to continue.</p>
           </div>
 
           {bannerMessages.length > 0 && (
@@ -67,12 +67,12 @@ export default function Login() {
 
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
-              <label htmlFor="login-email" className="mb-1.5 block text-sm font-bold text-white">
+              <label htmlFor="login-email" className="mb-1.5 block text-sm font-bold text-black dark:text-white">
                 Email
               </label>
               <div className="relative">
                 <FaEnvelope
-                  className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-white"
+                  className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-black/40 dark:text-white/40 transition-colors"
                   aria-hidden
                 />
                 <input
@@ -82,7 +82,7 @@ export default function Login() {
                   autoComplete="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full rounded-xl border border-white/10 bg-white/5 py-3.5 pl-10 pr-4 text-white placeholder-white/20 shadow-inner outline-none focus:border-white/30 transition"
+                  className="w-full rounded-xl border border-slate-200 dark:border-white/10 bg-black/5 dark:bg-white/5 py-3.5 pl-10 pr-4 text-black dark:text-white placeholder-black/20 dark:placeholder-white/20 shadow-inner outline-none transition focus:border-black/30 dark:focus:border-white/30"
                   placeholder="you@company.com"
                   required
                 />
@@ -91,12 +91,12 @@ export default function Login() {
             </div>
 
             <div>
-              <label htmlFor="login-password" className="mb-1.5 block text-sm font-bold text-white">
+              <label htmlFor="login-password" className="mb-1.5 block text-sm font-bold text-black dark:text-white">
                 Password
               </label>
               <div className="relative">
                 <FaLock
-                  className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-white"
+                  className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-black/40 dark:text-white/40 transition-colors"
                   aria-hidden
                 />
                 <input
@@ -106,7 +106,7 @@ export default function Login() {
                   autoComplete="current-password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full rounded-xl border border-white/10 bg-white/5 py-3.5 pl-10 pr-4 text-white placeholder-white/20 shadow-inner outline-none focus:border-white/30 transition"
+                  className="w-full rounded-xl border border-slate-200 dark:border-white/10 bg-black/5 dark:bg-white/5 py-3.5 pl-10 pr-4 text-black dark:text-white placeholder-black/20 dark:placeholder-white/20 shadow-inner outline-none transition focus:border-black/30 dark:focus:border-white/30"
                   placeholder="••••••••"
                   required
                 />
@@ -117,17 +117,17 @@ export default function Login() {
             <button
               type="submit"
               disabled={pending}
-              className="w-full rounded-xl bg-white py-3.5 text-center text-base font-black text-slate-900 shadow-xl transition hover:bg-white/90 focus:outline-none disabled:cursor-not-allowed disabled:opacity-60"
+              className="w-full rounded-xl bg-black dark:bg-white py-3.5 text-center text-base font-black text-white dark:text-slate-900 shadow-xl transition hover:opacity-90 focus:outline-none disabled:cursor-not-allowed disabled:opacity-60"
             >
               {pending ? 'Signing in…' : 'Sign in'}
             </button>
           </form>
 
-          <p className="mt-8 text-center text-sm font-bold text-white">
+          <p className="mt-8 text-center text-sm font-bold text-black dark:text-white transition-colors">
             Don’t have an account?{' '}
             <Link
               to="/register"
-              className="font-black text-white underline underline-offset-4 decoration-white/20 transition hover:decoration-white"
+              className="font-black text-black dark:text-white underline underline-offset-4 decoration-black/20 dark:decoration-white/20 transition hover:decoration-black dark:hover:decoration-white"
             >
               Create an account
             </Link>

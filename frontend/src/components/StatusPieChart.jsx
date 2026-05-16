@@ -29,6 +29,8 @@ const STATUS_BORDERS = {
  * @param {{ byStatus: Record<string, number> | null | undefined }} props
  */
 export default function StatusPieChart({ byStatus }) {
+  const isDark = typeof document !== 'undefined' && document.documentElement.classList.contains('dark');
+
   const { data, total } = useMemo(() => {
     if (!byStatus) {
       return { data: null, total: 0 };
@@ -61,7 +63,7 @@ export default function StatusPieChart({ byStatus }) {
         legend: {
           position: 'bottom',
           labels: {
-            color: 'rgba(248, 250, 252, 0.85)',
+            color: isDark ? 'rgba(248, 250, 252, 0.85)' : 'rgba(0, 0, 0, 0.85)',
             padding: 12,
             font: { size: 11, weight: '600' },
             usePointStyle: true,
@@ -69,10 +71,10 @@ export default function StatusPieChart({ byStatus }) {
           },
         },
         tooltip: {
-          backgroundColor: 'rgba(15, 23, 42, 0.94)',
-          titleColor: '#f8fafc',
-          bodyColor: '#e2e8f0',
-          borderColor: 'rgba(255,255,255,0.12)',
+          backgroundColor: isDark ? 'rgba(15, 23, 42, 0.94)' : 'rgba(255, 255, 255, 0.94)',
+          titleColor: isDark ? '#f8fafc' : '#000000',
+          bodyColor: isDark ? '#e2e8f0' : '#334155',
+          borderColor: isDark ? 'rgba(255,255,255,0.12)' : 'rgba(0, 0, 0, 0.12)',
           borderWidth: 1,
           padding: 10,
           callbacks: {
@@ -86,14 +88,14 @@ export default function StatusPieChart({ byStatus }) {
         },
       },
     }),
-    [total],
+    [total, isDark],
   );
 
   if (!data || total === 0) {
     return (
-      <div className="flex h-[220px] w-full flex-col items-center justify-center rounded-xl border border-dashed border-white/15 bg-white/[0.03] text-center">
-        <p className="text-sm font-semibold text-white/45">No applications yet</p>
-        <p className="mt-1 text-xs text-white/35">Status mix will appear here</p>
+      <div className="flex h-[220px] w-full flex-col items-center justify-center rounded-xl border border-dashed border-slate-300 dark:border-white/15 bg-slate-900/[0.03] dark:bg-white/[0.03] text-center transition-colors duration-300">
+        <p className="text-sm font-semibold text-black/50 dark:text-white/45">No applications yet</p>
+        <p className="mt-1 text-xs text-black/40 dark:text-white/35">Status mix will appear here</p>
       </div>
     );
   }
