@@ -41,18 +41,18 @@ export default function AnalyticsSummaryCards() {
       {cards.map((card) => (
         <div
           key={card.label}
-          className="relative bg-white/70 dark:bg-slate-900/80 border border-slate-200 dark:border-white/10 backdrop-blur-2xl rounded-2xl p-5 shadow-sm overflow-hidden"
+          className="relative bg-white/70 dark:bg-slate-900/80 border border-slate-200 dark:border-white/10 backdrop-blur-2xl rounded-2xl p-6 shadow-sm overflow-hidden flex flex-col items-center text-center"
         >
-          {/* Left accent border */}
-          <div className={`absolute left-0 top-0 bottom-0 w-1.5 ${card.color.replace('border-', 'bg-')}`} />
+          {/* Top accent border */}
+          <div className={`absolute top-0 left-0 right-0 h-1 ${card.color.replace('border-', 'bg-')}`} />
           
           {/* Subtle glow circle */}
           <div className={`absolute -right-4 -top-4 w-16 h-16 rounded-full blur-2xl ${card.glow}`} />
 
-          <p className="text-slate-500 dark:text-slate-400 text-sm font-semibold tracking-wide uppercase">
+          <p className="text-slate-500 dark:text-slate-400 text-xs font-bold tracking-widest uppercase mb-1">
             {card.label}
           </p>
-          <p className="text-slate-950 dark:text-white text-3xl font-black mt-1">
+          <p className="text-slate-950 dark:text-white text-4xl font-black">
             {card.value}
           </p>
         </div>
