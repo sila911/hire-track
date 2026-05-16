@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 import { Menu, Plus } from 'lucide-react';
 import Sidebar from './Sidebar';
@@ -11,13 +11,41 @@ export default function AppLayout({
   onNewApplication 
 }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [visible, setVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = (e) => {
+      const currentScrollY = e.target.scrollTop;
+      
+      if (currentScrollY > lastScrollY && currentScrollY > 60) {
+        setVisible(false); // Scrolling down - hide header
+      } else {
+        setVisible(true);  // Scrolling up - show header
+      }
+      setLastScrollY(currentScrollY);
+    };
+
+    const mainElement = document.getElementById('main-content');
+    if (mainElement) {
+      mainElement.addEventListener('scroll', handleScroll);
+    }
+    return () => {
+      if (mainElement) {
+        mainElement.removeEventListener('scroll', handleScroll);
+      }
+    };
+  }, [lastScrollY]);
 
   return (
     <div className="flex h-screen bg-slate-50 dark:bg-slate-950 transition-colors duration-300 animate-bg-flow overflow-hidden">
       <Sidebar isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />
       
       <div className="flex-1 flex flex-col min-h-screen dark-overlay text-black dark:text-slate-100 font-sans tracking-tight selection:bg-black/10 dark:selection:bg-white/30 transition-colors duration-300 overflow-hidden relative">
-        <header className="z-30 w-full px-4 md:px-8 py-4 backdrop-blur-2xl bg-white/40 dark:bg-[#020617]/40 border-b border-slate-200/50 dark:border-white/5 transition-colors duration-300">
+        <header className={`fixed top-0 left-0 right-0 z-50 px-4 md:px-8 py-4 backdrop-blur-2xl bg-white/40 dark:bg-[#020617]/40 border-b border-slate-200/50 dark:border-white/5 transition-transform duration-300 ease-in-out ${
+          visible ? 'translate-y-0' : '-translate-y-full'
+        }`}>
+          {/* Header content stays the same, just adjusting widths for sidebar if needed */}
           <div className="flex flex-col md:flex-row justify-between items-center gap-4 md:gap-6 relative z-10">
             <div className="flex items-center justify-between w-full md:w-auto">
               <button
@@ -83,7 +111,7 @@ export default function AppLayout({
           </div>
         </header>
 
-        <main className="flex-1 overflow-y-auto p-4 md:p-8 pt-6 custom-scrollbar">
+        <main id="main-content" className="flex-1 overflow-y-auto p-4 md:p-8 pt-24 md:pt-28 custom-scrollbar">
           <div className="max-w-[1600px] mx-auto">
             <Outlet />
           </div>

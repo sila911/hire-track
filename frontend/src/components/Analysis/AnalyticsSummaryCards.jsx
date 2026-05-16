@@ -37,22 +37,22 @@ export default function AnalyticsSummaryCards() {
   ];
 
   return (
-    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+    <div className="flex items-center gap-3 w-full overflow-x-auto md:overflow-visible scrollbar-none snap-x snap-mandatory pb-4 mb-4">
       {cards.map((card) => (
         <div
           key={card.label}
-          className="relative bg-white/70 dark:bg-slate-900/80 border border-slate-200 dark:border-white/10 backdrop-blur-2xl rounded-2xl p-6 shadow-sm overflow-hidden flex flex-col items-center text-center"
+          className="min-w-[140px] md:flex-1 snap-center p-3.5 bg-white/70 dark:bg-slate-900/80 border border-slate-200 dark:border-white/10 backdrop-blur-xl rounded-xl relative overflow-hidden flex flex-col"
         >
           {/* Top accent border */}
           <div className={`absolute top-0 left-0 right-0 h-1 ${card.color.replace('border-', 'bg-')}`} />
           
           {/* Subtle glow circle */}
-          <div className={`absolute -right-4 -top-4 w-16 h-16 rounded-full blur-2xl ${card.glow}`} />
+          <div className={`absolute -right-4 -top-4 w-12 h-12 rounded-full blur-xl ${card.glow}`} />
 
-          <p className="text-slate-500 dark:text-slate-400 text-xs font-bold tracking-widest uppercase mb-1">
+          <p className="text-slate-400 text-[10px] font-bold uppercase tracking-wider mb-1 relative z-10">
             {card.label}
           </p>
-          <p className="text-slate-950 dark:text-white text-4xl font-black">
+          <p className="text-slate-950 dark:text-white text-xl font-black relative z-10">
             {card.value}
           </p>
         </div>

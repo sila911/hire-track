@@ -96,7 +96,7 @@ export default function Sidebar({ isOpen, setIsOpen }) {
       </AnimatePresence>
 
       <aside className={`
-        fixed inset-y-0 left-0 z-50 h-screen transition-transform duration-300 ease-in-out
+        fixed inset-y-0 left-0 z-[60] h-screen transition-transform duration-300 ease-in-out
         md:relative md:translate-x-0
         ${isOpen ? 'translate-x-0' : '-translate-x-full'}
         ${isCollapsed ? 'md:w-20' : 'md:w-64'}
@@ -219,26 +219,26 @@ export default function Sidebar({ isOpen, setIsOpen }) {
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.95 }}
-                className="p-3 md:p-5 mx-4 mb-8 rounded-[1.5rem] md:rounded-[2rem] bg-gradient-to-br from-indigo-500/10 via-purple-500/10 to-transparent border border-indigo-500/20 backdrop-blur-md relative overflow-hidden group"
+                className="p-3.5 mx-4 mb-8 rounded-[1.5rem] md:rounded-[2rem] bg-gradient-to-br from-indigo-500/10 via-purple-500/10 to-transparent border border-indigo-500/20 backdrop-blur-md relative overflow-hidden group"
               >
                 <div className="absolute -right-8 -top-8 w-24 h-24 bg-indigo-500/10 rounded-full blur-2xl group-hover:bg-indigo-500/20 transition-colors"></div>
                 
-                <div className="flex items-center gap-2 md:gap-3 mb-2 md:mb-3 relative z-10">
-                  <div className="p-2 md:p-2.5 rounded-xl bg-indigo-500/20 text-indigo-600 dark:text-indigo-400 shadow-inner">
-                    <Zap size={14} className="md:w-4 md:h-4" fill="currentColor" />
+                <div className="flex items-center gap-3 mb-2.5 relative z-10">
+                  <div className="w-8 h-8 rounded-xl bg-indigo-500/20 text-indigo-600 dark:text-indigo-400 shadow-inner flex items-center justify-center">
+                    <Zap size={14} fill="currentColor" />
                   </div>
                   <div>
-                    <p className="text-[10px] md:text-[11px] font-black text-black dark:text-white uppercase tracking-wider">Free Plan</p>
-                    <p className="text-[9px] md:text-[10px] text-slate-500 font-bold">Standard Features</p>
+                    <p className="text-xs font-bold text-black dark:text-white tracking-wide">Free Plan</p>
+                    <p className="text-[10px] text-slate-500 font-bold opacity-60">Standard</p>
                   </div>
                 </div>
                 
-                <p className="text-[9px] md:text-[10px] text-slate-500 dark:text-slate-400 mb-3 md:mb-4 leading-relaxed font-medium">
+                <p className="text-[11px] text-slate-500 dark:text-slate-400 mb-3.5 leading-relaxed font-medium opacity-80">
                   Unlock power features and unlimited job tracking.
                 </p>
                 
-                <button className="w-full py-1.5 md:py-2.5 px-4 bg-black dark:bg-white text-white dark:text-black rounded-lg md:rounded-xl text-[10px] md:text-[11px] font-black uppercase tracking-widest hover:scale-[0.98] active:scale-95 transition-all shadow-lg shadow-indigo-500/10">
-                  Upgrade to Pro
+                <button className="w-full py-1.5 px-3 bg-black dark:bg-white text-white dark:text-black rounded-lg md:rounded-xl text-[11px] font-bold tracking-wider hover:scale-[0.98] active:scale-95 transition-all shadow-lg shadow-indigo-500/10">
+                  UPGRADE TO PRO
                 </button>
               </motion.div>
             )}
