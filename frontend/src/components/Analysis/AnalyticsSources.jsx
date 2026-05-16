@@ -43,9 +43,9 @@ export default function AnalyticsSources() {
   }
 
   return (
-    <div className="bg-white/90 dark:bg-slate-900/80 border border-slate-200 dark:border-white/10 backdrop-blur-2xl rounded-2xl p-6 shadow-xl">
-      <h3 className="text-xl font-black mb-6 text-slate-800 dark:text-white">Lead Source Performance</h3>
-      <div className="h-[400px] w-full">
+    <div className="bg-white/90 dark:bg-slate-900/80 border border-slate-200 dark:border-white/10 backdrop-blur-2xl rounded-2xl p-4 md:p-6 shadow-xl">
+      <h3 className="text-lg md:text-xl font-black mb-6 text-slate-800 dark:text-white">Lead Source Performance</h3>
+      <div className="h-[300px] md:h-[400px] w-full min-h-[250px]">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart
             data={data}

@@ -37,12 +37,12 @@ export default function AnalyticsConsistency() {
   }
 
   return (
-    <div className="bg-white/70 dark:bg-slate-900/80 border border-slate-200 dark:border-white/10 backdrop-blur-2xl rounded-2xl p-6 shadow-xl h-full">
-      <h3 className="text-xl font-black mb-6 text-slate-800 dark:text-white">Weekly Application Habits</h3>
-      <p className="text-sm text-slate-500 dark:text-slate-400 mb-6 font-bold">
+    <div className="bg-white/70 dark:bg-slate-900/80 border border-slate-200 dark:border-white/10 backdrop-blur-2xl rounded-2xl p-4 md:p-6 shadow-xl h-full">
+      <h3 className="text-lg md:text-xl font-black mb-2 text-slate-800 dark:text-white">Weekly Application Habits</h3>
+      <p className="text-xs md:text-sm text-slate-500 dark:text-slate-400 mb-6 font-bold">
         Consistency is key. Your submission output over the last 12 weeks.
       </p>
-      <div className="h-[250px] w-full">
+      <div className="h-[250px] w-full min-h-[250px]">
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart
             data={data}
