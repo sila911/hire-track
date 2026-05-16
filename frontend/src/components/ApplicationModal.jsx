@@ -8,7 +8,7 @@ function todayISODate() {
 }
 
 const STATUSES = ['Applied', 'Interviewing', 'Accepted', 'Rejected'];
-const SOURCES = ['LinkedIn', 'Nham24', 'Company Website', 'Referral', 'Other'];
+const SOURCES = ['LinkedIn', 'Facebook', 'Telegram', 'Nham24', 'Company Website', 'Referral', 'Other'];
 
 export default function ApplicationModal({ open, application, onClose, onSaved }) {
   const isEdit = Boolean(application?.id);
