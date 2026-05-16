@@ -13,6 +13,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', function () {
         return auth()->user();
     });
+    Route::put('/user/profile', [AuthController::class, 'updateProfile']);
+    Route::post('/user/password', [AuthController::class, 'updatePassword']);
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('applications/stats', ApplicationStatsController::class);
     Route::apiResource('applications', ApplicationController::class);

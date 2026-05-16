@@ -33,13 +33,13 @@ export default function ApplicationCard({ application, onStatusChange, onEdit, o
                 <img src={application.logo_url} alt="" className="w-full h-full object-contain" />
               </div>
             ) : (
-              <div className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center shrink-0">
-                <span className="text-xl font-black text-white/20">{(application.company || '?')[0]}</span>
+              <div className="w-12 h-12 rounded-2xl bg-white/10 border border-white/20 flex items-center justify-center shrink-0">
+                <span className="text-xl font-black text-white">{(application.company || '?')[0]}</span>
               </div>
             )}
             <div>
               <h3 className="text-lg font-black tracking-tight text-white leading-tight">{application.company}</h3>
-              <p className="text-white/40 font-bold text-xs mt-1 uppercase tracking-wider">{application.role}</p>
+              <p className="text-white font-black text-xs mt-1 uppercase tracking-wider">{application.role}</p>
             </div>
           </div>
 
@@ -47,7 +47,7 @@ export default function ApplicationCard({ application, onStatusChange, onEdit, o
             <button
               type="button"
               onClick={() => setShowMenu(!showMenu)}
-              className="p-2 text-white/20 hover:text-white/60 transition-colors"
+              className="p-2 text-white/40 hover:text-white transition-colors"
             >
               <FaEllipsisV />
             </button>
@@ -62,7 +62,7 @@ export default function ApplicationCard({ application, onStatusChange, onEdit, o
                 >
                   <button
                     onClick={() => { onEdit(application); setShowMenu(false); }}
-                    className="w-full flex items-center gap-3 px-4 py-3 text-xs font-bold text-white/60 hover:text-white hover:bg-white/5 transition-colors"
+                    className="w-full flex items-center gap-3 px-4 py-3 text-xs font-bold text-white hover:bg-white/5 transition-colors"
                   >
                     <FaEdit /> Edit
                   </button>
@@ -79,7 +79,7 @@ export default function ApplicationCard({ application, onStatusChange, onEdit, o
         </div>
 
         <div className="flex flex-col gap-4 mt-6">
-          <div className="flex items-center gap-2 text-[10px] font-bold text-white/20 uppercase tracking-widest">
+          <div className="flex items-center gap-2 text-[10px] font-bold text-white uppercase tracking-widest">
             <FaClock className="text-xs" />
             <span>Applied {new Date(application.applied_at).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}</span>
           </div>
@@ -88,7 +88,7 @@ export default function ApplicationCard({ application, onStatusChange, onEdit, o
             <select
               value={application.status}
               onChange={(e) => onStatusChange(application.id, e.target.value)}
-              className="appearance-none w-full bg-white/5 text-white/80 text-[10px] font-black uppercase tracking-[0.2em] py-3 px-5 rounded-2xl border border-white/5 cursor-pointer outline-none focus:border-white/20 transition-all hover:bg-white/[0.08]"
+              className="appearance-none w-full bg-white/5 text-white text-[10px] font-black uppercase tracking-[0.2em] py-3 px-5 rounded-2xl border border-white/10 cursor-pointer outline-none focus:border-white/20 transition-all hover:bg-white/[0.08]"
             >
               <option value="Applied" className="text-black">Applied</option>
               <option value="Interviewing" className="text-black">Interviewing</option>

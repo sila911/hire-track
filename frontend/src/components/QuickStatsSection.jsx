@@ -12,13 +12,13 @@ function StatCard({ title, value, hint, trend, loading, delay = 0 }) {
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay, duration: 0.35, type: 'spring', stiffness: 260, damping: 28 }}
-      className="relative overflow-hidden rounded-3xl border border-white/5 bg-white/[0.03] p-6 shadow-2xl backdrop-blur-xl"
+      className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/[0.03] p-6 shadow-2xl backdrop-blur-xl"
     >
       <div className="relative z-10">
         <div className="flex justify-between items-start mb-4">
-          <p className="text-xs font-bold uppercase tracking-[0.15em] text-white/30">{title}</p>
+          <p className="text-xs font-black uppercase tracking-[0.15em] text-white">{title}</p>
           {trend && !loading && (
-            <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/10`}>
+            <span className={`text-[10px] font-black px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20`}>
               {trend}
             </span>
           )}
@@ -31,7 +31,7 @@ function StatCard({ title, value, hint, trend, loading, delay = 0 }) {
         )}
         
         {hint && !loading && (
-          <p className="mt-2 text-xs font-medium text-white/20 tracking-tight">{hint}</p>
+          <p className="mt-2 text-xs font-bold text-white tracking-tight">{hint}</p>
         )}
       </div>
     </motion.div>
@@ -80,10 +80,10 @@ export default function QuickStatsSection({ stats, loading }) {
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.12, duration: 0.35, type: 'spring', stiffness: 260, damping: 28 }}
-        className="relative overflow-hidden rounded-3xl border border-white/5 bg-white/[0.03] p-6 shadow-2xl backdrop-blur-xl sm:col-span-2 xl:col-span-1"
+        className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/[0.03] p-6 shadow-2xl backdrop-blur-xl sm:col-span-2 xl:col-span-1"
       >
         <div className="relative z-10 h-full flex flex-col">
-          <p className="text-xs font-bold uppercase tracking-[0.15em] text-white/30 mb-4">Pipeline mix</p>
+          <p className="text-xs font-black uppercase tracking-[0.15em] text-white mb-4">Pipeline mix</p>
           <div className="flex-1 min-h-[60px] flex items-center justify-center">
             <StatusPieChart byStatus={stats?.by_status} />
           </div>

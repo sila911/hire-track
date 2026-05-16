@@ -138,7 +138,7 @@ export default function ApplicationModal({ open, application, onClose, onSaved }
               <button
                 type="button"
                 onClick={onClose}
-                className="rounded-xl border border-white/15 bg-white/5 px-3 py-2 text-sm font-bold text-white/80 transition hover:bg-white/10"
+                className="rounded-xl border border-white/15 bg-white/10 px-3 py-2 text-sm font-black text-white transition hover:bg-white/20"
               >
                 Close
               </button>
@@ -147,7 +147,7 @@ export default function ApplicationModal({ open, application, onClose, onSaved }
             {banner && (
               <div
                 role="alert"
-                className="mb-4 rounded-xl border border-red-400/30 bg-red-500/10 px-4 py-3 text-sm font-medium text-red-200"
+                className="mb-4 rounded-xl border border-red-400/30 bg-red-500/10 px-4 py-3 text-sm font-bold text-red-200"
               >
                 {banner}
               </div>
@@ -155,7 +155,7 @@ export default function ApplicationModal({ open, application, onClose, onSaved }
 
             <form onSubmit={handleSubmit} className="space-y-5">
               <div>
-                <label htmlFor="app-company" className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-white/50">
+                <label htmlFor="app-company" className="mb-1.5 block text-xs font-black uppercase tracking-wider text-white">
                   Company
                 </label>
                 <input
@@ -164,17 +164,17 @@ export default function ApplicationModal({ open, application, onClose, onSaved }
                   value={company}
                   onChange={(e) => setCompany(e.target.value)}
                   autoComplete="organization"
-                  className="w-full rounded-xl border border-white/15 bg-black/25 px-4 py-3 text-white placeholder-white/30 outline-none ring-white/20 focus:ring-2"
+                  className="w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-white placeholder-white/30 outline-none ring-white/20 focus:ring-2"
                   placeholder="Acme Inc."
                   required
                 />
                 {fieldErrors.company && (
-                  <p className="mt-1.5 text-xs font-semibold text-red-300">{fieldErrors.company}</p>
+                  <p className="mt-1.5 text-xs font-bold text-red-400">{fieldErrors.company}</p>
                 )}
               </div>
 
               <div>
-                <label htmlFor="app-role" className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-white/50">
+                <label htmlFor="app-role" className="mb-1.5 block text-xs font-black uppercase tracking-wider text-white">
                   Job title
                 </label>
                 <input
@@ -183,17 +183,17 @@ export default function ApplicationModal({ open, application, onClose, onSaved }
                   value={role}
                   onChange={(e) => setRole(e.target.value)}
                   autoComplete="organization-title"
-                  className="w-full rounded-xl border border-white/15 bg-black/25 px-4 py-3 text-white placeholder-white/30 outline-none ring-white/20 focus:ring-2"
+                  className="w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-white placeholder-white/30 outline-none ring-white/20 focus:ring-2"
                   placeholder="Software Engineer"
                   required
                 />
                 {fieldErrors.role && (
-                  <p className="mt-1.5 text-xs font-semibold text-red-300">{fieldErrors.role}</p>
+                  <p className="mt-1.5 text-xs font-bold text-red-400">{fieldErrors.role}</p>
                 )}
               </div>
 
               <div>
-                <label htmlFor="app-date" className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-white/50">
+                <label htmlFor="app-date" className="mb-1.5 block text-xs font-black uppercase tracking-wider text-white">
                   Applied on
                 </label>
                 <input
@@ -201,23 +201,23 @@ export default function ApplicationModal({ open, application, onClose, onSaved }
                   type="date"
                   value={appliedAt}
                   onChange={(e) => setAppliedAt(e.target.value)}
-                  className="w-full rounded-xl border border-white/15 bg-black/25 px-4 py-3 text-white outline-none ring-white/20 focus:ring-2 [color-scheme:dark]"
+                  className="w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-white outline-none ring-white/20 focus:ring-2 [color-scheme:dark]"
                   required
                 />
                 {fieldErrors.applied_at && (
-                  <p className="mt-1.5 text-xs font-semibold text-red-300">{fieldErrors.applied_at}</p>
+                  <p className="mt-1.5 text-xs font-bold text-red-400">{fieldErrors.applied_at}</p>
                 )}
               </div>
 
               <div>
-                <label htmlFor="app-status" className="mb-1.5 block text-xs font-bold uppercase tracking-wider text-white/50">
+                <label htmlFor="app-status" className="mb-1.5 block text-xs font-black uppercase tracking-wider text-white">
                   Status
                 </label>
                 <select
                   id="app-status"
                   value={status}
                   onChange={(e) => setStatus(e.target.value)}
-                  className="w-full rounded-xl border border-white/15 bg-black/25 px-4 py-3 text-white outline-none ring-white/20 focus:ring-2"
+                  className="w-full rounded-xl border border-white/10 bg-black/40 px-4 py-3 text-white outline-none ring-white/20 focus:ring-2"
                 >
                   {STATUSES.map((s) => (
                     <option key={s} value={s} className="bg-slate-900 text-white">
@@ -226,7 +226,7 @@ export default function ApplicationModal({ open, application, onClose, onSaved }
                   ))}
                 </select>
                 {fieldErrors.status && (
-                  <p className="mt-1.5 text-xs font-semibold text-red-300">{fieldErrors.status}</p>
+                  <p className="mt-1.5 text-xs font-bold text-red-400">{fieldErrors.status}</p>
                 )}
               </div>
 
@@ -234,14 +234,14 @@ export default function ApplicationModal({ open, application, onClose, onSaved }
                 <button
                   type="button"
                   onClick={onClose}
-                  className="rounded-xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-bold text-white/90 transition hover:bg-white/10"
+                  className="rounded-xl border border-white/10 bg-white/5 px-5 py-3 text-sm font-black text-white transition hover:bg-white/10"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="rounded-xl border border-white/25 bg-white/20 px-6 py-3 text-sm font-bold text-white shadow-lg transition hover:bg-white/30 disabled:opacity-60"
+                  className="rounded-xl border border-white/20 bg-white/20 px-6 py-3 text-sm font-black text-white shadow-xl transition hover:bg-white/30 disabled:opacity-60"
                 >
                   {submitting ? 'Saving…' : isEdit ? 'Save changes' : 'Create'}
                 </button>

@@ -61,4 +61,33 @@ class AuthController extends Controller
 
         return response()->noContent();
     }
+
+    public function updatePassword(Request $request)
+    {
+        $data = $request->validate([
+            'current_password' => ['required', 'string', 'current_password'],
+            'password' => ['required', 'string', Password::defaults(), 'confirmed'],
+        ]);
+
+        $request->user()->update([
+            'password' => Hash::make($data['password']),
+        ]);
+
+        return response()->json(['message' => 'Password updated successfully.']);
+    }
+
+    public function updateProfile(Request $request)
+    {
+        $data = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'profile_image_url' => ['nullable', 'string', 'url', 'max:2048'],
+        ]);
+
+        $request->user()->update($data);
+
+        return response()->json([
+            'message' => 'Profile updated successfully.',
+            'user' => $request->user(),
+        ]);
+    }
 }
