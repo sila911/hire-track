@@ -16,8 +16,7 @@ import { useAuth } from '../auth-context';
 import { useDialog } from '../dialog-context';
 import { motion, AnimatePresence } from 'framer-motion';
 
-export default function Sidebar({ isOpen, setIsOpen }) {
-  const [isCollapsed, setIsCollapsed] = useState(false);
+export default function Sidebar({ isOpen, setIsOpen, isCollapsed, setIsCollapsed }) {
   const { user, logout } = useAuth();
   const { confirm } = useDialog();
   const navigate = useNavigate();
@@ -96,22 +95,40 @@ export default function Sidebar({ isOpen, setIsOpen }) {
       </AnimatePresence>
 
       <aside className={`
-        fixed inset-y-0 left-0 z-[60] h-screen transition-transform duration-300 ease-in-out
-        md:relative md:translate-x-0
+        fixed inset-y-0 left-0 z-[60] h-screen transition-all duration-300 ease-in-out
         ${isOpen ? 'translate-x-0' : '-translate-x-full'}
-        ${isCollapsed ? 'md:w-20' : 'md:w-64'}
+        md:translate-x-0
+        ${isCollapsed ? 'md:w-20 items-center' : 'md:w-64'}
         w-64 bg-white/60 dark:bg-slate-950/40 border-r border-slate-200 dark:border-white/5 backdrop-blur-xl flex flex-col
       `}>
         {/* Collapse Toggle (Desktop only) */}
         <button
           onClick={() => setIsCollapsed(!isCollapsed)}
-          className="hidden md:flex absolute -right-3 top-24 bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 rounded-full p-1.5 shadow-lg z-50 text-slate-500 hover:text-black dark:hover:text-white transition-all hover:scale-110 active:scale-95"
+          className="hidden md:flex absolute -right-3 top-6 bg-white dark:bg-slate-900 border border-slate-200 dark:border-white/10 rounded-full p-1.5 shadow-lg z-50 text-slate-500 hover:text-black dark:hover:text-white transition-all hover:scale-110 active:scale-95 transform translate-x-0"
         >
           {isCollapsed ? <ChevronRight size={14} /> : <ChevronLeft size={14} />}
         </button>
 
+        {/* Brand Section */}
+        <div className="pt-8 transition-all duration-300 w-full">
+          <div className={`flex items-center w-full ${isCollapsed ? 'justify-center px-0' : 'justify-start gap-4 px-5'} overflow-hidden`}>
+            <div className="w-8 h-8 bg-black dark:bg-white rounded-xl flex items-center justify-center shrink-0 shadow-lg">
+              <Briefcase size={18} className="text-white dark:text-black" />
+            </div>
+            {!isCollapsed && (
+              <motion.span 
+                initial={{ opacity: 0, x: -10 }}
+                animate={{ opacity: 1, x: 0 }}
+                className="text-xl font-black tracking-tighter text-black dark:text-white truncate"
+              >
+                HireTrack
+              </motion.span>
+            )}
+          </div>
+        </div>
+
         {/* Profile Banner */}
-        <div className={`pt-8 pb-6 flex flex-col items-center transition-all duration-300 ${isCollapsed ? 'md:px-2' : 'px-6'}`}>
+        <div className={`pt-6 pb-6 flex flex-col items-center transition-all duration-300 w-full ${isCollapsed ? 'md:px-2' : 'px-6'}`}>
           <div className={`
             relative rounded-2xl bg-black/5 dark:bg-white/10 border border-black/10 dark:border-white/20 
             ${isCollapsed ? 'md:w-10 md:h-10' : 'w-20 h-20'}
@@ -140,26 +157,26 @@ export default function Sidebar({ isOpen, setIsOpen }) {
         </div>
 
         {/* Navigation */}
-        <nav className="flex-1 px-3 py-4 space-y-8 overflow-y-auto custom-scrollbar-slim">
+        <nav className="flex-1 px-3 py-4 space-y-8 overflow-y-auto custom-scrollbar-slim w-full">
           {menuItems.map((group) => (
-            <div key={group.group} className="space-y-4">
+            <div key={group.group} className="space-y-4 w-full">
               {(!isCollapsed || window.innerWidth < 768) && (
                 <h3 className="px-4 text-[10px] font-bold tracking-[0.2em] text-slate-400 dark:text-slate-500 uppercase opacity-60">
                   {group.group}
                 </h3>
               )}
-              <div className="space-y-1.5">
+              <div className="space-y-1.5 w-full">
                 {group.items.map((item) => (
                   <NavLink
                     key={item.path}
                     to={item.path}
                     onClick={() => { if(window.innerWidth < 768) setIsOpen(false); }}
                     className={({ isActive }) => `
-                      flex items-center gap-4 px-4 py-3.5 rounded-2xl transition-all duration-200 group relative
+                      flex items-center w-full py-3.5 rounded-2xl transition-all duration-200 group relative
+                      ${isCollapsed ? 'justify-center px-0' : 'justify-start gap-4 px-5'}
                       ${isActive 
                         ? 'bg-slate-200/50 dark:bg-white/10 font-bold text-black dark:text-white shadow-sm' 
                         : 'text-slate-500 hover:bg-slate-200/30 dark:hover:bg-white/5 hover:text-black dark:hover:text-white hover:scale-[1.02]'}
-                      ${isCollapsed ? 'md:justify-center md:px-0' : ''}
                     `}
                   >
                     <item.icon size={20} className={`transition-transform duration-200 group-hover:scale-110 ${isCollapsed ? 'md:shrink-0' : 'shrink-0'}`} />
@@ -175,9 +192,9 @@ export default function Sidebar({ isOpen, setIsOpen }) {
                   <button
                     onClick={toggleTheme}
                     className={`
-                      flex items-center gap-4 px-4 py-3.5 w-full rounded-2xl transition-all duration-200 group relative
+                      flex items-center w-full py-3.5 rounded-2xl transition-all duration-200 group relative
+                      ${isCollapsed ? 'justify-center px-0' : 'justify-start gap-4 px-5'}
                       text-slate-500 hover:bg-slate-200/30 dark:hover:bg-white/5 hover:text-black dark:hover:text-white hover:scale-[1.02]
-                      ${isCollapsed ? 'md:justify-center md:px-0' : ''}
                     `}
                   >
                     {theme === 'dark' ? <Sun size={20} className="transition-transform duration-200 group-hover:scale-110 shrink-0" /> : <Moon size={20} className="transition-transform duration-200 group-hover:scale-110 shrink-0" />}
@@ -196,13 +213,13 @@ export default function Sidebar({ isOpen, setIsOpen }) {
           ))}
 
           {/* Logout Button */}
-          <div className="pt-4 border-t border-slate-200 dark:border-white/5">
+          <div className="pt-4 border-t border-slate-200 dark:border-white/5 w-full">
             <button
               onClick={handleLogout}
               className={`
-                flex items-center gap-4 px-4 py-3.5 w-full rounded-2xl transition-all duration-200 group
+                flex items-center w-full py-3.5 rounded-2xl transition-all duration-200 group
+                ${isCollapsed ? 'justify-center px-0' : 'justify-start gap-4 px-5'}
                 text-red-500 hover:bg-red-500/10 hover:scale-[1.02]
-                ${isCollapsed ? 'md:justify-center md:px-0' : ''}
               `}
             >
               <LogOut size={20} className="transition-transform group-hover:-translate-x-1" />
@@ -212,7 +229,7 @@ export default function Sidebar({ isOpen, setIsOpen }) {
         </nav>
 
         {/* Upgrade Widget */}
-        <div className="mt-auto">
+        <div className="mt-auto w-full">
           <AnimatePresence>
             {(!isCollapsed || window.innerWidth < 768) && (
               <motion.div

@@ -11,6 +11,7 @@ export default function AppLayout({
   onNewApplication 
 }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(false);
   const [visible, setVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
 
@@ -39,10 +40,15 @@ export default function AppLayout({
 
   return (
     <div className="flex h-screen bg-slate-50 dark:bg-slate-950 transition-colors duration-300 animate-bg-flow overflow-hidden">
-      <Sidebar isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />
+      <Sidebar 
+        isOpen={isSidebarOpen} 
+        setIsOpen={setIsSidebarOpen} 
+        isCollapsed={isCollapsed}
+        setIsCollapsed={setIsCollapsed}
+      />
       
-      <div className="flex-1 flex flex-col min-h-screen dark-overlay text-black dark:text-slate-100 font-sans tracking-tight selection:bg-black/10 dark:selection:bg-white/30 transition-colors duration-300 overflow-hidden relative">
-        <header className={`fixed top-0 left-0 right-0 z-50 px-4 md:px-8 py-4 backdrop-blur-2xl bg-white/40 dark:bg-[#020617]/40 border-b border-slate-200/50 dark:border-white/5 transition-transform duration-300 ease-in-out ${
+      <div className={`flex-1 flex flex-col min-h-screen dark-overlay text-black dark:text-slate-100 font-sans tracking-tight selection:bg-black/10 dark:selection:bg-white/30 transition-all duration-300 overflow-hidden relative ${isCollapsed ? 'md:ml-20' : 'md:ml-64'}`}>
+        <header className={`absolute top-0 left-0 right-0 z-50 px-4 md:px-8 py-4 backdrop-blur-2xl bg-white/40 dark:bg-[#020617]/40 border-b border-slate-200/50 dark:border-white/5 transition-transform duration-300 ease-in-out ${
           visible ? 'translate-y-0' : '-translate-y-full'
         }`}>
           {/* Header content stays the same, just adjusting widths for sidebar if needed */}
