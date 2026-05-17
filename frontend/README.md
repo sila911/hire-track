@@ -1,24 +1,40 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-# React + Vite
+# HireTrack Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is the React and Vite-based user interface for the HireTrack application.
 
-Currently, two official plugins are available:
+## Prerequisites
+- Node.js (v18 or higher recommended)
+- npm or yarn
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Local Installation Guide
 
-## React Compiler
+Follow these steps to set up the frontend on your local device:
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+1. **Navigate to the frontend directory**
+   ```bash
+   cd frontend
+   ```
 
-## Expanding the ESLint configuration
+2. **Install Dependencies**
+   Install all required Node packages:
+   ```bash
+   npm install
+   ```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
-=======
-# hire-track
->>>>>>> 352ed894924e1fe046aff6d62898b73fcf4e9b00
-=======
+3. **Set up Environment Variables**
+   Copy the example environment file to create your local `.env`:
+   ```bash
+   cp .env.example .env
+   ```
+   *Make sure `VITE_API_BASE_URL` (or the equivalent variable in your `.env`) points to your local Laravel backend (usually `http://localhost:8000`).*
 
->>>>>>> 331a5c92195379bda3bd4fc433250a3db6043db1
+4. **Start the Development Server**
+   Run the Vite development server with Hot Module Replacement (HMR):
+   ```bash
+   npm run dev
+   ```
+   The application will be accessible at `http://localhost:5173`.
+
+## Notes
+- Ensure the **HireTrack Backend API** is running simultaneously to authenticate users and fetch data.
+- The default setup utilizes Tailwind CSS for styling and React Router for navigation.
