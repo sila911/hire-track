@@ -44,7 +44,7 @@ export function AuthProvider({ children }) {
     localStorage.removeItem('token');
     setAuthed(false);
     setUser(null);
-    navigate('/login', { replace: true });
+    navigate('/', { replace: true });
   }, [navigate]);
 
   const login = useCallback((token, userData) => {

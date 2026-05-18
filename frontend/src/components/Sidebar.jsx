@@ -68,9 +68,9 @@ export default function Sidebar({ isOpen, setIsOpen, isCollapsed, setIsCollapsed
 
     if (ok) {
       logout();
-      navigate('/login');
     }
   };
+  
 
   return (
     <>

@@ -8,7 +8,7 @@ export default function ProtectedRoute({ children }) {
   if (loading) return null; // Should be handled by AuthProvider but just in case
 
   if (!authed) {
-    return <Navigate to="/login" state={{ from: location }} replace />;
+    return <Navigate to="/" replace />;
   }
 
   return children;

@@ -19,8 +19,7 @@ import {
   SiNetflix, 
   SiAirbnb, 
   SiSpotify 
-} from 'react-icons/si';
-import { FaMicrosoft } from 'react-icons/fa6';
+} from 'react-icons/si';import { FaMicrosoft } from 'react-icons/fa6';
 
 export default function Landing() {
   const navigate = useNavigate();
@@ -229,35 +228,21 @@ export default function Landing() {
           >
             {/* Main Content Card */}
             <div className="relative rounded-[2.5rem] border border-black/10 dark:border-white/10 bg-white/80 dark:bg-white/5 backdrop-blur-2xl p-4 shadow-[0_50px_100px_rgba(0,0,0,0.1)] dark:shadow-[0_50px_100px_rgba(0,0,0,0.5)] overflow-hidden">
-               <div className="bg-slate-100 dark:bg-slate-900 rounded-[2rem] overflow-hidden border border-black/5 dark:border-white/5 aspect-[1.4/1] flex items-center justify-center relative">
-                  <div className="w-full h-full p-8 flex flex-col gap-6 opacity-40 dark:opacity-60 grayscale-[0.5]">
-                    <div className="flex justify-between items-center mb-4">
-                      <div className="w-40 h-8 bg-black/10 dark:bg-white/10 rounded-xl"></div>
-                      <div className="flex gap-2">
-                        <div className="w-10 h-10 bg-black/10 dark:bg-white/10 rounded-full"></div>
-                        <div className="w-10 h-10 bg-black/10 dark:bg-white/10 rounded-full"></div>
-                      </div>
-                    </div>
-                    <div className="grid grid-cols-3 gap-6 mb-4">
-                      <div className="h-32 bg-indigo-500/10 rounded-3xl border border-indigo-500/20"></div>
-                      <div className="h-32 bg-purple-500/10 rounded-3xl border border-purple-500/20"></div>
-                      <div className="h-32 bg-emerald-500/10 rounded-3xl border border-emerald-500/20"></div>
-                    </div>
-                    <div className="flex-1 bg-black/5 dark:bg-white/5 rounded-3xl border border-black/5 dark:border-white/5 p-6 flex gap-6">
-                      <div className="w-1/3 h-full bg-black/10 dark:bg-white/10 rounded-2xl"></div>
-                      <div className="w-1/3 h-full bg-black/10 dark:bg-white/10 rounded-2xl"></div>
-                      <div className="w-1/3 h-full bg-black/10 dark:bg-white/10 rounded-2xl opacity-30"></div>
-                    </div>
-                  </div>
+               <div className="bg-slate-100 dark:bg-slate-900 rounded-[2rem] overflow-hidden border border-black/5 dark:border-white/5 aspect-[1.4/1] flex items-center justify-center relative shadow-2xl group/preview">
+                  <img 
+                    src="/live-demo.gif" 
+                    alt="HireTrack Dashboard Preview" 
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover/preview:scale-105"
+                  />
                   
                   {/* Floating Overlay Info */}
-                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                  <div className="absolute inset-0 flex items-end justify-center pb-8 pointer-events-none">
                     <motion.div 
                       whileHover={{ scale: 1.1 }}
                       className="px-8 py-4 rounded-3xl bg-white/90 dark:bg-white text-black font-black text-sm shadow-2xl flex items-center gap-3 backdrop-blur-md"
                     >
                       <div className="w-3 h-3 rounded-full bg-emerald-500 animate-pulse"></div>
-                      Live Dashboard Preview
+                      
                     </motion.div>
                   </div>
                </div>
