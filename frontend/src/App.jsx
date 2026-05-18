@@ -11,6 +11,7 @@ import Settings from './pages/Settings';
 import Analysis from './pages/Analysis';
 import Login from './pages/Auth/Login';
 import Register from './pages/Auth/Register';
+import Landing from './pages/Landing';
 import { useDialog } from './dialog-context';
 import { useNotification } from './notification-context';
 import api from './axios';
@@ -176,6 +177,7 @@ function AppShell() {
   return (
     <AuthProvider>
       <Routes>
+        <Route path="/" element={<Landing />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         
@@ -200,7 +202,6 @@ function AppShell() {
           <Route path="/applications" element={<div className="p-8 text-center"><h2 className="text-2xl font-bold">Applications List Coming Soon</h2></div>} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/settings" element={<Settings />} />
-          <Route path="/" element={<Navigate to="/dashboard" replace />} />
           <Route path="*" element={<Navigate to="/dashboard" replace />} />
         </Route>
       </Routes>
