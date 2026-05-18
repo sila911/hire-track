@@ -19,7 +19,7 @@ This project is a decoupled application featuring a **Laravel 12** backend API a
 ### Backend
 - **Framework:** Laravel 12
 - **Auth:** Laravel Sanctum (Stateful API Authentication)
-- **Database:** MySQL / PostgreSQL / SQLite
+- **Database:** MySQL 
 - **Testing:** PHPUnit
 
 ### Frontend

@@ -8,7 +8,6 @@ import {
   LogOut, 
   ChevronLeft, 
   ChevronRight,
-  Zap,
   Sun,
   Moon
 } from 'lucide-react';
@@ -50,12 +49,6 @@ export default function Sidebar({ isOpen, setIsOpen, isCollapsed, setIsCollapsed
         { name: 'Dashboard', icon: LayoutDashboard, path: '/dashboard' },
         { name: 'Analysis', icon: BarChart2, path: '/analysis' },
         { name: 'Applications', icon: Briefcase, path: '/applications' },
-      ]
-    },
-    {
-      group: 'ACCOUNT & TOOLS',
-      items: [
-        { name: 'Settings', icon: Settings, path: '/settings' },
       ]
     }
   ];
@@ -188,78 +181,58 @@ export default function Sidebar({ isOpen, setIsOpen, isCollapsed, setIsCollapsed
                     )}
                   </NavLink>
                 ))}
-                {group.group === 'ACCOUNT & TOOLS' && (
-                  <button
-                    onClick={toggleTheme}
-                    className={`
-                      flex items-center w-full py-3.5 rounded-2xl transition-all duration-200 group relative
-                      ${isCollapsed ? 'justify-center px-0' : 'justify-start gap-4 px-5'}
-                      text-slate-500 hover:bg-slate-200/30 dark:hover:bg-white/5 hover:text-black dark:hover:text-white hover:scale-[1.02]
-                    `}
-                  >
-                    {theme === 'dark' ? <Sun size={20} className="transition-transform duration-200 group-hover:scale-110 shrink-0" /> : <Moon size={20} className="transition-transform duration-200 group-hover:scale-110 shrink-0" />}
-                    {(!isCollapsed || window.innerWidth < 768) && (
-                      <span className="text-sm tracking-tight">Theme</span>
-                    )}
-                    {(!isCollapsed || window.innerWidth < 768) && (
-                      <div className="ml-auto p-1.5 rounded-lg bg-black/5 dark:bg-white/10 text-black dark:text-amber-400 border border-black/5 dark:border-white/10 shadow-sm">
-                        {theme === 'dark' ? <Sun size={12} fill="currentColor" /> : <Moon size={12} fill="currentColor" />}
-                      </div>
-                    )}
-                  </button>
-                )}
               </div>
             </div>
           ))}
+        </nav>
 
-          {/* Logout Button */}
-          <div className="pt-4 border-t border-slate-200 dark:border-white/5 w-full">
+        {/* Bottom Section */}
+        <div className="mt-auto w-full pb-4">
+          <div className={`px-3 space-y-1 ${isCollapsed ? '' : 'pt-2 border-t border-slate-200 dark:border-white/5 mx-2'}`}>
+            <NavLink
+              to="/settings"
+              onClick={() => { if(window.innerWidth < 768) setIsOpen(false); }}
+              className={({ isActive }) => `
+                flex items-center w-full py-3 rounded-xl transition-all duration-200 group relative
+                ${isCollapsed ? 'justify-center px-0' : 'justify-start gap-4 px-4'}
+                ${isActive 
+                  ? 'bg-slate-200/50 dark:bg-white/10 font-bold text-black dark:text-white' 
+                  : 'text-slate-500 hover:bg-slate-200/30 dark:hover:bg-white/5 hover:text-black dark:hover:text-white'}
+              `}
+            >
+              <Settings size={20} className="transition-transform duration-200 group-hover:rotate-45" />
+              {(!isCollapsed || window.innerWidth < 768) && <span className="text-sm tracking-tight">Settings</span>}
+            </NavLink>
+
+            <button
+              onClick={toggleTheme}
+              className={`
+                flex items-center w-full py-3 rounded-xl transition-all duration-200 group relative
+                ${isCollapsed ? 'justify-center px-0' : 'justify-start gap-4 px-4'}
+                text-slate-500 hover:bg-slate-200/30 dark:hover:bg-white/5 hover:text-black dark:hover:text-white
+              `}
+            >
+              {theme === 'dark' ? <Sun size={20} className="shrink-0" /> : <Moon size={20} className="shrink-0" />}
+              {(!isCollapsed || window.innerWidth < 768) && <span className="text-sm tracking-tight">Theme</span>}
+              {(!isCollapsed || window.innerWidth < 768) && (
+                <div className="ml-auto p-1 rounded-lg bg-black/5 dark:bg-white/10 text-black dark:text-amber-400 border border-black/5 dark:border-white/10 shadow-sm">
+                  {theme === 'dark' ? <Sun size={10} fill="currentColor" /> : <Moon size={10} fill="currentColor" />}
+                </div>
+              )}
+            </button>
+
             <button
               onClick={handleLogout}
               className={`
-                flex items-center w-full py-3.5 rounded-2xl transition-all duration-200 group
-                ${isCollapsed ? 'justify-center px-0' : 'justify-start gap-4 px-5'}
-                text-red-500 hover:bg-red-500/10 hover:scale-[1.02]
+                flex items-center w-full py-3 rounded-xl transition-all duration-200 group
+                ${isCollapsed ? 'justify-center px-0' : 'justify-start gap-4 px-4'}
+                text-red-500 hover:bg-red-500/10
               `}
             >
               <LogOut size={20} className="transition-transform group-hover:-translate-x-1" />
-              {(!isCollapsed || window.innerWidth < 768) && <span className="font-bold text-sm tracking-tight">Logout</span>}
+              {(!isCollapsed || window.innerWidth < 768) && <span className="text-sm font-bold tracking-tight">Logout</span>}
             </button>
           </div>
-        </nav>
-
-        {/* Upgrade Widget */}
-        <div className="mt-auto w-full">
-          <AnimatePresence>
-            {(!isCollapsed || window.innerWidth < 768) && (
-              <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.95 }}
-                className="p-3.5 mx-4 mb-8 rounded-[1.5rem] md:rounded-[2rem] bg-gradient-to-br from-indigo-500/10 via-purple-500/10 to-transparent border border-indigo-500/20 backdrop-blur-md relative overflow-hidden group"
-              >
-                <div className="absolute -right-8 -top-8 w-24 h-24 bg-indigo-500/10 rounded-full blur-2xl group-hover:bg-indigo-500/20 transition-colors"></div>
-                
-                <div className="flex items-center gap-3 mb-2.5 relative z-10">
-                  <div className="w-8 h-8 rounded-xl bg-indigo-500/20 text-indigo-600 dark:text-indigo-400 shadow-inner flex items-center justify-center">
-                    <Zap size={14} fill="currentColor" />
-                  </div>
-                  <div>
-                    <p className="text-xs font-bold text-black dark:text-white tracking-wide">Free Plan</p>
-                    <p className="text-[10px] text-slate-500 font-bold opacity-60">Standard</p>
-                  </div>
-                </div>
-                
-                <p className="text-[11px] text-slate-500 dark:text-slate-400 mb-3.5 leading-relaxed font-medium opacity-80">
-                  Unlock power features and unlimited job tracking.
-                </p>
-                
-                <button className="w-full py-1.5 px-3 bg-black dark:bg-white text-white dark:text-black rounded-lg md:rounded-xl text-[11px] font-bold tracking-wider hover:scale-[0.98] active:scale-95 transition-all shadow-lg shadow-indigo-500/10">
-                  UPGRADE TO PRO
-                </button>
-              </motion.div>
-            )}
-          </AnimatePresence>
         </div>
       </aside>
     </>
