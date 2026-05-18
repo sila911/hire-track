@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
-import { Outlet } from 'react-router-dom';
-import { Menu, Plus } from 'lucide-react';
+import { Outlet, NavLink, useLocation } from 'react-router-dom';
+import { Menu, Search, Globe, Sun, Moon, LayoutDashboard, BarChart2, Briefcase } from 'lucide-react';
+import { useAuth } from '../auth-context';
 import Sidebar from './Sidebar';
 
 export default function AppLayout({ 
@@ -10,19 +11,22 @@ export default function AppLayout({
   setSortBy, 
   onNewApplication 
 }) {
+  const { user } = useAuth();
+  const location = useLocation();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [visible, setVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
+  const [theme, setTheme] = useState(localStorage.getItem('theme') || 'dark');
 
   useEffect(() => {
     const handleScroll = (e) => {
       const currentScrollY = e.target.scrollTop;
       
       if (currentScrollY > lastScrollY && currentScrollY > 60) {
-        setVisible(false); // Scrolling down - hide header
+        setVisible(false); // Scrolling down - hide
       } else {
-        setVisible(true);  // Scrolling up - show header
+        setVisible(true);  // Scrolling up - show
       }
       setLastScrollY(currentScrollY);
     };
@@ -38,8 +42,31 @@ export default function AppLayout({
     };
   }, [lastScrollY]);
 
+  useEffect(() => {
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+    localStorage.setItem('theme', theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme(theme === 'dark' ? 'light' : 'dark');
+  };
+
+  const navLinks = [
+    { name: 'Dashboard', path: '/dashboard', icon: LayoutDashboard },
+    { name: 'Analysis', path: '/analysis', icon: BarChart2 },
+    { name: 'Applications', path: '/applications', icon: Briefcase },
+  ];
+
+  const initials = user?.name
+    ? user.name.split(' ').map((n) => n[0]).join('').toUpperCase().slice(0, 2)
+    : '??';
+
   return (
-    <div className="flex h-screen bg-slate-50 dark:bg-slate-950 transition-colors duration-300 animate-bg-flow overflow-hidden">
+    <div className="flex h-screen bg-slate-50 dark:bg-slate-950 transition-colors duration-300 overflow-hidden">
       <Sidebar 
         isOpen={isSidebarOpen} 
         setIsOpen={setIsSidebarOpen} 
@@ -47,75 +74,86 @@ export default function AppLayout({
         setIsCollapsed={setIsCollapsed}
       />
       
-      <div className={`flex-1 flex flex-col min-h-screen dark-overlay text-black dark:text-slate-100 font-sans tracking-tight selection:bg-black/10 dark:selection:bg-white/30 transition-all duration-300 overflow-hidden relative ${isCollapsed ? 'md:ml-20' : 'md:ml-64'}`}>
-        <header className={`absolute top-0 left-0 right-0 z-50 px-4 md:px-8 py-4 backdrop-blur-2xl bg-white/40 dark:bg-[#020617]/40 border-b border-slate-200/50 dark:border-white/5 transition-transform duration-300 ease-in-out ${
-          visible ? 'translate-y-0' : '-translate-y-full'
-        }`}>
-          {/* Header content stays the same, just adjusting widths for sidebar if needed */}
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4 md:gap-6 relative z-10">
-            <div className="flex items-center justify-between w-full md:w-auto">
-              <button
-                onClick={() => setIsSidebarOpen(true)}
-                className="p-2 -ml-2 text-slate-600 dark:text-slate-400 md:hidden hover:bg-black/5 dark:hover:bg-white/5 rounded-xl transition-colors"
-              >
-                <Menu size={24} />
-              </button>
-              
-              <h1 className="text-2xl md:text-3xl font-black tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-black to-slate-700 dark:from-white dark:to-white/60 drop-shadow-sm whitespace-nowrap transition-all duration-300">
-                HireTrack
-              </h1>
-
-              <button
-                type="button"
-                onClick={onNewApplication}
-                className="md:hidden p-2.5 bg-black dark:bg-white text-white dark:text-black rounded-xl shadow-lg"
-              >
-                <Plus size={20} />
-              </button>
+      <div className={`flex-1 flex flex-col min-h-screen text-black dark:text-slate-100 font-sans tracking-tight transition-all duration-300 overflow-hidden relative ${isCollapsed ? 'md:ml-20' : 'md:ml-64'}`}>
+        
+        {/* Floating Capsule Navbar */}
+        <nav className={`
+          fixed top-4 left-1/2 -translate-x-1/2 w-[92%] max-w-6xl h-14 rounded-full 
+          bg-white/70 dark:bg-slate-900/80 border border-slate-200/80 dark:border-white/10 
+          backdrop-blur-xl px-5 shadow-lg flex items-center justify-between z-50
+          transition-all duration-300 ease-out
+          ${visible 
+            ? 'translate-y-0 opacity-100 scale-100' 
+            : '-translate-y-20 opacity-0 scale-95 pointer-events-none'}
+        `}>
+          {/* Left: Avatar & Name */}
+          <div className="flex items-center gap-3 shrink-0">
+            <button
+              onClick={() => setIsSidebarOpen(true)}
+              className="p-1.5 md:hidden hover:bg-black/5 dark:hover:bg-white/5 rounded-full transition-colors"
+            >
+              <Menu size={20} />
+            </button>
+            <div className="w-8 h-8 rounded-full bg-indigo-500 flex items-center justify-center text-white text-[10px] font-black overflow-hidden shadow-sm border border-white/20">
+              {user?.profile_image_url ? (
+                <img src={user.profile_image_url} alt="" className="w-full h-full object-cover" />
+              ) : (
+                <span>{initials}</span>
+              )}
             </div>
-
-            <div className="hidden md:flex flex-col sm:flex-row gap-3 w-full max-w-2xl flex-1 justify-center md:px-8">
-              <div className="relative flex-1">
-                <input
-                  type="text"
-                  placeholder="Search applications..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full bg-black/5 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-black dark:text-white placeholder-slate-500 dark:placeholder-white text-sm font-black py-3 px-11 rounded-xl outline-none focus:border-black/20 dark:focus:border-white/30 transition-all shadow-inner"
-                />
-                <svg className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500 dark:text-white pointer-events-none transition-colors duration-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                </svg>
-              </div>
-              
-              <div className="relative min-w-[140px] sm:min-w-[180px]">
-                <select
-                  value={sortBy}
-                  onChange={(e) => setSortBy(e.target.value)}
-                  className="appearance-none w-full bg-black/5 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-black dark:text-white text-sm font-black py-3 pl-4 pr-10 rounded-xl outline-none focus:border-black/20 dark:focus:border-white/30 transition-all shadow-inner cursor-pointer"
-                >
-                  <option value="date_applied_desc">Date Applied</option>
-                  <option value="company_asc">Company (A-Z)</option>
-                </select>
-                <svg className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500 dark:text-white pointer-events-none transition-colors duration-300" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                  <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
-                </svg>
-              </div>
-            </div>
-
-            <div className="hidden md:flex flex-row gap-3 items-center whitespace-nowrap">
-              <button
-                type="button"
-                onClick={onNewApplication}
-                className="bg-black dark:bg-white text-white dark:text-black px-6 py-3 rounded-xl font-black tracking-tight transition-all hover:bg-slate-800 dark:hover:bg-white/90 hover:scale-[0.98] active:scale-95 shadow-xl shadow-black/10 dark:shadow-white/5 flex items-center gap-2"
-              >
-                <Plus size={18} />
-                <span className="hidden xl:inline">New Application</span>
-                <span className="inline xl:hidden text-sm">New</span>
-              </button>
-            </div>
+            <span className="hidden sm:block text-slate-900 dark:text-white font-bold text-sm truncate max-w-[120px]">
+              {user?.name}
+            </span>
           </div>
-        </header>
+
+          {/* Center: Navigation Links */}
+          <div className="hidden lg:flex items-center gap-6 text-sm text-slate-500 font-medium">
+            {navLinks.map((link) => (
+              <NavLink
+                key={link.path}
+                to={link.path}
+                className={({ isActive }) => `
+                  hover:text-indigo-500 dark:hover:text-white transition-colors relative py-1
+                  ${isActive ? 'text-indigo-600 dark:text-white' : 'dark:text-slate-400'}
+                `}
+              >
+                {({ isActive }) => (
+                  <>
+                    <span>{link.name}</span>
+                    {isActive && (
+                      <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-indigo-500 rounded-full" />
+                    )}
+                  </>
+                )}
+              </NavLink>
+            ))}
+          </div>
+
+          {/* Right: Search, Lang, Theme */}
+          <div className="flex items-center gap-2 md:gap-4 shrink-0">
+            <div className="relative group hidden md:block">
+              <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-indigo-500 transition-colors" />
+              <input
+                type="text"
+                placeholder="Search..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="bg-black/5 dark:bg-white/5 border border-transparent focus:border-indigo-500/50 text-xs font-bold py-2 pl-9 pr-4 rounded-full outline-none w-32 lg:w-48 transition-all"
+              />
+            </div>
+
+            <button className="p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/5 text-slate-500 dark:text-slate-400 transition-colors">
+              <Globe size={18} />
+            </button>
+
+            <button
+              onClick={toggleTheme}
+              className="p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/5 text-slate-500 dark:text-slate-400 transition-colors"
+            >
+              {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+            </button>
+          </div>
+        </nav>
 
         <main id="main-content" className="flex-1 overflow-y-auto p-4 md:p-8 pt-24 md:pt-28 custom-scrollbar">
           <div className="max-w-[1600px] mx-auto">

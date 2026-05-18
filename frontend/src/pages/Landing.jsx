@@ -15,7 +15,6 @@ import {
 } from 'lucide-react';
 import { 
   SiGoogle, 
-  SiMicrosoft, 
   SiStripe, 
   SiNetflix, 
   SiAirbnb, 
