@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { FaEnvelope, FaLock, FaUser } from 'react-icons/fa';
+import { ArrowLeft, Sun, Moon } from 'lucide-react';
 import api from '../../axios';
 import FormErrorAlert from '../../components/ui/FormErrorAlert';
 import { parseRegisterApiError } from '../../utils/laravelErrors';
@@ -19,6 +20,20 @@ export default function Register() {
   const [fieldErrors, setFieldErrors] = useState({});
   const [bannerMessages, setBannerMessages] = useState([]);
   const [pending, setPending] = useState(false);
+  const [theme, setTheme] = useState(localStorage.getItem('theme') || 'dark');
+
+  useEffect(() => {
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+    localStorage.setItem('theme', theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme(theme === 'dark' ? 'light' : 'dark');
+  };
 
   const nameError = fieldErrors.name || '';
   const emailError = fieldErrors.email || '';
@@ -54,15 +69,42 @@ export default function Register() {
   };
 
   return (
-    <div className="flex min-h-dvh items-center justify-center bg-slate-50 dark:bg-[#020617] px-4 py-10 font-sans transition-colors duration-300 antialiased">
+    <div className="flex min-h-dvh items-center justify-center bg-slate-50 dark:bg-[#020617] px-4 py-10 font-sans transition-colors duration-300 antialiased relative overflow-hidden">
+      {/* Animated Background Blobs */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
+        <div className="absolute top-[-5%] left-[-5%] w-[45%] h-[45%] bg-indigo-500/20 dark:bg-indigo-500/20 rounded-full blur-[120px] animate-blob" />
+        <div className="absolute top-[10%] right-[-5%] w-[40%] h-[40%] bg-purple-500/20 dark:bg-purple-500/20 rounded-full blur-[120px] animate-blob animation-delay-2000" />
+        <div className="absolute bottom-[10%] left-[-5%] w-[40%] h-[40%] bg-rose-500/15 dark:bg-rose-500/15 rounded-full blur-[120px] animate-blob animation-delay-4000" />
+        <div className="absolute bottom-[-5%] right-[10%] w-[45%] h-[45%] bg-blue-500/20 dark:bg-blue-500/20 rounded-full blur-[120px] animate-blob" />
+        <div className="absolute top-[40%] left-[30%] w-[35%] h-[35%] bg-amber-400/15 dark:bg-amber-400/10 rounded-full blur-[120px] animate-blob animation-delay-2000" />
+      </div>
+
       <motion.div
         initial={{ opacity: 0, y: 14, x: 10 }}
         animate={{ opacity: 1, y: 0, x: 0 }}
         transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
         className="w-full max-w-[420px]"
       >
-        <div className="rounded-3xl border border-slate-200 dark:border-white/10 bg-white/80 dark:bg-white/[0.03] p-8 shadow-2xl backdrop-blur-xl transition-all duration-300">
-          <div className="mb-8 text-center">
+        <div className="rounded-3xl border border-slate-200 dark:border-white/10 bg-white/80 dark:bg-white/[0.03] p-8 shadow-2xl backdrop-blur-xl transition-all duration-300 relative overflow-hidden">
+          {/* Header with Back and Theme Toggle */}
+          <div className="flex items-center justify-between mb-8 relative z-10">
+            <Link 
+              to="/" 
+              className="flex items-center gap-2 text-[11px] font-black uppercase tracking-widest text-black/50 dark:text-white/40 hover:text-black dark:hover:text-white transition-colors group"
+            >
+              <ArrowLeft size={14} className="transition-transform group-hover:-translate-x-1" strokeWidth={3} />
+              <span>Back</span>
+            </Link>
+            
+            <button
+              onClick={toggleTheme}
+              className="p-2.5 rounded-2xl bg-black/5 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-slate-500 dark:text-slate-400 hover:text-black dark:hover:text-white transition-all shadow-sm"
+            >
+              {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+            </button>
+          </div>
+
+          <div className="mb-8 text-center relative z-10">
             <p className="font-black tracking-tighter text-4xl text-black dark:text-white">HireTrack</p>
             <h1 className="mt-4 font-black text-2xl tracking-tight text-black dark:text-white">Create account</h1>
             <p className="mt-2 text-sm font-bold text-black/60 dark:text-white/60">Start tracking applications in one place.</p>
