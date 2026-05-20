@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaEllipsisV, FaEdit, FaTrashAlt, FaClock } from 'react-icons/fa';
+import StatusDropdown from './StatusDropdown';
 
 export default function ApplicationCard({ application, onStatusChange, onEdit, onDelete }) {
   const [showMenu, setShowMenu] = useState(false);
@@ -23,7 +24,7 @@ export default function ApplicationCard({ application, onStatusChange, onEdit, o
       animate={{ opacity: 1, scale: 1 }}
       whileHover={{ y: -4 }}
       transition={{ type: 'spring', stiffness: 400, damping: 30 }}
-      className="group rounded-3xl bg-white/80 dark:bg-white/[0.04] border border-slate-200/60 dark:border-white/5 p-6 shadow-xl relative overflow-visible hover:bg-white dark:hover:bg-white/[0.07] transition-all duration-300"
+      className="group rounded-3xl bg-white/80 dark:bg-white/[0.04] border border-slate-200/60 dark:border-white/5 p-6 shadow-xl relative overflow-visible hover:bg-white dark:hover:bg-white/[0.07] transition-all duration-300 z-10 hover:z-50 focus-within:z-50"
     >
       <div className="relative z-10">
         <div className="flex justify-between items-start mb-4">
@@ -85,22 +86,11 @@ export default function ApplicationCard({ application, onStatusChange, onEdit, o
             <span>Applied {new Date(application.applied_at).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}</span>
           </div>
 
-          <div className="relative w-full">
-            <select
+          <div className="relative w-full overflow-visible">
+            <StatusDropdown
               value={application.status}
-              onChange={(e) => onStatusChange(application.id, e.target.value)}
-              className="appearance-none w-full bg-black/5 dark:bg-white/5 text-black dark:text-white text-[11px] md:text-xs font-bold uppercase tracking-wider py-1.5 md:py-3 px-3 md:px-5 rounded-xl md:rounded-2xl border border-slate-200 dark:border-white/10 cursor-pointer outline-none focus:border-slate-300 dark:focus:border-white/20 transition-all hover:bg-black/10 dark:hover:bg-white/[0.08]"
-            >
-              <option value="Applied">Applied</option>
-              <option value="Interviewing">Interviewing</option>
-              <option value="Accepted">Accepted</option>
-              <option value="Rejected">Rejected</option>
-            </select>
-            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-4 text-black/20 dark:text-white/20 transition-colors duration-300">
-              <svg className="fill-current h-3 w-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
-              </svg>
-            </div>
+              onChange={(newStatus) => onStatusChange(application.id, newStatus)}
+            />
           </div>
         </div>
       </div>

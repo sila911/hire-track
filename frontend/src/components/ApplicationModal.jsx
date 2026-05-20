@@ -1,15 +1,135 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { FaXmark } from 'react-icons/fa6';
+import { FaXmark, FaLinkedin, FaFacebook, FaTelegram, FaStore } from 'react-icons/fa6';
+import { Globe, UserPlus, MoreHorizontal, ChevronDown } from 'lucide-react';
 import api from '../axios';
 import { firstErrorPerField } from '../utils/laravelErrors';
+import StatusDropdown from './StatusDropdown';
 
 function todayISODate() {
   return new Date().toISOString().slice(0, 10);
 }
 
-const STATUSES = ['Applied', 'Interviewing', 'Accepted', 'Rejected'];
 const SOURCES = ['LinkedIn', 'Facebook', 'Telegram', 'Nham24', 'Company Website', 'Referral', 'Other'];
+
+const SOURCE_CONFIG = {
+  LinkedIn: {
+    icon: FaLinkedin,
+    color: 'text-blue-600 dark:text-blue-400',
+    bg: 'bg-blue-500/10 dark:bg-blue-500/20',
+    border: 'border-blue-200 dark:border-blue-500/30',
+  },
+  Facebook: {
+    icon: FaFacebook,
+    color: 'text-blue-500 dark:text-blue-300',
+    bg: 'bg-blue-500/10 dark:bg-blue-500/20',
+    border: 'border-blue-200 dark:border-blue-500/30',
+  },
+  Telegram: {
+    icon: FaTelegram,
+    color: 'text-sky-500 dark:text-sky-300',
+    bg: 'bg-sky-500/10 dark:bg-sky-500/20',
+    border: 'border-sky-200 dark:border-sky-500/30',
+  },
+  Nham24: {
+    icon: FaStore,
+    color: 'text-red-500 dark:text-red-400',
+    bg: 'bg-red-500/10 dark:bg-red-500/20',
+    border: 'border-red-200 dark:border-red-500/30',
+  },
+  'Company Website': {
+    icon: Globe,
+    color: 'text-slate-600 dark:text-slate-300',
+    bg: 'bg-slate-500/10 dark:bg-slate-500/20',
+    border: 'border-slate-200 dark:border-slate-500/30',
+  },
+  Referral: {
+    icon: UserPlus,
+    color: 'text-emerald-600 dark:text-emerald-400',
+    bg: 'bg-emerald-500/10 dark:bg-emerald-500/20',
+    border: 'border-emerald-200 dark:border-emerald-500/30',
+  },
+  Other: {
+    icon: MoreHorizontal,
+    color: 'text-gray-500 dark:text-gray-400',
+    bg: 'bg-gray-500/10 dark:bg-gray-500/20',
+    border: 'border-gray-200 dark:border-gray-500/30',
+  },
+};
+
+function SourceDropdown({ value, onChange, className = '' }) {
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  const currentConfig = SOURCE_CONFIG[value] || SOURCE_CONFIG.Other;
+  const CurrentIcon = currentConfig.icon;
+
+  return (
+    <div className={`relative ${className}`} ref={dropdownRef}>
+      <button
+        type="button"
+        onClick={(e) => { e.preventDefault(); setIsOpen(!isOpen); }}
+        className={`w-full flex items-center justify-between gap-2 px-3 py-1.5 md:py-2 rounded-xl border ${currentConfig.border} ${currentConfig.bg} transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] outline-none shadow-sm`}
+      >
+        <div className={`flex items-center gap-2 ${currentConfig.color}`}>
+          <CurrentIcon size={14} className="shrink-0" />
+          <span className="text-[11px] md:text-sm font-bold uppercase tracking-wider">{value}</span>
+        </div>
+        <ChevronDown size={14} className={`shrink-0 text-slate-500 dark:text-slate-400 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />
+      </button>
+
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -10, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -10, scale: 0.95 }}
+            transition={{ duration: 0.2 }}
+            className="absolute z-50 w-full mt-2 py-2 bg-white/90 dark:bg-slate-900/90 border border-slate-200 dark:border-white/10 rounded-2xl shadow-xl backdrop-blur-xl overflow-hidden max-h-56 overflow-y-auto custom-scrollbar-slim"
+          >
+            {SOURCES.map((source) => {
+              const config = SOURCE_CONFIG[source];
+              const Icon = config.icon;
+              const isSelected = value === source;
+
+              return (
+                <button
+                  key={source}
+                  type="button"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onChange(source);
+                    setIsOpen(false);
+                  }}
+                  className={`w-full flex items-center gap-3 px-4 py-2.5 text-left transition-colors duration-200
+                    ${isSelected ? 'bg-black/5 dark:bg-white/10' : 'hover:bg-black/5 dark:hover:bg-white/5'}
+                  `}
+                >
+                  <div className={`flex items-center justify-center w-6 h-6 rounded-full ${config.bg} ${config.color}`}>
+                    <Icon size={12} />
+                  </div>
+                  <span className={`text-[11px] md:text-xs font-bold uppercase tracking-widest ${isSelected ? config.color : 'text-slate-600 dark:text-slate-300'}`}>
+                    {source}
+                  </span>
+                </button>
+              );
+            })}
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
 
 export default function ApplicationModal({ open, application, onClose, onSaved }) {
   const isEdit = Boolean(application?.id);
@@ -232,42 +352,26 @@ export default function ApplicationModal({ open, application, onClose, onSaved }
               </div>
 
               <div>
-                <label htmlFor="app-status" className="mb-1 block text-[10px] font-bold tracking-wider text-slate-400 uppercase">
+                <label className="mb-1 block text-[10px] font-bold tracking-wider text-slate-400 uppercase">
                   Status
                 </label>
-                <select
-                  id="app-status"
+                <StatusDropdown
                   value={status}
-                  onChange={(e) => setStatus(e.target.value)}
-                  className="w-full rounded-xl border border-slate-200 dark:border-white/10 bg-white/40 dark:bg-black/40 px-3 py-1.5 text-sm text-black dark:text-white outline-none ring-slate-200 dark:ring-white/20 focus:ring-2 transition-all cursor-pointer"
-                >
-                  {STATUSES.map((s) => (
-                    <option key={s} value={s} className="bg-white dark:bg-slate-900 text-black dark:text-white">
-                      {s}
-                    </option>
-                  ))}
-                </select>
+                  onChange={setStatus}
+                />
                 {fieldErrors.status && (
                   <p className="mt-1 text-[10px] font-bold text-red-400">{fieldErrors.status}</p>
                 )}
               </div>
 
               <div>
-                <label htmlFor="app-source" className="mb-1 block text-[10px] font-bold tracking-wider text-slate-400 uppercase">
+                <label className="mb-1 block text-[10px] font-bold tracking-wider text-slate-400 uppercase">
                   Source
                 </label>
-                <select
-                  id="app-source"
+                <SourceDropdown
                   value={source}
-                  onChange={(e) => setSource(e.target.value)}
-                  className="w-full rounded-xl border border-slate-200 dark:border-white/10 bg-white/40 dark:bg-black/40 px-3 py-1.5 text-sm text-black dark:text-white outline-none ring-slate-200 dark:ring-white/20 focus:ring-2 transition-all cursor-pointer"
-                >
-                  {SOURCES.map((s) => (
-                    <option key={s} value={s} className="bg-white dark:bg-slate-900 text-black dark:text-white">
-                      {s}
-                    </option>
-                  ))}
-                </select>
+                  onChange={setSource}
+                />
                 {fieldErrors.source && (
                   <p className="mt-1 text-[10px] font-bold text-red-400">{fieldErrors.source}</p>
                 )}
