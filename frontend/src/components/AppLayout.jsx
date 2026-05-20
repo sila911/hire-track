@@ -34,9 +34,11 @@ export default function AppLayout({
     <div className="flex h-screen bg-slate-50 dark:bg-slate-950 transition-colors duration-300 overflow-hidden relative">
       {/* Animated Background Blobs */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
-        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-indigo-500/10 dark:bg-indigo-500/20 rounded-full blur-[120px] animate-blob" />
-        <div className="absolute top-[20%] right-[-5%] w-[35%] h-[35%] bg-purple-500/10 dark:bg-purple-500/20 rounded-full blur-[120px] animate-blob animation-delay-2000" />
-        <div className="absolute bottom-[-10%] left-[20%] w-[45%] h-[45%] bg-blue-500/10 dark:bg-blue-500/20 rounded-full blur-[120px] animate-blob animation-delay-4000" />
+        <div className="absolute top-[-5%] left-[-5%] w-[45%] h-[45%] bg-indigo-500/20 dark:bg-indigo-500/20 rounded-full blur-[120px] animate-blob" />
+        <div className="absolute top-[10%] right-[-5%] w-[40%] h-[40%] bg-purple-500/20 dark:bg-purple-500/20 rounded-full blur-[120px] animate-blob animation-delay-2000" />
+        <div className="absolute bottom-[10%] left-[-5%] w-[40%] h-[40%] bg-rose-500/15 dark:bg-rose-500/15 rounded-full blur-[120px] animate-blob animation-delay-4000" />
+        <div className="absolute bottom-[-5%] right-[10%] w-[45%] h-[45%] bg-blue-500/20 dark:bg-blue-500/20 rounded-full blur-[120px] animate-blob" />
+        <div className="absolute top-[40%] left-[30%] w-[35%] h-[35%] bg-amber-400/15 dark:bg-amber-400/10 rounded-full blur-[120px] animate-blob animation-delay-2000" />
       </div>
 
       <Sidebar 
