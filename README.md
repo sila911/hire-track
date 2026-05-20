@@ -4,6 +4,17 @@ HireTrack is a sleek, personal job application tracker designed to help job seek
 
 This project is a decoupled application featuring a **Laravel 12** backend API and a **React 19** frontend powered by **Vite**.
 
+## 📸 Screenshots
+
+### Landing Page
+<img src="frontend/public/londingPage.png" alt="Landing Page" width="800">
+
+### Dashboard
+<img src="frontend/public/dashbordPage.png" alt="Dashboard Page" width="800">
+
+### Analytics
+<img src="frontend/public/analyticsPage.png" alt="Analytics Page" width="800">
+
 ## ✨ Features
 
 - **Personal Dashboard & Kanban Board:** A centralized view of all your job applications with real-time search, sorting, and a drag-and-drop Kanban board for visual status management.
