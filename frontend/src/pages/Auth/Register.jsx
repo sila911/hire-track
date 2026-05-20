@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { FaEnvelope, FaLock, FaUser } from 'react-icons/fa';
-import { ArrowLeft, Sun, Moon } from 'lucide-react';
+import { ArrowLeft, Sun, Moon, Eye, EyeOff } from 'lucide-react';
 import api from '../../axios';
 import FormErrorAlert from '../../components/ui/FormErrorAlert';
 import { parseRegisterApiError } from '../../utils/laravelErrors';
@@ -21,6 +21,8 @@ export default function Register() {
   const [bannerMessages, setBannerMessages] = useState([]);
   const [pending, setPending] = useState(false);
   const [theme, setTheme] = useState(localStorage.getItem('theme') || 'dark');
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   useEffect(() => {
     if (theme === 'dark') {
@@ -177,14 +179,21 @@ export default function Register() {
                 <input
                   id="register-password"
                   name="password"
-                  type="password"
+                  type={showPassword ? 'text' : 'password'}
                   autoComplete="new-password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full rounded-xl border border-slate-200 dark:border-white/10 bg-black/5 dark:bg-white/5 py-3.5 pl-10 pr-4 text-black dark:text-white placeholder-black/20 dark:placeholder-white/20 shadow-inner outline-none transition focus:border-black/30 dark:focus:border-white/30"
+                  className="w-full rounded-xl border border-slate-200 dark:border-white/10 bg-black/5 dark:bg-white/5 py-3.5 pl-10 pr-12 text-black dark:text-white placeholder-black/20 dark:placeholder-white/20 shadow-inner outline-none transition focus:border-black/30 dark:focus:border-white/30"
                   placeholder="••••••••"
                   required
                 />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 p-1.5 rounded-lg text-black/40 dark:text-white/40 hover:text-black dark:hover:text-white transition-colors"
+                >
+                  {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                </button>
               </div>
               {passwordError ? <p className="mt-1.5 text-sm font-bold text-red-400">{passwordError}</p> : null}
             </div>
@@ -204,14 +213,21 @@ export default function Register() {
                 <input
                   id="register-password-confirmation"
                   name="password_confirmation"
-                  type="password"
+                  type={showConfirmPassword ? 'text' : 'password'}
                   autoComplete="new-password"
                   value={passwordConfirmation}
                   onChange={(e) => setPasswordConfirmation(e.target.value)}
-                  className="w-full rounded-xl border border-slate-200 dark:border-white/10 bg-black/5 dark:bg-white/5 py-3.5 pl-10 pr-4 text-black dark:text-white placeholder-black/20 dark:placeholder-white/20 shadow-inner outline-none transition focus:border-black/30 dark:focus:border-white/30"
+                  className="w-full rounded-xl border border-slate-200 dark:border-white/10 bg-black/5 dark:bg-white/5 py-3.5 pl-10 pr-12 text-black dark:text-white placeholder-black/20 dark:placeholder-white/20 shadow-inner outline-none transition focus:border-black/30 dark:focus:border-white/30"
                   placeholder="Repeat password"
                   required
                 />
+                <button
+                  type="button"
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 p-1.5 rounded-lg text-black/40 dark:text-white/40 hover:text-black dark:hover:text-white transition-colors"
+                >
+                  {showConfirmPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                </button>
               </div>
               {passwordConfirmationError ? (
                 <p className="mt-1.5 text-sm font-bold text-red-400">{passwordConfirmationError}</p>
