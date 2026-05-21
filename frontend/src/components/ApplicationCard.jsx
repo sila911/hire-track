@@ -1,7 +1,17 @@
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaEllipsisV, FaEdit, FaTrashAlt, FaClock } from 'react-icons/fa';
+import { FaEllipsisV, FaEdit, FaTrashAlt, FaClock, FaLinkedin, FaFacebook, FaTelegram } from 'react-icons/fa';
+import { Globe, UserPlus, MoreHorizontal } from 'lucide-react';
 import StatusDropdown from './StatusDropdown';
+
+const SOURCE_ICONS = {
+  Telegram: FaTelegram,
+  LinkedIn: FaLinkedin,
+  Facebook: FaFacebook,
+  Website: Globe,
+  Referral: UserPlus,
+  Other: MoreHorizontal,
+};
 
 export default function ApplicationCard({ application, onStatusChange, onEdit, onDelete }) {
   const [showMenu, setShowMenu] = useState(false);
@@ -16,6 +26,8 @@ export default function ApplicationCard({ application, onStatusChange, onEdit, o
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
+
+  const SourceIcon = SOURCE_ICONS[application.source] || SOURCE_ICONS.Other;
 
   return (
     <motion.div
@@ -81,9 +93,15 @@ export default function ApplicationCard({ application, onStatusChange, onEdit, o
         </div>
 
         <div className="flex flex-col gap-3 md:gap-4 mt-4 md:mt-6">
-          <div className="flex items-center gap-2 text-[10px] font-bold text-slate-500 dark:text-white/40 uppercase tracking-widest transition-colors duration-300">
-            <FaClock className="text-[10px]" />
-            <span>Applied {new Date(application.applied_at).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}</span>
+          <div className="flex flex-col gap-1.5">
+            <div className="flex items-center gap-2 text-[10px] font-bold text-slate-500 dark:text-white/40 uppercase tracking-widest transition-colors duration-300">
+              <FaClock className="text-[10px]" />
+              <span>Applied {new Date(application.applied_at).toLocaleDateString(undefined, { month: 'short', day: 'numeric' })}</span>
+            </div>
+            <div className="flex items-center gap-2 text-[10px] font-bold text-slate-400 dark:text-white/30 uppercase tracking-widest transition-colors duration-300">
+              <SourceIcon size={10} className="shrink-0" />
+              <span>SOURCE: {application.source || 'Other'}</span>
+            </div>
           </div>
 
           <div className="relative w-full overflow-visible">

@@ -76,7 +76,7 @@ export default function Landing() {
       role: "Product Designer @ TechFlow",
     },
     {
-      quote: "The Kanban board is a game changer. I used to use spreadsheets, but this is so much faster and more visual. Highly recommend for any job seeker.",
+      quote: "This is a really Great website. My girlfriend broke up with me after I used this website.",
       author: "Michael L.",
       role: "Software Engineer @ Nova",
     },

@@ -138,7 +138,13 @@ class AuthController extends Controller
 
         } catch (\Exception $e) {
             \Log::error('Google Auth failure: ' . $e->getMessage());
-            return response()->json(['error' => 'Authentication exception: ' . $e->getMessage()], 500);
+            
+            $message = 'Authentication failed. Please try again later.';
+            if ($e instanceof \Illuminate\Database\QueryException || $e instanceof \PDOException) {
+                $message = 'Database service is currently unavailable. Please contact support if the issue persists.';
+            }
+
+            return response()->json(['error' => $message], 500);
         }
     }
 }
