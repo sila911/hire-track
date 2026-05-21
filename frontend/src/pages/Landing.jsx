@@ -23,6 +23,7 @@ import {
 import { useAuth } from '../auth-context';
 
 import AboutSection from '../components/AboutSection';
+import AnimatedBackground from '../components/AnimatedBackground';
 
 export default function Landing() {
   const navigate = useNavigate();
@@ -109,31 +110,8 @@ export default function Landing() {
     : '??';
 
   return (
-    <div className="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-white selection:bg-indigo-500/30 overflow-x-hidden transition-colors duration-500">
-      {/* Immersive Background Glows */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
-        <motion.div 
-          animate={{ 
-            scale: [1, 1.2, 1],
-            rotate: [0, 90, 0],
-            x: [0, 50, 0],
-            y: [0, 30, 0]
-          }}
-          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-          className="absolute top-[-10%] right-[-10%] w-[50%] h-[50%] bg-indigo-500/10 dark:bg-indigo-500/20 rounded-full blur-[120px]"
-        />
-        <motion.div 
-          animate={{ 
-            scale: [1.2, 1, 1.2],
-            rotate: [0, -90, 0],
-            x: [0, -50, 0],
-            y: [0, -30, 0]
-          }}
-          transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-          className="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] bg-purple-500/10 dark:bg-purple-500/20 rounded-full blur-[120px]"
-        />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[radial-gradient(circle_at_center,_transparent_0%,_rgba(2,6,23,0.4)_100%)] dark:bg-[radial-gradient(circle_at_center,_transparent_0%,_rgba(2,6,23,0.8)_100%)]"></div>
-      </div>
+    <div className="min-h-screen bg-transparent text-slate-900 dark:text-white selection:bg-indigo-500/30 overflow-x-hidden transition-colors duration-500 relative">
+      <AnimatedBackground />
 
       {/* Floating Dark iOS-Style Capsule Navbar */}
       <nav 
@@ -467,7 +445,7 @@ export default function Landing() {
               <a href="#" className="hover:text-black dark:hover:text-white transition-colors">Privacy</a>
               <a href="#" className="hover:text-black dark:hover:text-white transition-colors">Terms</a>
               <a href="#" className="hover:text-black dark:hover:text-white transition-colors">Twitter</a>
-              <a href="#" className="hover:text-black dark:hover:text-white transition-colors">GitHub</a>
+              <a href="https://github.com/sila911/hire-track" target="_blank" rel="noopener noreferrer" className="hover:text-black dark:hover:text-white transition-colors">GitHub</a>
             </div>
           </div>
           <p>© {new Date().getFullYear()} HireTrack. Designed for excellence. All rights reserved.</p>
