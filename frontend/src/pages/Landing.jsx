@@ -20,10 +20,31 @@ import {
   SiAirbnb, 
   SiSpotify 
 } from 'react-icons/si';import { FaMicrosoft } from 'react-icons/fa6';
+import { useAuth } from '../auth-context';
+
+import AboutSection from '../components/AboutSection';
 
 export default function Landing() {
   const navigate = useNavigate();
+  const { user } = useAuth();
   const [theme, setTheme] = useState(localStorage.getItem('theme') || 'dark');
+  const [scrollVisible, setScrollVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      if (currentScrollY > 60 && currentScrollY > lastScrollY) {
+        setScrollVisible(false);
+      } else if (currentScrollY < lastScrollY) {
+        setScrollVisible(true);
+      }
+      setLastScrollY(currentScrollY);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [lastScrollY]);
 
   useEffect(() => {
     if (theme === 'dark') {
@@ -83,6 +104,10 @@ export default function Landing() {
     }
   };
 
+  const initials = user?.name
+    ? user.name.split(' ').map((n) => n[0]).join('').toUpperCase().slice(0, 2)
+    : '??';
+
   return (
     <div className="min-h-screen bg-white dark:bg-slate-950 text-slate-900 dark:text-white selection:bg-indigo-500/30 overflow-x-hidden transition-colors duration-500">
       {/* Immersive Background Glows */}
@@ -110,39 +135,60 @@ export default function Landing() {
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[radial-gradient(circle_at_center,_transparent_0%,_rgba(2,6,23,0.4)_100%)] dark:bg-[radial-gradient(circle_at_center,_transparent_0%,_rgba(2,6,23,0.8)_100%)]"></div>
       </div>
 
-      {/* Premium Sticky Header */}
-      <motion.nav 
-        initial={{ y: -100, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-        className="fixed top-0 left-0 right-0 z-[100] border-b border-black/5 dark:border-white/5 bg-white/40 dark:bg-slate-950/40 backdrop-blur-xl px-6 py-4 md:px-12"
+      {/* Floating Dark iOS-Style Capsule Navbar */}
+      <nav 
+        className={`fixed top-4 left-1/2 -translate-x-1/2 w-[95%] max-w-7xl h-14 rounded-full bg-[#030712]/60 border border-white/10 backdrop-blur-xl px-6 shadow-2xl flex items-center justify-between z-50 transition-all duration-300 ease-out ${scrollVisible ? 'translate-y-0 opacity-100 scale-100' : '-translate-y-24 opacity-0 scale-95 pointer-events-none'}`}
       >
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-3 group cursor-pointer">
-            <div className="w-10 h-10 bg-black dark:bg-white rounded-xl flex items-center justify-center shadow-2xl group-hover:scale-110 transition-transform duration-300">
-              <Briefcase size={22} className="text-white dark:text-black" />
-            </div>
-            <span className="text-2xl font-black tracking-tighter">HireTrack</span>
+        {/* Left: Avatar + Name (or Logo if not logged in) */}
+        <div className="flex items-center gap-3 shrink-0">
+          <div className="w-8 h-8 bg-white/10 rounded-full flex items-center justify-center border border-white/20 overflow-hidden shadow-sm">
+            {user?.profile_image_url ? (
+              <img src={user.profile_image_url} alt="" className="w-full h-full object-cover" />
+            ) : user ? (
+              <span className="text-[10px] font-black text-white">{initials}</span>
+            ) : (
+              <Briefcase size={16} className="text-white" />
+            )}
           </div>
-          
-          <div className="flex items-center gap-4 md:gap-8">
-            <button
-              onClick={toggleTheme}
-              className="p-2.5 rounded-xl bg-black/5 dark:bg-white/5 text-slate-600 dark:text-slate-400 hover:text-black dark:hover:text-white transition-all hover:bg-black/10 dark:hover:bg-white/10"
-            >
-              {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
-            </button>
-            <motion.button 
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+          <span className="text-sm font-black tracking-tight text-white truncate max-w-[100px]">
+            {user?.name || 'HireTrack'}
+          </span>
+        </div>
+
+        {/* Center: Menu Links */}
+        <div className="hidden md:flex items-center gap-8 text-xs font-bold tracking-widest uppercase text-white/50">
+          <a href="#features" className="hover:text-white transition-colors">Features</a>
+          <a href="#stories" className="hover:text-white transition-colors">Stories</a>
+          <a href="#about" className="hover:text-white transition-colors">About</a>
+        </div>
+
+        {/* Right: Theme, Sign In */}
+        <div className="flex items-center gap-3 md:gap-5">
+          <button
+            onClick={toggleTheme}
+            className="text-white/40 hover:text-white transition-colors"
+          >
+            {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+          </button>
+
+          {!user && (
+            <button 
               onClick={() => navigate('/login')}
-              className="px-6 py-2.5 bg-black dark:bg-white text-white dark:text-black rounded-xl text-sm font-bold tracking-tight shadow-xl hover:opacity-90 transition-all"
+              className="px-5 py-2 bg-white text-black rounded-full text-[10px] font-black tracking-widest uppercase hover:scale-105 transition-transform"
             >
               Sign In
-            </motion.button>
-          </div>
+            </button>
+          )}
+          {user && (
+            <button 
+              onClick={() => navigate('/dashboard')}
+              className="px-5 py-2 bg-indigo-500 text-white rounded-full text-[10px] font-black tracking-widest uppercase hover:scale-105 transition-transform"
+            >
+              App
+            </button>
+          )}
         </div>
-      </motion.nav>
+      </nav>
 
       {/* Hero Section */}
       <main className="relative z-10 max-w-7xl mx-auto px-6 pt-40 pb-20 md:px-12 flex flex-col lg:flex-row items-center gap-20">
@@ -300,7 +346,7 @@ export default function Landing() {
       </section>
 
       {/* Features Grid */}
-      <section className="relative z-10 max-w-7xl mx-auto px-6 py-40 md:px-12">
+      <section id="features" className="relative z-10 max-w-7xl mx-auto px-6 py-40 md:px-12">
         <div className="text-center mb-24">
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
@@ -347,7 +393,7 @@ export default function Landing() {
       </section>
 
       {/* Testimonials */}
-      <section className="relative z-10 max-w-7xl mx-auto px-6 py-40 md:px-12">
+      <section id="stories" className="relative z-10 max-w-7xl mx-auto px-6 py-40 md:px-12">
         <div className="text-center mb-24">
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
@@ -375,21 +421,23 @@ export default function Landing() {
         </div>
       </section>
 
+      <AboutSection />
+
       {/* High-Impact CTA Section */}
       <section className="relative z-10 max-w-6xl mx-auto px-6 py-40 text-center">
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
-          className="p-16 md:p-32 rounded-[4rem] bg-slate-950 text-white shadow-2xl relative overflow-hidden group border border-white/5"
+          className="p-16 md:p-32 rounded-[4rem] bg-indigo-600 dark:bg-slate-950 text-white shadow-2xl relative overflow-hidden group border border-white/10"
         >
           {/* Animated Background Gradients for CTA */}
-          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-indigo-600/20 rounded-full blur-[100px] -mr-64 -mt-64 group-hover:bg-indigo-600/30 transition-colors duration-700"></div>
-          <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-purple-600/20 rounded-full blur-[100px] -ml-64 -mb-64 group-hover:bg-purple-600/30 transition-colors duration-700"></div>
+          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-white/20 dark:bg-indigo-600/20 rounded-full blur-[100px] -mr-64 -mt-64 group-hover:bg-white/30 dark:group-hover:bg-indigo-600/30 transition-colors duration-700"></div>
+          <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-white/20 dark:bg-purple-600/20 rounded-full blur-[100px] -ml-64 -mb-64 group-hover:bg-white/30 dark:group-hover:bg-purple-600/30 transition-colors duration-700"></div>
           
           <div className="relative z-10">
             <h2 className="text-5xl md:text-7xl font-black tracking-tight mb-10 leading-[0.9]">Ready to land your <br />next big role?</h2>
-            <p className="text-indigo-100/60 text-lg md:text-xl font-medium mb-16 max-w-2xl mx-auto">
+            <p className="text-indigo-100 dark:text-indigo-100/60 text-lg md:text-xl font-medium mb-16 max-w-2xl mx-auto">
               Stop organizing in spreadsheets. Join thousands of users who have streamlined their search with HireTrack.
             </p>
             <motion.button
