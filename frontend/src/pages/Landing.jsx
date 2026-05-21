@@ -75,18 +75,21 @@ export default function Landing() {
       author: "Sarah J.",
       role: "Product Designer @ TechFlow",
       url: "https://linkedin.com/in/sarahj",
+      avatar: "https://i.pravatar.cc/150?u=sarahj",
     },
     {
       quote: "This is a really Great website. My girlfriend broke up with me after I used this website.",
       author: "Samrach Oepchheangrath",
       role: "Network Engineer @ CloudNet",
       url: "https://www.facebook.com/samrachoep",
+      avatar: "https://i.pravatar.cc/150?u=samrach",
     },
     {
       quote: "I love the mobile optimization. I can update my application status while I'm on the train right after an interview. So convenient!",
       author: "Alex D.",
       role: "Marketing Specialist",
       url: "https://twitter.com/alexd",
+      avatar: "https://i.pravatar.cc/150?u=alexd",
     }
   ];
 
@@ -497,9 +500,19 @@ function TestimonialCard({ testimonial, index }) {
         "{testimonial.quote}"
       </p>
       <div className="flex items-center gap-4">
-        <div className="w-12 h-12 rounded-full bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center text-white font-black">
-          {testimonial.author[0]}
-        </div>
+        {testimonial.avatar ? (
+          <div className="w-12 h-12 rounded-full overflow-hidden border border-white/10 shrink-0">
+            <img 
+              src={testimonial.avatar} 
+              alt={testimonial.author} 
+              className="w-full h-full object-cover"
+            />
+          </div>
+        ) : (
+          <div className="w-12 h-12 rounded-full bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center text-white font-black shrink-0">
+            {testimonial.author[0]}
+          </div>
+        )}
         <div>
           {testimonial.url ? (
             <a 
