@@ -71,25 +71,25 @@ export default function Landing() {
 
   const testimonials = [
     {
-      quote: "HireTrack helped me organize 150+ applications and I finally landed my dream job. The analytics showed me exactly where my pipeline was failing.",
-      author: "Sarah J.",
-      role: "Product Designer @ TechFlow",
-      url: "https://linkedin.com/in/sarahj",
-      avatar: "https://i.pravatar.cc/150?u=sarahj",
+      quote: "My Excel tracking sheet was so ugly it gave me depression. Moving to this sleek dashboard gives me the exact same dopamine hit as playing video games. I’m still unemployed, but at least my coping mechanism looks beautiful.",
+      author: "Sila S.",
+      role: "Single & Employed",
+      url: "https://silasem.me",
+      avatar: "https://github.com/sila911.png",
     },
     {
-      quote: "This is a really Great website. My girlfriend broke up with me after I used this website.",
-      author: "Samrach Oepchheangrath",
+      quote: " website. My girlfriend broke up with me after I used this website.",
+      author: "Samrach Oep.",
       role: "Network Engineer @ CloudNet",
-      url: "https://www.facebook.com/samrachoep",
-      avatar: "https://i.pravatar.cc/150?u=samrach",
+      url: "https://www.facebook.com/share/14cb9f5TM7d/?mibextid=wwXIfr",
+      avatar: "https://scontent.fpnh8-2.fna.fbcdn.net/v/t39.30808-1/476797606_1134817501391810_5935420307205904795_n.jpg?stp=dst-jpg_s100x100_tt6&_nc_cat=107&ccb=1-7&_nc_sid=e99d92&_nc_ohc=gEeEaQ_ubBUQ7kNvwFmEnGX&_nc_oc=AdppW5-2RGL7TQtYYea1e17yujNog3jeJomajvfzVIVrWV1rl8CoXO20DUntRRs52VA&_nc_zt=24&_nc_ht=scontent.fpnh8-2.fna&_nc_gid=Ix5RSkOdZ3PKZw4x0IAMiw&_nc_ss=7b289&oh=00_Af6YG8Ns7hfwYuyZihFB5fKKZePsxYbbu7MuBB97gtjptw&oe=6A151248",
     },
     {
-      quote: "I love the mobile optimization. I can update my application status while I'm on the train right after an interview. So convenient!",
-      author: "Alex D.",
-      role: "Marketing Specialist",
+      quote: "This website is dangerously effective. My girlfriend broke up with me because I spent Valentine's Day automating my application code instead of taking her to a nice cafe at Riverside. Got an internship offer, a perfect layout, and zero replies on Telegram.",
+      author: "Rotha D.",
+      role: "Single & Coding",
       url: "https://twitter.com/alexd",
-      avatar: "https://i.pravatar.cc/150?u=alexd",
+      avatar: "",
     }
   ];
 
