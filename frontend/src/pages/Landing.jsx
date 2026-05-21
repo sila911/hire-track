@@ -74,16 +74,19 @@ export default function Landing() {
       quote: "HireTrack helped me organize 150+ applications and I finally landed my dream job. The analytics showed me exactly where my pipeline was failing.",
       author: "Sarah J.",
       role: "Product Designer @ TechFlow",
+      url: "https://linkedin.com/in/sarahj",
     },
     {
       quote: "This is a really Great website. My girlfriend broke up with me after I used this website.",
-      author: "Michael L.",
-      role: "Software Engineer @ Nova",
+      author: "Samrach Oepchheangrath",
+      role: "Network Engineer @ CloudNet",
+      url: "https://www.facebook.com/samrachoep",
     },
     {
       quote: "I love the mobile optimization. I can update my application status while I'm on the train right after an interview. So convenient!",
       author: "Alex D.",
       role: "Marketing Specialist",
+      url: "https://twitter.com/alexd",
     }
   ];
 
@@ -498,7 +501,18 @@ function TestimonialCard({ testimonial, index }) {
           {testimonial.author[0]}
         </div>
         <div>
-          <p className="font-black text-slate-900 dark:text-white tracking-tight text-lg">{testimonial.author}</p>
+          {testimonial.url ? (
+            <a 
+              href={testimonial.url} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="font-black text-slate-900 dark:text-white tracking-tight text-lg hover:text-indigo-500 dark:hover:text-indigo-400 transition-colors inline-block hover:underline decoration-2 underline-offset-4"
+            >
+              {testimonial.author}
+            </a>
+          ) : (
+            <p className="font-black text-slate-900 dark:text-white tracking-tight text-lg">{testimonial.author}</p>
+          )}
           <p className="text-[10px] font-black text-slate-500 dark:text-slate-500 uppercase tracking-[0.2em] mt-0.5">{testimonial.role}</p>
         </div>
       </div>
