@@ -218,12 +218,14 @@ function AppShell() {
 
 import { NotificationProvider } from './notification-context';
 import { DialogProvider } from './dialog-context';
+import { Analytics } from '@vercel/analytics/react';
 
 function App() {
   return (
     <NotificationProvider>
       <DialogProvider>
         <AppShell />
+        <Analytics />
       </DialogProvider>
     </NotificationProvider>
   );
