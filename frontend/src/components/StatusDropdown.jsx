@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Send, Users, CheckCircle, XCircle, ChevronDown } from 'lucide-react';
 
-export const STATUS_CONFIG = {
+const STATUS_CONFIG = {
   Applied: {
     icon: Send,
     color: 'text-blue-600 dark:text-blue-400',

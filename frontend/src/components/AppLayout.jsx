@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import { Menu, Search, Sun, Moon, Plus, ChevronDown } from 'lucide-react';
-import { useAuth } from '../auth-context';
 import Sidebar from './Sidebar';
 
 export default function AppLayout({ 
@@ -11,7 +10,6 @@ export default function AppLayout({
   setSortBy, 
   onNewApplication 
 }) {
-  const { user } = useAuth();
   const location = useLocation();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isCollapsed, setIsCollapsed] = useState(false);

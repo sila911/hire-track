@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 import { useEffect, useState, useRef } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { FaXmark, FaLinkedin, FaFacebook, FaTelegram } from 'react-icons/fa6';
@@ -185,7 +186,7 @@ export default function ApplicationModal({ open, application, onClose, onSaved }
         if (data && data.length > 0 && data[0].logo) {
           setLogoUrl(data[0].logo);
         }
-      } catch (err) {
+      } catch {
         // ignore errors
       }
     }, 500);
