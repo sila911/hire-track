@@ -1,10 +1,9 @@
 <?php
 
+use App\Http\Controllers\AnalyticsController;
 use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\ApplicationStatsController;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\AnalyticsController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::post('/register', [AuthController::class, 'register']);

@@ -10,16 +10,17 @@ class AnalyticsController extends Controller
     public function sources(Request $request)
     {
         $sources = $request->user()->applications()
-            ->select('source', 
+            ->select('source',
                 DB::raw('count(*) as total_apps'),
                 DB::raw('sum(case when status in ("Interviewing", "Accepted", "Rejected") then 1 else 0 end) as interviews')
             )
             ->groupBy('source')
             ->get()
             ->map(function ($item) {
-                $item->interview_rate = $item->total_apps > 0 
-                    ? round(($item->interviews / $item->total_apps) * 100, 1) 
+                $item->interview_rate = $item->total_apps > 0
+                    ? round(($item->interviews / $item->total_apps) * 100, 1)
                     : 0;
+
                 return $item;
             });
 
@@ -54,7 +55,7 @@ class AnalyticsController extends Controller
 
             return [
                 'source' => $source,
-                'avg_days' => round($avgDays, 1)
+                'avg_days' => round($avgDays, 1),
             ];
         })->values();
 
@@ -74,7 +75,7 @@ class AnalyticsController extends Controller
         })->map(function ($group, $week) {
             return [
                 'week' => $week,
-                'count' => $group->count()
+                'count' => $group->count(),
             ];
         })->values();
 

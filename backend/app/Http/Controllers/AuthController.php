@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Validation\ValidationException;
-use Illuminate\Support\Facades\Http;
 use Laravel\Socialite\Facades\Socialite;
-use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
@@ -93,6 +93,7 @@ class AuthController extends Controller
             'user' => $request->user(),
         ]);
     }
+
     public function handleGoogleLogin(Request $request)
     {
         $request->validate(['token' => 'required']);
@@ -102,15 +103,17 @@ class AuthController extends Controller
             // This is more reliable for ID Tokens (JWT) than Socialite's userFromToken
             $response = \Http::get("https://oauth2.googleapis.com/tokeninfo?id_token={$request->token}");
 
-            if (!$response->successful()) {
-                \Log::error('Google Token Validation Failed: ' . $response->body());
+            if (! $response->successful()) {
+                \Log::error('Google Token Validation Failed: '.$response->body());
+
                 return response()->json(['error' => 'Invalid or expired Google token'], 401);
             }
 
             $googleData = $response->json();
 
-            if (!isset($googleData['email'])) {
-                \Log::error('Google response missing email: ' . json_encode($googleData));
+            if (! isset($googleData['email'])) {
+                \Log::error('Google response missing email: '.json_encode($googleData));
+
                 return response()->json(['error' => 'Could not retrieve email from Google'], 401);
             }
 
@@ -124,7 +127,7 @@ class AuthController extends Controller
             );
 
             // Update profile image if available and not already set
-            if (!$user->profile_image_url && isset($googleData['picture'])) {
+            if (! $user->profile_image_url && isset($googleData['picture'])) {
                 $user->update(['profile_image_url' => $googleData['picture']]);
             }
 
@@ -133,14 +136,14 @@ class AuthController extends Controller
 
             return response()->json([
                 'token' => $authToken,
-                'user' => $user
+                'user' => $user,
             ], 200);
 
         } catch (\Exception $e) {
-            \Log::error('Google Auth failure: ' . $e->getMessage());
-            
+            \Log::error('Google Auth failure: '.$e->getMessage());
+
             $message = 'Authentication failed. Please try again later.';
-            if ($e instanceof \Illuminate\Database\QueryException || $e instanceof \PDOException) {
+            if ($e instanceof QueryException || $e instanceof \PDOException) {
                 $message = 'Database service is currently unavailable. Please contact support if the issue persists.';
             }
 
