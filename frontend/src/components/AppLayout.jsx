@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
-import { Menu, Search, Sun, Moon, Plus, ChevronDown } from 'lucide-react';
+import { SearchNormal1, Sun1, Moon, Add, ArrowDown2, Briefcase, Logout } from 'iconsax-react';
 import Sidebar from './Sidebar';
+import { useAuth } from '../auth-context';
+import { useDialog } from '../dialog-context';
 
 export default function AppLayout({ 
   searchQuery, 
@@ -11,7 +13,8 @@ export default function AppLayout({
   onNewApplication 
 }) {
   const location = useLocation();
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const { user, logout } = useAuth();
+  const { confirm } = useDialog();
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [theme, setTheme] = useState(localStorage.getItem('theme') || 'dark');
 
@@ -28,6 +31,17 @@ export default function AppLayout({
     setTheme(theme === 'dark' ? 'light' : 'dark');
   };
 
+  const handleLogout = async () => {
+    const ok = await confirm({
+      title: 'Confirm Logout',
+      message: 'Are you sure you want to sign out?',
+      confirmLabel: 'Logout',
+      cancelLabel: 'Cancel',
+      variant: 'danger',
+    });
+    if (ok) logout();
+  };
+
   return (
     <div className="flex h-screen bg-slate-50 dark:bg-slate-950 transition-colors duration-300 overflow-hidden relative">
       {/* Animated Background Blobs */}
@@ -40,86 +54,71 @@ export default function AppLayout({
       </div>
 
       <Sidebar 
-        isOpen={isSidebarOpen} 
-        setIsOpen={setIsSidebarOpen} 
         isCollapsed={isCollapsed}
         setIsCollapsed={setIsCollapsed}
       />
       
       <div className={`flex-1 flex flex-col min-h-screen text-black dark:text-slate-100 font-sans tracking-tight transition-all duration-300 overflow-hidden relative ${isCollapsed ? 'md:ml-20' : 'md:ml-64'}`}>
         
-        <main id="main-content" className="flex-1 overflow-y-auto p-4 md:p-8 custom-scrollbar">
+        <main id="main-content" className="flex-1 overflow-y-auto p-4 pb-32 md:p-8 custom-scrollbar">
           <div className="max-w-[1600px] mx-auto">
             
-            {/* New Header Section */}
-            <header className="mb-8 flex flex-col gap-6">
-              <div className="flex items-center justify-between md:hidden">
-                <button
-                  onClick={() => setIsSidebarOpen(true)}
-                  className="p-2 hover:bg-black/5 dark:hover:bg-white/5 rounded-xl transition-colors"
-                >
-                  <Menu size={24} />
-                </button>
+            {/* Header Section */}
+            <header className="mb-4 md:mb-8 flex flex-col md:gap-6">
+              
+              {/* MOBILE HEADER ONLY */}
+              <div className="flex items-center justify-between md:hidden bg-white/40 dark:bg-white/5 backdrop-blur-lg p-3 rounded-2xl border border-white/50 dark:border-white/10 shadow-sm relative z-50">
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 bg-black dark:bg-white rounded-xl flex items-center justify-center shrink-0 shadow-sm">
+                    <Briefcase size={16} className="text-white dark:text-black" />
+                  </div>
+                  <span className="font-black tracking-tighter text-lg">HireTracking</span>
+                </div>
                 
-                <button
-                  onClick={toggleTheme}
-                  className="p-2 rounded-xl hover:bg-black/5 dark:hover:bg-white/5 text-slate-500 dark:text-slate-400 transition-colors"
-                >
-                  {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
-                </button>
+                <div className="flex items-center gap-2">
+                  <button onClick={toggleTheme} className="p-2 rounded-xl bg-white/50 dark:bg-white/10 text-slate-600 dark:text-slate-300">
+                    {theme === 'dark' ? <Sun1 size={18} variant="Linear" color="currentColor" /> : <Moon size={18} variant="Linear" color="currentColor" />}
+                  </button>
+                  <button 
+                    onClick={onNewApplication} 
+                    className="w-9 h-9 rounded-xl bg-black dark:bg-white text-white dark:text-black flex items-center justify-center shadow-sm hover:scale-105 active:scale-95 transition-all"
+                  >
+                    <Add size={20} color="currentColor" variant="Linear" className="stroke-[3px]" />
+                  </button>
+                </div>
               </div>
 
-              <div className="grid grid-cols-1 lg:grid-cols-4 items-center gap-4">
+              {/* DESKTOP/SHARED TOOLBAR */}
+              <div className="hidden md:grid grid-cols-1 lg:grid-cols-4 items-center gap-4">
                 {/* Left: Hidden on mobile, empty on desktop to help centering */}
                 <div className="hidden lg:block">
                   <h1 className="text-2xl font-black tracking-tighter">
                     {location.pathname === '/dashboard' ? 'Dashboard' : 
                      location.pathname === '/analysis' ? 'Analytics' : 
-                     location.pathname === '/applications' ? 'Applications' : 'hiretrackinging'}
+                     location.pathname === '/applications' ? 'Applications' : 
+                     location.pathname === '/settings' ? 'Settings' : 'HireTracking'}
                   </h1>
                 </div>
 
-                {/* Center: Search and Filter */}
-                <div className="lg:col-span-2 flex flex-col sm:flex-row items-center gap-3">
-                  <div className="relative w-full group">
-                    <Search size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-indigo-500 transition-colors" />
-                    <input
-                      type="text"
-                      placeholder="Search..."
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
-                      className="w-full bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 focus:border-indigo-500/50 text-sm font-bold py-2.5 pl-11 pr-4 rounded-2xl outline-none shadow-sm transition-all"
-                    />
-                  </div>
-
-                  <div className="relative w-full sm:w-auto shrink-0">
-                    <select
-                      value={sortBy}
-                      onChange={(e) => setSortBy(e.target.value)}
-                      className="w-full appearance-none bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 focus:border-indigo-500/50 text-xs font-black py-2.5 pl-4 pr-10 rounded-2xl outline-none shadow-sm transition-all cursor-pointer"
-                    >
-                      <option value="date_applied_desc">NEWEST</option>
-                      <option value="company_asc">A-Z</option>
-                    </select>
-                    <ChevronDown size={14} className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
-                  </div>
+                <div className="hidden lg:block lg:col-span-2">
+                  {/* Search and filter removed per user request */}
                 </div>
 
                 {/* Right: New Application Button */}
                 <div className="flex justify-end items-center gap-4">
                   <button
                     onClick={onNewApplication}
-                    className="w-full sm:w-auto flex items-center justify-center gap-2 bg-black dark:bg-white text-white dark:text-black px-5 py-2.5 rounded-2xl font-black text-xs tracking-widest uppercase hover:scale-[1.02] active:scale-95 transition-all shadow-lg"
+                    className="hidden md:flex w-10 h-10 items-center justify-center bg-black dark:bg-white text-white dark:text-black rounded-2xl hover:scale-105 active:scale-95 transition-all shadow-lg shrink-0"
+                    title="New Application"
                   >
-                    <Plus size={16} strokeWidth={3} />
-                    <span>New App</span>
+                    <Add size={20} variant="Linear" color="currentColor" className="stroke-[3px]" />
                   </button>
                   
                   <button
                     onClick={toggleTheme}
                     className="hidden md:flex p-2.5 rounded-2xl bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 hover:bg-black/5 dark:hover:bg-white/10 text-slate-500 dark:text-slate-400 transition-colors shadow-sm"
                   >
-                    {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+                    {theme === 'dark' ? <Sun1 size={18} variant="Linear" color="currentColor" /> : <Moon size={18} variant="Linear" color="currentColor" />}
                   </button>
                 </div>
               </div>
@@ -132,4 +131,3 @@ export default function AppLayout({
     </div>
   );
 }
-

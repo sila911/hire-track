@@ -1,5 +1,6 @@
 import ApplicationCard from './ApplicationCard';
 import { motion } from 'framer-motion';
+import Skeleton from './ui/Skeleton';
 
 const STATUSES = ['Applied', 'Interviewing', 'Accepted', 'Rejected'];
 
@@ -14,8 +15,43 @@ export default function Dashboard({
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center h-64">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-black dark:border-white/80"></div>
+      <div className="flex overflow-x-auto snap-x snap-mandatory pb-8 gap-6 md:grid md:grid-cols-2 lg:grid-cols-4 md:overflow-visible md:snap-none custom-scrollbar">
+        {STATUSES.map((status, index) => (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: index * 0.1, duration: 0.5, type: 'spring' }}
+            key={`skel-${status}`}
+            className="flex-none w-[85%] sm:w-[450px] md:w-full snap-center flex flex-col rounded-[2.5rem] bg-white/70 dark:bg-white/[0.02] border border-slate-200/50 dark:border-white/5 p-6 shadow-2xl backdrop-blur-xl relative min-h-[600px] transition-colors duration-300"
+          >
+            <div className="mb-8 flex items-center justify-between px-2">
+              <Skeleton className="h-6 w-24" />
+              <Skeleton className="h-6 w-8 rounded-full" />
+            </div>
+
+            <div className="flex-1 space-y-4 overflow-y-auto pb-4 pr-1">
+              {[1, 2, 3].map((i) => (
+                <div key={i} className="rounded-3xl border border-slate-200/50 dark:border-white/5 bg-white/50 dark:bg-white/[0.02] p-5 flex flex-col gap-4">
+                  <div className="flex justify-between items-start">
+                    <div className="space-y-2">
+                      <Skeleton className="h-5 w-32" />
+                      <Skeleton className="h-3 w-20" />
+                    </div>
+                    <Skeleton variant="circular" className="h-10 w-10 shrink-0" />
+                  </div>
+                  <div className="space-y-2 mt-2">
+                    <Skeleton className="h-3 w-full" />
+                    <Skeleton className="h-3 w-3/4" />
+                  </div>
+                  <div className="flex gap-2 mt-2">
+                    <Skeleton className="h-6 w-16 rounded-full" />
+                    <Skeleton className="h-6 w-20 rounded-full" />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+        ))}
       </div>
     );
   }

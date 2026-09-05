@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import Skeleton from '../ui/Skeleton';
 import {
   BarChart,
   Bar,
@@ -36,8 +37,16 @@ export default function AnalyticsSources() {
 
   if (loading) {
     return (
-      <div className="flex h-[400px] items-center justify-center">
-        <div className="h-12 w-12 animate-spin rounded-full border-4 border-indigo-500 border-t-transparent"></div>
+      <div className="bg-white/90 dark:bg-slate-900/80 border border-slate-200 dark:border-white/10 backdrop-blur-2xl rounded-2xl p-4 md:p-6 shadow-xl h-full flex flex-col">
+        <Skeleton className="h-6 w-56 mb-8" />
+        <div className="flex-1 flex items-end justify-around pt-4 pb-2 min-h-[300px] md:min-h-[400px]">
+          {['h-[75%]', 'h-[50%]', 'h-full', 'h-[66%]', 'h-[33%]'].map((h, i) => (
+            <div key={i} className="flex gap-1 items-end h-full w-12 justify-center">
+              <Skeleton className={`w-4 sm:w-6 ${h} rounded-t-lg`} />
+              <Skeleton className={`w-4 sm:w-6 ${h === 'h-full' ? 'h-[75%]' : 'h-[25%]'} rounded-t-lg`} />
+            </div>
+          ))}
+        </div>
       </div>
     );
   }

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import Skeleton from '../ui/Skeleton';
 import api from '../../axios';
 
 export default function AnalyticsSummaryCards() {
@@ -21,9 +22,12 @@ export default function AnalyticsSummaryCards() {
 
   if (loading) {
     return (
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+      <div className="flex items-center gap-3 w-full overflow-x-auto md:overflow-visible scrollbar-none snap-x snap-mandatory pb-4 mb-4">
         {[...Array(4)].map((_, i) => (
-          <div key={i} className="h-32 bg-slate-100 dark:bg-slate-800/50 animate-pulse rounded-2xl"></div>
+          <div key={i} className="min-w-[140px] md:flex-1 snap-center p-3.5 bg-white/70 dark:bg-slate-900/80 border border-slate-200 dark:border-white/10 backdrop-blur-xl rounded-xl relative overflow-hidden flex flex-col justify-center gap-3 h-[82px]">
+            <Skeleton className="h-2 w-20" />
+            <Skeleton className="h-6 w-12" />
+          </div>
         ))}
       </div>
     );

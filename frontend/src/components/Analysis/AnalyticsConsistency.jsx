@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import Skeleton from '../ui/Skeleton';
 import {
   AreaChart,
   Area,
@@ -30,8 +31,14 @@ export default function AnalyticsConsistency() {
 
   if (loading) {
     return (
-      <div className="flex h-[300px] items-center justify-center">
-        <div className="h-10 w-10 animate-spin rounded-full border-4 border-indigo-500 border-t-transparent"></div>
+      <div className="bg-white/70 dark:bg-slate-900/80 border border-slate-200 dark:border-white/10 backdrop-blur-2xl rounded-2xl p-4 md:p-6 shadow-xl h-full flex flex-col">
+        <Skeleton className="h-6 w-56 mb-2" />
+        <Skeleton className="h-4 w-64 mb-8" />
+        <div className="flex-1 flex items-end justify-between pt-4 pb-2 min-h-[250px]">
+          {['h-[25%]', 'h-[33%]', 'h-[50%]', 'h-[75%]', 'h-[66%]', 'h-full', 'h-[80%]', 'h-[50%]'].map((h, i) => (
+            <Skeleton key={i} className={`w-6 sm:w-10 ${h} rounded-t-xl`} />
+          ))}
+        </div>
       </div>
     );
   }
