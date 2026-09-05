@@ -1,6 +1,6 @@
-# HireTrack Frontend
+# hiretrackinging Frontend
 
-This is the React and Vite-based user interface for the HireTrack application.
+This is the React and Vite-based user interface for the hiretrackinging application.
 
 ## Prerequisites
 - Node.js (v18 or higher recommended)
@@ -36,5 +36,5 @@ Follow these steps to set up the frontend on your local device:
    The application will be accessible at `http://localhost:5173`.
 
 ## Notes
-- Ensure the **HireTrack Backend API** is running simultaneously to authenticate users and fetch data.
+- Ensure the **hiretrackinging Backend API** is running simultaneously to authenticate users and fetch data.
 - The default setup utilizes Tailwind CSS for styling and React Router for navigation.

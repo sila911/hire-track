@@ -113,7 +113,7 @@ export default function Sidebar({ isOpen, setIsOpen, isCollapsed, setIsCollapsed
                 animate={{ opacity: 1, x: 0 }}
                 className="text-xl font-black tracking-tighter text-black dark:text-white truncate"
               >
-                HireTrack
+                hiretrackinging
               </motion.span>
             )}
           </div>

@@ -1,6 +1,6 @@
-# HireTrack
+# hiretrackinging
 
-HireTrack is a sleek, personal job application tracker designed to help job seekers organize their career search. Track your applications, manage statuses, and visualize your progress with a modern, high-performance interface.
+hiretrackinging is a sleek, personal job application tracker designed to help job seekers organize their career search. Track your applications, manage statuses, and visualize your progress with a modern, high-performance interface.
 
 This project is a decoupled application featuring a **Laravel 12** backend API and a **React 19** frontend powered by **Vite**.
 
@@ -43,7 +43,7 @@ This project is a decoupled application featuring a **Laravel 12** backend API a
 ## 📂 Project Structure
 
 ```text
-HireTrack/
+hiretrackinging/
 ├── backend/               # Laravel 12 API
 │   ├── app/               # Application logic (Controllers, Models)
 │   ├── database/          # Migrations, Factories, Seeders
@@ -125,4 +125,4 @@ HireTrack/
    ```
 ## 📄 License
 
-HireTrack is open-sourced software licensed under the [MIT license](LICENSE).
+hiretrackinging is open-sourced software licensed under the [MIT license](LICENSE).

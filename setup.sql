@@ -1,4 +1,4 @@
--- Supabase Setup SQL for HireTrack (Laravel Backend)
+-- Supabase Setup SQL for hiretrackinging (Laravel Backend)
 -- This script creates the necessary tables for the Laravel application.
 -- Run this in the Supabase SQL Editor.
 

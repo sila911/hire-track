@@ -45,14 +45,14 @@ export default function AboutSection() {
               className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tight mb-6 text-slate-900 dark:text-white"
             >
               Why We Built <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 to-cyan-400">HireTrack</span>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 to-cyan-400">hiretrackinging</span>
             </motion.h2>
 
             <motion.p 
               variants={itemVariants}
               className="text-lg text-slate-600 dark:text-slate-400 font-medium leading-relaxed mb-8 max-w-lg"
             >
-              We believe the job search is stressful enough without having to manage chaotic spreadsheets. HireTrack was built to simplify the process for modern professionals by combining intuitive automation with beautiful, actionable analytics. Focus on landing the job, let us track the journey.
+              We believe the job search is stressful enough without having to manage chaotic spreadsheets. hiretrackinging was built to simplify the process for modern professionals by combining intuitive automation with beautiful, actionable analytics. Focus on landing the job, let us track the journey.
             </motion.p>
             
             <motion.div variants={itemVariants} className="flex flex-col gap-4">

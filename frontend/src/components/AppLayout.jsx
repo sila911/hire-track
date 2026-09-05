@@ -75,7 +75,7 @@ export default function AppLayout({
                   <h1 className="text-2xl font-black tracking-tighter">
                     {location.pathname === '/dashboard' ? 'Dashboard' : 
                      location.pathname === '/analysis' ? 'Analytics' : 
-                     location.pathname === '/applications' ? 'Applications' : 'HireTrack'}
+                     location.pathname === '/applications' ? 'Applications' : 'hiretrackinging'}
                   </h1>
                 </div>
 

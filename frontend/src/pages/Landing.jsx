@@ -135,7 +135,7 @@ export default function Landing() {
             )}
           </div>
           <span className="text-sm font-black tracking-tight text-white truncate max-w-[100px]">
-            {user?.name || 'HireTrack'}
+            {user?.name || 'hiretrackinging'}
           </span>
         </div>
 
@@ -203,7 +203,7 @@ export default function Landing() {
             variants={itemVariants}
             className="text-lg md:text-xl text-slate-600 dark:text-slate-400 font-medium leading-relaxed max-w-xl mx-auto lg:mx-0 mb-12"
           >
-            Stop losing track of your applications. HireTrack gives you a visual Kanban workflow, deep analytics, and a professional command center for your career growth.
+            Stop losing track of your applications. hiretrackinging gives you a visual Kanban workflow, deep analytics, and a professional command center for your career growth.
           </motion.p>
           
           <motion.div 
@@ -261,7 +261,7 @@ export default function Landing() {
                <div className="bg-slate-100 dark:bg-slate-900 rounded-[2rem] overflow-hidden border border-black/5 dark:border-white/5 aspect-[1.4/1] flex items-center justify-center relative shadow-2xl group/preview">
                   <img 
                     src="/live-demo.gif" 
-                    alt="HireTrack Dashboard Preview" 
+                    alt="hiretrackinging Dashboard Preview" 
                     className="w-full h-full object-cover transition-transform duration-700 group-hover/preview:scale-105"
                   />
                   
@@ -422,7 +422,7 @@ export default function Landing() {
           <div className="relative z-10">
             <h2 className="text-5xl md:text-7xl font-black tracking-tight mb-10 leading-[0.9]">Ready to land your <br />next big role?</h2>
             <p className="text-indigo-100 dark:text-indigo-100/60 text-lg md:text-xl font-medium mb-16 max-w-2xl mx-auto">
-              Stop organizing in spreadsheets. Join thousands of users who have streamlined their search with HireTrack.
+              Stop organizing in spreadsheets. Join thousands of users who have streamlined their search with hiretrackinging.
             </p>
             <motion.button
               whileHover={{ scale: 1.05 }}
@@ -445,7 +445,7 @@ export default function Landing() {
               <div className="w-8 h-8 bg-black dark:bg-white rounded-lg flex items-center justify-center">
                 <Briefcase size={16} className="text-white dark:text-black" />
               </div>
-              <span className="text-xl font-black tracking-tighter text-black dark:text-white">HireTrack</span>
+              <span className="text-xl font-black tracking-tighter text-black dark:text-white">hiretrackinging</span>
             </div>
             <div className="flex items-center gap-8">
               <a href="#" className="hover:text-black dark:hover:text-white transition-colors">Privacy</a>
@@ -454,7 +454,7 @@ export default function Landing() {
               <a href="https://github.com/sila911/hire-track" target="_blank" rel="noopener noreferrer" className="hover:text-black dark:hover:text-white transition-colors">GitHub</a>
             </div>
           </div>
-          <p>© {new Date().getFullYear()} HireTrack. Designed for excellence. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} hiretrackinging. Designed for excellence. All rights reserved.</p>
         </div>
       </footer>
     </div>

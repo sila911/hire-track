@@ -1,6 +1,6 @@
-# HireTrack Backend API
+# hiretrackinging Backend API
 
-This is the Laravel-based REST API for the HireTrack application.
+This is the Laravel-based REST API for the hiretrackinging application.
 
 ## Prerequisites
 - PHP 8.2 or higher
