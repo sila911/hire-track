@@ -1,0 +1,13 @@
+const iconsax = require('iconsax-react');
+console.log('Home2 exists?', !!iconsax.Home2);
+console.log('ChartSquare exists?', !!iconsax.ChartSquare);
+console.log('Briefcase exists?', !!iconsax.Briefcase);
+console.log('Setting2 exists?', !!iconsax.Setting2);
+console.log('Logout exists?', !!iconsax.Logout);
+console.log('ArrowLeft2 exists?', !!iconsax.ArrowLeft2);
+console.log('ArrowRight2 exists?', !!iconsax.ArrowRight2);
+console.log('Sun1 exists?', !!iconsax.Sun1);
+console.log('Moon exists?', !!iconsax.Moon);
+console.log('SearchNormal1 exists?', !!iconsax.SearchNormal1);
+console.log('Add exists?', !!iconsax.Add);
+console.log('ArrowDown2 exists?', !!iconsax.ArrowDown2);

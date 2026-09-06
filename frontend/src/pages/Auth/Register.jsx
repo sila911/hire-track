@@ -58,7 +58,7 @@ export default function Register() {
       addNotification({
         type: 'success',
         title: 'Account Created',
-        description: `Welcome to hiretrackinging, ${data.user.name}!`,
+        description: `Welcome to Hire Tracking, ${data.user.name}!`,
       });
       navigate('/dashboard', { replace: true });
     } catch (err) {
@@ -107,7 +107,7 @@ export default function Register() {
           </div>
 
           <div className="mb-8 text-center relative z-10">
-            <p className="font-black tracking-tighter text-4xl text-black dark:text-white">hiretrackinging</p>
+            <p className="font-black tracking-tighter text-4xl text-black dark:text-white">Hire Tracking</p>
             <h1 className="mt-4 font-black text-2xl tracking-tight text-black dark:text-white">Create account</h1>
             <p className="mt-2 text-sm font-bold text-black/60 dark:text-white/60">Start tracking applications in one place.</p>
           </div>

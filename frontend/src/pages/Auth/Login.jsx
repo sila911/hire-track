@@ -136,7 +136,7 @@ export default function Login() {
           </div>
 
           <div className="mb-8 text-center relative z-10">
-            <p className="font-black tracking-tighter text-4xl text-black dark:text-white">hiretrackinging</p>
+            <p className="font-black tracking-tighter text-4xl text-black dark:text-white">Hire Tracking</p>
             <h1 className="mt-4 font-black text-2xl tracking-tight text-black dark:text-white">Sign in</h1>
             <p className="mt-2 text-sm font-bold text-black/60 dark:text-white/60">Welcome back. Enter your credentials to continue.</p>
           </div>

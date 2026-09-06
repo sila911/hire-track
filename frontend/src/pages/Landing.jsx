@@ -2,17 +2,17 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { 
-  LayoutDashboard, 
-  BarChart2, 
-  Smartphone, 
-  ChevronRight, 
+  Category, 
+  ChartSquare, 
+  Mobile, 
+  ArrowRight2, 
   Briefcase,
-  Sun,
+  Sun1,
   Moon,
-  Quote,
-  Zap,
-  CheckCircle2
-} from 'lucide-react';
+  Messages3,
+  Flash,
+  TickCircle
+} from 'iconsax-react';
 import { 
   SiGoogle, 
   SiStripe, 
@@ -131,11 +131,11 @@ export default function Landing() {
             ) : user ? (
               <span className="text-[10px] font-black text-white">{initials}</span>
             ) : (
-              <Briefcase size={16} className="text-white" />
+              <Briefcase size={16} variant="Bold" color="currentColor" className="text-white" />
             )}
           </div>
           <span className="text-sm font-black tracking-tight text-white truncate max-w-[100px]">
-            {user?.name || 'hiretrackinging'}
+            {user?.name || 'Hire Tracking'}
           </span>
         </div>
 
@@ -152,7 +152,7 @@ export default function Landing() {
             onClick={toggleTheme}
             className="text-white/40 hover:text-white transition-colors"
           >
-            {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+            {theme === 'dark' ? <Sun1 size={18} variant="Linear" color="currentColor" /> : <Moon size={18} variant="Linear" color="currentColor" />}
           </button>
 
           {!user && (
@@ -175,7 +175,7 @@ export default function Landing() {
       </nav>
 
       {/* Hero Section */}
-      <main className="relative z-10 max-w-7xl mx-auto px-6 pt-40 pb-20 md:px-12 flex flex-col lg:flex-row items-center gap-20">
+      <main className="relative z-10 max-w-7xl mx-auto px-6 pt-32 pb-16 md:pt-40 md:pb-20 md:px-12 flex flex-col lg:flex-row items-center gap-20">
         <motion.div 
           variants={containerVariants}
           initial="hidden"
@@ -184,7 +184,7 @@ export default function Landing() {
         >
           <motion.div variants={itemVariants}>
             <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-600 dark:text-indigo-400 text-[10px] md:text-xs font-black tracking-[0.2em] uppercase mb-8">
-              <Zap size={14} fill="currentColor" />
+              <Flash size={14} variant="Bold" color="currentColor" />
               Next-Gen Career Tracking
             </span>
           </motion.div>
@@ -201,9 +201,9 @@ export default function Landing() {
           
           <motion.p 
             variants={itemVariants}
-            className="text-lg md:text-xl text-slate-600 dark:text-slate-400 font-medium leading-relaxed max-w-xl mx-auto lg:mx-0 mb-12"
+            className="text-base md:text-xl text-slate-600 dark:text-slate-400 mb-8 max-w-lg mx-auto lg:mx-0 font-medium leading-relaxed"
           >
-            Stop losing track of your applications. hiretrackinging gives you a visual Kanban workflow, deep analytics, and a professional command center for your career growth.
+            Ditch the chaotic spreadsheets. Track applications, analyze interviews, and land your dream role faster.
           </motion.p>
           
           <motion.div 
@@ -214,81 +214,111 @@ export default function Landing() {
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               onClick={() => navigate('/login')}
-              className="relative w-full sm:w-auto px-10 py-5 bg-black dark:bg-white text-white dark:text-black rounded-2xl font-black text-xl shadow-[0_20px_50px_rgba(79,70,229,0.3)] dark:shadow-[0_20px_50px_rgba(255,255,255,0.1)] group overflow-hidden"
+              className="relative w-full sm:w-auto px-10 py-5 bg-black dark:bg-white text-white dark:text-black rounded-full font-black text-xl shadow-[0_15px_40px_-10px_rgba(0,0,0,0.5)] dark:shadow-[0_15px_40px_-10px_rgba(255,255,255,0.3)] group overflow-hidden"
             >
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
               <span className="relative z-10 flex items-center justify-center gap-2">
                 Get Started Free
-                <ChevronRight size={22} className="group-hover:translate-x-1 transition-transform" />
+                <ArrowRight2 size={22} variant="Linear" color="currentColor" className="group-hover:translate-x-1 transition-transform" />
               </span>
-              {/* Pulse Glow Effect */}
               <motion.div 
                 animate={{ 
                   boxShadow: ["0 0 0 0px rgba(79, 70, 229, 0.4)", "0 0 0 20px rgba(79, 70, 229, 0)"]
                 }}
                 transition={{ duration: 2, repeat: Infinity }}
-                className="absolute inset-0 rounded-2xl pointer-events-none"
+                className="absolute inset-0 rounded-full pointer-events-none"
               />
             </motion.button>
             
-            <div className="flex flex-col items-start gap-1">
-              <div className="flex items-center gap-1.5 text-xs font-bold text-slate-500">
-                <CheckCircle2 size={14} className="text-emerald-500" />
+            <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 sm:gap-6 mt-8">
+              <div className="flex items-center gap-2 text-xs md:text-sm font-bold text-slate-500">
+                <TickCircle size={16} variant="Bold" color="currentColor" className="text-emerald-500 shrink-0" />
                 No credit card required
               </div>
-              <div className="flex items-center gap-1.5 text-xs font-bold text-slate-500">
-                <CheckCircle2 size={14} className="text-emerald-500" />
+              <div className="flex items-center gap-2 text-xs md:text-sm font-bold text-slate-500">
+                <TickCircle size={16} variant="Bold" color="currentColor" className="text-emerald-500 shrink-0" />
                 Unlimited job tracking
               </div>
             </div>
           </motion.div>
         </motion.div>
 
-        {/* Premium Layered Dashboard Preview */}
-        <motion.div 
-          initial={{ opacity: 0, x: 50, rotateY: -20 }}
-          animate={{ opacity: 1, x: 0, rotateY: 0 }}
-          transition={{ duration: 1.2, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
-          className="flex-1 relative perspective-1000 w-full"
+        {/* Right Column: 3D UI */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1, ease: "easeOut", delay: 0.3 }}
+          className="flex-1 relative w-full mt-12 lg:mt-0 max-w-sm md:max-w-md mx-auto flex items-center justify-center"
+          style={{ perspective: 2000 }}
         >
-          <motion.div
-            animate={{ y: [0, -15, 0] }}
-            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-            className="relative z-20"
-          >
-            {/* Main Content Card */}
-            <div className="relative rounded-[2.5rem] border border-black/10 dark:border-white/10 bg-white/80 dark:bg-white/5 backdrop-blur-2xl p-4 shadow-[0_50px_100px_rgba(0,0,0,0.1)] dark:shadow-[0_50px_100px_rgba(0,0,0,0.5)] overflow-hidden">
-               <div className="bg-slate-100 dark:bg-slate-900 rounded-[2rem] overflow-hidden border border-black/5 dark:border-white/5 aspect-[1.4/1] flex items-center justify-center relative shadow-2xl group/preview">
-                  <img 
-                    src="/live-demo.gif" 
-                    alt="hiretrackinging Dashboard Preview" 
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover/preview:scale-105"
-                  />
-                  
-                  {/* Floating Overlay Info */}
-                  <div className="absolute inset-0 flex items-end justify-center pb-8 pointer-events-none">
-                    <motion.div 
-                      whileHover={{ scale: 1.1 }}
-                      className="px-8 py-4 rounded-3xl bg-white/90 dark:bg-white text-black font-black text-sm shadow-2xl flex items-center gap-3 backdrop-blur-md"
-                    >
-                      <div className="w-3 h-3 rounded-full bg-emerald-500 animate-pulse"></div>
-                      
-                    </motion.div>
-                  </div>
-               </div>
-            </div>
+          {/* Background Glow */}
+          <div className="absolute inset-0 bg-gradient-to-tr from-indigo-500/20 to-purple-500/20 rounded-[3rem] blur-3xl pointer-events-none"></div>
 
-            {/* Floating Secondary Elements */}
+          {/* 3D Board */}
+          <motion.div
+            animate={{ rotateX: [10, 15, 10], rotateY: [-15, -20, -15], y: [-5, 5, -5] }}
+            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+            className="relative w-full aspect-square rounded-[2rem] bg-white/50 dark:bg-slate-900/50 border border-white/20 backdrop-blur-xl p-6 shadow-2xl"
+            style={{ transformStyle: "preserve-3d" }}
+          >
+            {/* 3D Element: Kanban Column Header */}
             <motion.div 
-              animate={{ y: [0, 20, 0], x: [0, 10, 0] }}
-              transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute -top-12 -right-12 w-48 h-48 rounded-full bg-gradient-to-br from-indigo-500/20 to-purple-500/20 blur-3xl z-10"
-            />
-            <motion.div 
-              animate={{ y: [0, -20, 0], x: [0, -10, 0] }}
-              transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute -bottom-16 -left-16 w-64 h-64 rounded-full bg-gradient-to-tr from-cyan-500/20 to-indigo-500/20 blur-3xl z-10"
-            />
+              style={{ transform: "translateZ(30px)" }}
+              className="flex items-center justify-between mb-6"
+            >
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-indigo-500 flex items-center justify-center shadow-lg shadow-indigo-500/30">
+                  <Category size={20} variant="Bold" color="currentColor" className="text-white" />
+                </div>
+                <div>
+                  <div className="text-sm font-black text-slate-900 dark:text-white">Interviews</div>
+                  <div className="text-[10px] font-bold text-slate-500">3 Active</div>
+                </div>
+              </div>
+            </motion.div>
+
+            <div className="space-y-4 relative" style={{ transformStyle: "preserve-3d" }}>
+              {/* Card 1 */}
+              <motion.div 
+                animate={{ z: [40, 50, 40] }}
+                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                className="p-4 rounded-xl bg-white dark:bg-slate-800 shadow-xl border border-black/5 dark:border-white/5 flex items-center gap-3"
+              >
+                <div className="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-700 flex items-center justify-center text-xs font-black">G</div>
+                <div className="flex-1">
+                  <div className="text-xs font-black text-slate-900 dark:text-white">Google</div>
+                  <div className="text-[10px] text-slate-500">Frontend Engineer</div>
+                </div>
+                <div className="w-2 h-2 rounded-full bg-indigo-500"></div>
+              </motion.div>
+
+              {/* Card 2 */}
+              <motion.div 
+                animate={{ z: [60, 70, 60] }}
+                transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+                className="p-4 rounded-xl bg-white dark:bg-slate-800 shadow-[0_20px_40px_rgba(0,0,0,0.1)] border border-black/5 dark:border-white/5 flex items-center gap-3"
+              >
+                <div className="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-700 flex items-center justify-center text-xs font-black">S</div>
+                <div className="flex-1">
+                  <div className="text-xs font-black text-slate-900 dark:text-white">Stripe</div>
+                  <div className="text-[10px] text-slate-500">Full Stack</div>
+                </div>
+                <div className="w-2 h-2 rounded-full bg-emerald-500"></div>
+              </motion.div>
+              
+              {/* Stats Card Floating Top Right */}
+              <motion.div 
+                animate={{ z: [80, 90, 80], x: [10, 15, 10], y: [-20, -15, -20] }}
+                transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+                className="absolute -right-6 -top-20 p-4 rounded-2xl bg-indigo-600 shadow-2xl border border-white/10 flex flex-col items-center justify-center gap-2"
+              >
+                <ChartSquare size={24} variant="Bulk" color="currentColor" className="text-white" />
+                <div className="text-center">
+                  <div className="text-xs font-black text-white">Offer Rate</div>
+                  <div className="text-lg font-black text-emerald-400">+24%</div>
+                </div>
+              </motion.div>
+            </div>
           </motion.div>
         </motion.div>
       </main>
@@ -330,7 +360,7 @@ export default function Landing() {
       </section>
 
       {/* Features Grid */}
-      <section id="features" className="relative z-10 max-w-7xl mx-auto px-6 py-40 md:px-12">
+      <section id="features" className="relative z-10 max-w-7xl mx-auto px-6 py-20 md:py-40 md:px-12">
         <div className="text-center mb-24">
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
@@ -356,19 +386,19 @@ export default function Landing() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <FeatureCard 
-            icon={<LayoutDashboard size={26} />}
+            icon={<Category size={26} variant="Bulk" color="currentColor" />}
             title="Visual Kanban Pipeline"
             description="Track applications effortlessly with a drag-and-drop workflow. See exactly where you stand in every process."
             delay={0.1}
           />
           <FeatureCard 
-            icon={<BarChart2 size={26} />}
+            icon={<ChartSquare size={26} variant="Bulk" color="currentColor" />}
             title="Hiring Analytics"
             description="Deep insights into conversion rates and response speeds. Use data to optimize your interview performance."
             delay={0.2}
           />
           <FeatureCard 
-            icon={<Smartphone size={26} />}
+            icon={<Mobile size={26} variant="Bulk" color="currentColor" />}
             title="Sleek Mobile Optimization"
             description="Track your applications on the go. A perfectly responsive interface that works wherever you are."
             delay={0.3}
@@ -376,8 +406,10 @@ export default function Landing() {
         </div>
       </section>
 
+      <AboutSection />
+
       {/* Testimonials */}
-      <section id="stories" className="relative z-10 max-w-7xl mx-auto px-6 py-40 md:px-12">
+      <section id="stories" className="relative z-10 max-w-7xl mx-auto px-6 py-20 md:py-40 md:px-12">
         <div className="text-center mb-24">
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
@@ -405,33 +437,33 @@ export default function Landing() {
         </div>
       </section>
 
-      <AboutSection />
-
       {/* High-Impact CTA Section */}
-      <section className="relative z-10 max-w-6xl mx-auto px-6 py-40 text-center">
+      <section className="relative z-10 max-w-6xl mx-auto px-6 py-20 md:py-40 text-center">
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
-          className="p-16 md:p-32 rounded-[4rem] bg-indigo-600 dark:bg-slate-950 text-white shadow-2xl relative overflow-hidden group border border-white/10"
+          className="px-6 py-16 sm:p-16 md:p-32 rounded-[3rem] md:rounded-[4rem] bg-indigo-600 dark:bg-slate-950 text-white shadow-2xl relative overflow-hidden group border border-white/10"
         >
           {/* Animated Background Gradients for CTA */}
           <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-white/20 dark:bg-indigo-600/20 rounded-full blur-[100px] -mr-64 -mt-64 group-hover:bg-white/30 dark:group-hover:bg-indigo-600/30 transition-colors duration-700"></div>
           <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-white/20 dark:bg-purple-600/20 rounded-full blur-[100px] -ml-64 -mb-64 group-hover:bg-white/30 dark:group-hover:bg-purple-600/30 transition-colors duration-700"></div>
           
           <div className="relative z-10">
-            <h2 className="text-5xl md:text-7xl font-black tracking-tight mb-10 leading-[0.9]">Ready to land your <br />next big role?</h2>
-            <p className="text-indigo-100 dark:text-indigo-100/60 text-lg md:text-xl font-medium mb-16 max-w-2xl mx-auto">
-              Stop organizing in spreadsheets. Join thousands of users who have streamlined their search with hiretrackinging.
+            <h2 className="text-4xl sm:text-5xl md:text-7xl font-black tracking-tight mb-6 md:mb-10 leading-[1.1] md:leading-[0.9]">
+              Ready to land your <br className="hidden md:block" />next big role?
+            </h2>
+            <p className="text-indigo-100 dark:text-indigo-100/60 text-base md:text-xl font-medium mb-10 md:mb-16 max-w-2xl mx-auto px-4 md:px-0">
+              Stop organizing in spreadsheets. Join thousands of users who have streamlined their search with Hire Tracking.
             </p>
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => navigate('/login')}
-              className="px-12 py-6 bg-white text-indigo-600 rounded-[2rem] font-black text-2xl shadow-2xl hover:bg-slate-50 transition-all flex items-center justify-center gap-3 mx-auto group/btn"
+              className="w-full sm:w-auto px-8 py-5 md:px-12 md:py-6 bg-white text-indigo-600 rounded-full font-black text-lg md:text-2xl shadow-[0_20px_40px_-10px_rgba(255,255,255,0.4)] hover:shadow-[0_25px_50px_-12px_rgba(255,255,255,0.5)] hover:bg-slate-50 transition-all duration-300 flex items-center justify-center gap-3 mx-auto group/btn"
             >
               Get Started for Free
-              <ChevronRight size={28} className="group-hover/btn:translate-x-1 transition-transform" />
+              <ArrowRight2 size={24} variant="Linear" color="currentColor" className="md:w-7 md:h-7 group-hover/btn:translate-x-1 transition-transform shrink-0" />
             </motion.button>
           </div>
         </motion.div>
@@ -443,9 +475,9 @@ export default function Landing() {
           <div className="flex flex-col md:flex-row items-center justify-between gap-8 mb-12">
             <div className="flex items-center gap-2">
               <div className="w-8 h-8 bg-black dark:bg-white rounded-lg flex items-center justify-center">
-                <Briefcase size={16} className="text-white dark:text-black" />
+                <Briefcase size={16} variant="Bold" color="currentColor" className="text-white dark:text-black" />
               </div>
-              <span className="text-xl font-black tracking-tighter text-black dark:text-white">hiretrackinging</span>
+              <span className="text-xl font-black tracking-tighter text-black dark:text-white">Hire Tracking</span>
             </div>
             <div className="flex items-center gap-8">
               <a href="#" className="hover:text-black dark:hover:text-white transition-colors">Privacy</a>
@@ -454,7 +486,7 @@ export default function Landing() {
               <a href="https://github.com/sila911/hire-track" target="_blank" rel="noopener noreferrer" className="hover:text-black dark:hover:text-white transition-colors">GitHub</a>
             </div>
           </div>
-          <p>© {new Date().getFullYear()} hiretrackinging. Designed for excellence. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} Hire Tracking. Designed for excellence. All rights reserved.</p>
         </div>
       </footer>
     </div>
@@ -472,10 +504,12 @@ function FeatureCard({ icon, title, description, delay }) {
     >
       <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
       <div className="relative z-10">
-        <div className="w-16 h-16 rounded-2xl bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 flex items-center justify-center mb-8 group-hover:scale-110 group-hover:bg-indigo-500/20 transition-all duration-500 shadow-inner">
-          {icon}
+        <div className="flex items-center gap-4 mb-5">
+          <div className="w-14 h-14 shrink-0 rounded-2xl bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 flex items-center justify-center group-hover:scale-110 group-hover:bg-indigo-500/20 transition-all duration-500 shadow-inner">
+            {icon}
+          </div>
+          <h3 className="text-xl md:text-2xl font-black tracking-tight text-slate-900 dark:text-white leading-tight">{title}</h3>
         </div>
-        <h3 className="text-2xl font-black mb-4 tracking-tight text-slate-900 dark:text-white">{title}</h3>
         <p className="text-slate-600 dark:text-slate-400 font-medium leading-relaxed">
           {description}
         </p>
@@ -494,7 +528,7 @@ function TestimonialCard({ testimonial, index }) {
       className="p-10 rounded-[3rem] bg-white/40 dark:bg-white/5 border border-black/5 dark:border-white/10 backdrop-blur-xl shadow-xl flex flex-col h-full group hover:bg-white/60 dark:hover:bg-white/[0.08] transition-all duration-500"
     >
       <div className="text-indigo-500 dark:text-indigo-400 mb-8 transform group-hover:scale-110 transition-transform">
-        <Quote size={40} fill="currentColor" className="opacity-20" />
+        <Messages3 size={40} variant="Bulk" color="currentColor" className="opacity-30" />
       </div>
       <p className="text-xl font-medium text-slate-700 dark:text-slate-300 mb-10 flex-1 italic leading-relaxed">
         "{testimonial.quote}"
